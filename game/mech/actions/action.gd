@@ -12,6 +12,6 @@ var action_type : ActionType
 var owner : Mech
 
 
-
-@abstract func do()
+func do():
+	owner.decrement_actions()
 @abstract func can_do() -> bool

@@ -44,7 +44,6 @@ func _update_weapons_selection():
 			var button := Button.new()
 			button.text = w
 			button.pressed.connect(func():
-				printt(i, button.text)
 				$Mech.config.set_weapon(i, button.text)
 				)
 			selections.add_child(button)

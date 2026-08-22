@@ -7,6 +7,7 @@ var weapon_index : int
 
 
 func do():
+	super()
 	Global.battle_stage.do_attack(owner, weapon_index)
 
 

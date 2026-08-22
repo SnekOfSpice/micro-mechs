@@ -2,6 +2,12 @@ extends Resource
 class_name CombatStats
 
 
+var actions_left := 2:
+	set(value):
+		if value != actions_left:
+			actions_left = value
+			emit_changed()
+
 var health : int:
 	set(value):
 		if value != health:

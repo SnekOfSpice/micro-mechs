@@ -5,7 +5,14 @@ class_name PlayerHUD
 
 func _ready() -> void:
 	Global.hud = self
+	EventBus.combat_stats_changed.connect(_on_combat_stats_changed)
 
+
+func _on_combat_stats_changed(mech : Mech):
+	if mech != Global.player_mech:
+		return
+	
+	%ActionsContainer.visible = mech.combat_stats.actions_left > 0
 
 func register_mechs_to_track(player_mech : Mech, npc_mech : Mech):
 	%MechStatusContainer.tracking_mech = player_mech

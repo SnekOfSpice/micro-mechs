@@ -5,7 +5,6 @@ class_name MechConfig
 
 @export var torso_id := "":
 	set(new_value):
-		print(new_value)
 		if torso_id != new_value:
 			torso_id = new_value
 			emit_changed()

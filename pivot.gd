@@ -23,11 +23,9 @@ func set_flipped(flipped : bool):
 		sprite.position.x = -sprite.position.x
 	else:
 		var width := sprite.texture.get_width()
-		if name == "Leg1Front": print("flipped ", sprite.flip_h, " pos ", sprite.position.x )
 		if sprite.flip_h:
 			sprite.position.x = -(sprite.position.x + width)
 		else:
 			sprite.position.x = -(width + sprite.position.x)
-		if name == "Leg1Front": print("position is now ", sprite.position.x)
 	sprite.flip_h = flipped
 	in_front = not in_front

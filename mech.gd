@@ -115,7 +115,7 @@ func _load_legs(tech_id : String) -> void:
 	
 	if not ResourceLoader.exists(leg_path):
 		return
-	print("loading legs" , tech_id)
+	
 	var front : LegPivot = load(leg_path).instantiate()
 	var back : LegPivot = load(leg_path).instantiate()
 	
@@ -277,3 +277,13 @@ func too_much_dead_space() -> bool:
 		if not vis.is_on_screen():
 			return false
 	return true
+
+
+func decrement_actions():
+	var prev := combat_stats.actions_left
+	combat_stats.actions_left -= 1
+	if combat_stats.actions_left <= 0 and prev > 0:
+		PhaseManager.advance_phase()
+
+func refill_actions():
+	combat_stats.actions_left = 2
