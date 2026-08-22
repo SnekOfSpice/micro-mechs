@@ -16,7 +16,7 @@ enum DamageType {
 @export var damage_type := DamageType.Kinetic
 @export var energy_consumption_self := 0
 @export var energy_consumption_target := 0
-@export var heat_generatoion_self := 0
-@export var heat_generatoion_target := 0
+@export var heat_generation_self := 0
+@export var heat_generation_target := 0
 @export var bullet_consumption := 0
 @export var rocket_consumption := 0

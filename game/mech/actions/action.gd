@@ -14,3 +14,4 @@ var owner : Mech
 
 
 @abstract func do()
+@abstract func can_do() -> bool

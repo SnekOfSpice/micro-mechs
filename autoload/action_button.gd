@@ -8,6 +8,10 @@ var action : Action:
 		_rebuild()
 
 
+func _ready() -> void:
+	EventBus.request_action_rebuild.connect(_rebuild)
+
+
 func _rebuild():
 	if action is ActionCoolDown:
 		text = "cool down"
@@ -16,12 +20,10 @@ func _rebuild():
 	elif action is ActionWeapon:
 		text = "attack"
 	
-	disabled = _is_action_prohibited()
+	disabled = not action.can_do()
 
-func _is_action_prohibited() -> bool:
-	return false
 
 
 func _on_pressed() -> void:
 	action.do()
-	_rebuild()
+	EventBus.request_action_rebuild.emit()

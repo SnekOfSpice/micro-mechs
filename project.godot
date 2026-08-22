@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*uid://npmcbeberrw5"
 PhaseManager="*uid://ddwj8mj0xrxeu"
+EventBus="*uid://c3svy8rvi4pmo"
 
 [display]
 

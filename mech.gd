@@ -159,7 +159,7 @@ func get_action_list() -> Array[Action]:
 	
 	var leg_config : LegConfig = %LegPivots.get_child(0).config
 	for i in range(1, leg_config.movement + 1):
-		for factor in [1, -1]:
+		for factor in [-1, 1]:
 			var move_action := ActionMove.new()
 			move_action.owner = self
 			move_action.config = leg_config
@@ -184,3 +184,38 @@ func cool_down():
 
 func move(distance : int):
 	position.x += distance * WIDTH
+
+
+
+func is_in_spot(index : int) -> bool:
+	var index_position := index * WIDTH
+	return position.x - index_position < 0.001
+
+
+
+func is_in_range(r : Vector2) -> bool:
+	var index_range := r * WIDTH
+	
+	return position.x >= (index_range.x - 0.001) and position.x <= (index_range.y + 0.001)
+
+
+func get_spot() -> int:
+	return int(position.x / float(WIDTH))
+
+
+func can_use_weapon(weapon_config : WeaponConfig) -> bool:
+	if not combat_stats:
+		return false
+	
+	if weapon_config.bullet_consumption > combat_stats.bullets:
+		return false
+	
+	if weapon_config.rocket_consumption > combat_stats.rockets:
+		return false
+	
+	if weapon_config.energy_consumption_self > combat_stats.energy:
+		return false
+	
+	
+	return true
+	
