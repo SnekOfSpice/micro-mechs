@@ -48,8 +48,7 @@ func _begin_battle():
 	await get_tree().process_frame
 	mech1.initialize_combat_stats()
 	mech2.initialize_combat_stats()
-	mech1.combat_stats.actions_left = 1
-	mech2.combat_stats.actions_left = 0
+	
 	%PlayerHUD.populate_player_actions(mech1.get_action_list())
 	Global.active_mech = mech1
 	PhaseManager.begin_match()

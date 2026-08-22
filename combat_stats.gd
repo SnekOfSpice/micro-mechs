@@ -2,7 +2,7 @@ extends Resource
 class_name CombatStats
 
 
-var actions_left := 2:
+var actions_left : int:
 	set(value):
 		if value != actions_left:
 			actions_left = value

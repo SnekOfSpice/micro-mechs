@@ -285,5 +285,5 @@ func decrement_actions():
 	if combat_stats.actions_left <= 0 and prev > 0:
 		PhaseManager.advance_phase()
 
-func refill_actions():
-	combat_stats.actions_left = 2
+func refill_actions(amount := 2):
+	combat_stats.actions_left = amount

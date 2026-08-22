@@ -2,9 +2,16 @@ extends Phase
 class_name PhaseStartTurn
 
 
+var first_turn := true
+
+
 func enter_state() -> void:
 	print("generate energy")
-	Global.active_mech.refill_actions()
+	if first_turn:
+		Global.active_mech.refill_actions(1)
+	else:
+		Global.active_mech.refill_actions()
+	first_turn = false
 	super()
 	pass
 
