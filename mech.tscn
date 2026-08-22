@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b8t2hbd1sq8oh" path="res://mech.gd" id="1_qbvha"]
 [ext_resource type="Script" uid="uid://doykq4fatoa8u" path="res://parts/mech_config.gd" id="2_n3pud"]
 [ext_resource type="PackedScene" uid="uid://b30xwos54plgc" path="res://parts/torsos/torso_1.tscn" id="3_03qo4"]
+[ext_resource type="Script" uid="uid://dvua23rncvore" path="res://parts/legs/leg_config.gd" id="5_6frl3"]
 [ext_resource type="PackedScene" uid="uid://otfocs0xc7ab" path="res://parts/legs/leg_1.tscn" id="5_v0cvm"]
 [ext_resource type="PackedScene" uid="uid://dpdt0208uwpai" path="res://parts/weapons/cannon_1.tscn" id="8_my38c"]
 [ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="10_gv68a"]
@@ -14,6 +15,12 @@ torso_id = "torso_1"
 leg_id = "leg_1"
 weapon_list = PackedStringArray("cannon_1", "cannon_2")
 metadata/_custom_type_script = "uid://doykq4fatoa8u"
+
+[sub_resource type="Resource" id="Resource_d1hbp"]
+script = ExtResource("5_6frl3")
+
+[sub_resource type="Resource" id="Resource_xoyw3"]
+script = ExtResource("5_6frl3")
 
 [sub_resource type="Resource" id="Resource_fraup"]
 script = ExtResource("10_gv68a")
@@ -40,10 +47,12 @@ unique_name_in_owner = true
 [node name="Leg1Front" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
 z_index = 1
 position = Vector2(-17, -45)
+config = SubResource("Resource_d1hbp")
 
 [node name="@Marker2D@24938" parent="LegPivots" unique_id=30313655 instance=ExtResource("5_v0cvm")]
 z_index = -1
 position = Vector2(18, -29)
+config = SubResource("Resource_xoyw3")
 in_front = false
 
 [node name="WeaponPivots" type="Node2D" parent="." unique_id=1380579439]

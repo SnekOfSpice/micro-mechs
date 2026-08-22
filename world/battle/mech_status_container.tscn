@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://kyqyl0rq54ol"]
+
+[ext_resource type="Script" uid="uid://r1htg1ve0qr3" path="res://world/battle/mech_status_container.gd" id="1_nocc1"]
+[ext_resource type="Texture2D" uid="uid://ucyrjc0dswq7" path="res://Illustration11.png" id="2_fbbku"]
+
+[node name="MechStatusContainer" type="PanelContainer" unique_id=1072919913]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_nocc1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1470907998]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=1534464393]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=1290199101]
+layout_mode = 2
+columns = 2
+
+[node name="ProgressBar4" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1267258419]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+value = 100.0
+texture_progress = ExtResource("2_fbbku")
+tint_progress = Color(1, 0.43137255, 0.20392157, 1)
+
+[node name="ProgressBar2" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1005740156]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+value = 100.0
+texture_progress = ExtResource("2_fbbku")
+tint_progress = Color(0, 0.5411765, 0.67058825, 1)
+
+[node name="ProgressBar3" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=2099014465]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+value = 100.0
+texture_progress = ExtResource("2_fbbku")
+tint_progress = Color(1, 0.20392157, 0.24313726, 1)
+
+[node name="ProgressBar" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=56114837]
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 2
+value = 100.0
+texture_progress = ExtResource("2_fbbku")
+tint_progress = Color(1, 0.79607844, 0.20392157, 1)

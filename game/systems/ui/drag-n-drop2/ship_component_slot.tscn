@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bagtiinmqp1rq"]
+
+[ext_resource type="Script" uid="uid://beyqnbydj1u23" path="res://game/systems/ui/drag-n-drop2/ship_component_slot.gd" id="1_3hu5t"]
+
+[node name="ShipComponentSlot" type="TextureButton" unique_id=1684588727]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_3hu5t")

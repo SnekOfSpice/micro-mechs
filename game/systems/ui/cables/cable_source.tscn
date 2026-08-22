@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c4ragd2dy0kso"]
+
+[ext_resource type="Script" uid="uid://bv6epl0g3ildf" path="res://game/systems/ui/cables/cable_source.gd" id="1_enlsh"]
+
+[node name="CableSource" type="Button" unique_id=1144046087]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "S"
+script = ExtResource("1_enlsh")

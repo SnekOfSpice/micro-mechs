@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b14nvytfkkcr0"]
+
+[ext_resource type="Script" uid="uid://ch0jbyygyi7ix" path="res://world/battle/player_hud.gd" id="1_g2sh0"]
+[ext_resource type="PackedScene" uid="uid://kyqyl0rq54ol" path="res://world/battle/mech_status_container.tscn" id="2_6y46n"]
+
+[node name="PlayerHUD" type="Control" unique_id=1663708321]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g2sh0")
+
+[node name="ActionsContainer" type="HBoxContainer" parent="." unique_id=636132995]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MechStatusContainer" parent="." unique_id=1072919913 instance=ExtResource("2_6y46n")]
+layout_mode = 0

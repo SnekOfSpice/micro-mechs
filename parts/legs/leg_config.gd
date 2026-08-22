@@ -1,0 +1,15 @@
+extends Resource
+class_name LegConfig
+
+
+
+enum MovementType {
+	WALK,
+	JUMP,
+	TELEPORT
+}
+
+
+@export var health := 0
+@export var movement := 1
+@export var movement_type := MovementType.WALK

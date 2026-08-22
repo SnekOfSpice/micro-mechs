@@ -3,6 +3,10 @@ extends Node2D
 class_name Mech
 
 
+const WIDTH := 128
+var combat_stats : CombatStats
+
+
 @export var config : MechConfig:
 	set(value):
 		config = value
@@ -36,6 +40,10 @@ func load_mech():
 	
 	%TorsoPivot.position.y = -_get_mech_height()
 
+
+
+func _initialize_combat_stats():
+	pass
 
 func _load_weapons(weapon_id_list : PackedStringArray):
 	if not find_child("WeaponPivots"):
@@ -140,3 +148,39 @@ func set_flip(flipped : bool):
 	for pivot : Pivot in %WeaponPivots.get_children():
 		pivot.set_flipped(flipped)
 	#%WeaponPivots.scale.x = -1 if flipped else 1
+
+
+func get_action_list() -> Array[Action]:
+	var result : Array[Action] = []
+	
+	var cd_action := ActionCoolDown.new()
+	cd_action.owner = self
+	result.append(cd_action)
+	
+	var leg_config : LegConfig = %LegPivots.get_child(0).config
+	for i in range(1, leg_config.movement + 1):
+		for factor in [1, -1]:
+			var move_action := ActionMove.new()
+			move_action.owner = self
+			move_action.config = leg_config
+			move_action.distance = i * factor
+			result.append(move_action)
+	
+	var i := 0
+	for weapon : WeaponPivot in %WeaponPivots.get_children():
+		var weapon_action := ActionWeapon.new()
+		weapon_action.owner = self
+		weapon_action.weapon_index = i
+		weapon_action.config = weapon.config
+		result.append(weapon_action)
+		i += 1
+	
+	return result
+
+
+func cool_down():
+	print("TODO REDUCE HEAT")
+
+
+func move(distance : int):
+	position.x += distance * WIDTH

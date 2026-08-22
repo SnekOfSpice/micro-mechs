@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dpj41p7k8frnv"]
+
+[ext_resource type="Script" uid="uid://0a4yd2tusmjr" path="res://game/systems/ui/hover_target.gd" id="2_m00c3"]
+
+[node name="HoverTarget" type="TextureRect" unique_id=1265294881 groups=["hover_target"]]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = -50.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+mouse_filter = 0
+script = ExtResource("2_m00c3")
+category = 1
+private = true
+void_data = true
+
+[node name="Line2D" type="Line2D" parent="." unique_id=267636367]
+unique_name_in_owner = true
+closed = true
+width = 9.455

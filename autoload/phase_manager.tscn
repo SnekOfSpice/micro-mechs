@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ddwj8mj0xrxeu"]
+
+[ext_resource type="Script" uid="uid://csar0c75fy6qp" path="res://autoload/phase_manager.gd" id="1_umv0x"]
+[ext_resource type="Script" uid="uid://bpo4qj2bgedf7" path="res://game/systems/phase_manager/phase_start_turn.gd" id="2_0ln8c"]
+[ext_resource type="Script" uid="uid://cvlyh8bi2a6an" path="res://game/systems/phase_manager/phase_act.gd" id="3_0tf8w"]
+[ext_resource type="Script" uid="uid://i02ar82gy0fv" path="res://game/systems/phase_manager/phase_cleanup.gd" id="4_gfswe"]
+[ext_resource type="Script" uid="uid://djr7p1lyokuu" path="res://game/systems/phase_manager/phase_pass_to_other.gd" id="5_t3352"]
+
+[node name="PhaseManager" type="Node" unique_id=1075315574]
+script = ExtResource("1_umv0x")
+
+[node name="PhaseStartTurn" type="Node" parent="." unique_id=788747016]
+script = ExtResource("2_0ln8c")
+implicit_exit = true
+metadata/description = "Good Morning, Crew. Draw your Cards. Start of Day effects trigger."
+
+[node name="PhaseAct" type="Node" parent="." unique_id=810466092]
+script = ExtResource("3_0tf8w")
+metadata/description = "At the start of the Phase, Resources created during ShipResolve are dropped into the Ship. Patterns and Rooms become unlocked."
+
+[node name="PhaseCleanup" type="Node" parent="." unique_id=2117774]
+script = ExtResource("4_gfswe")
+implicit_exit = true
+metadata/description = "At the start of this Phase, the Ship resolves. All costs are used up. Payoffs are stored for the next Workday Start. Patterns and Rooms that are resolving are no longer interactable."
+
+[node name="PhasePassToOther" type="Node" parent="." unique_id=195968819]
+script = ExtResource("5_t3352")
+implicit_exit = true
+metadata/Description = "This does not do much inthe minimal loop."
