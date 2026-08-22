@@ -10,7 +10,7 @@ config = ExtResource("3_8j1me")
 weapon_count = 2
 
 [node name="LegTransformFront" parent="." index="0" unique_id=770917501]
-position = Vector2(-17, 3)
+position = Vector2(-17, 19)
 
 [node name="@RemoteTransform2D@49497" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="0" unique_id=712188100]
 position = Vector2(-27, 2)
