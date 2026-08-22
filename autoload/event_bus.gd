@@ -4,3 +4,4 @@ extends Node
 
 signal request_action_rebuild()
 signal combat_stats_changed(mech : Mech)
+signal phase_changed(phase : Phase)

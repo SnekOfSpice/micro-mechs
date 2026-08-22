@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ts0sg858uarx"]
+
+[ext_resource type="Script" uid="uid://bn1s5sgxnef6l" path="res://game/agents/mech_agent.gd" id="1_oanm1"]
+
+[node name="MechAgent" type="Node" unique_id=1348574379]
+script = ExtResource("1_oanm1")

@@ -227,13 +227,17 @@ func cool_down():
 
 
 func move(distance : int):
-	position.x += distance * WIDTH
+	var target_position := position.x + distance * WIDTH
+	
+	var t := create_tween()
+	t.tween_property(self, "position:x", target_position, distance * 0.1)
 
 
 
 func is_in_spot(index : int) -> bool:
 	var index_position := index * WIDTH
-	return position.x - index_position < 0.001
+	var distance : float = position.x - index_position
+	return abs(distance) < 0.001
 
 
 

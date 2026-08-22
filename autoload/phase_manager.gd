@@ -20,7 +20,7 @@ func _ready() -> void:
 func advance_phase():
 	var next_phase = (
 		phases[wrapi(phases.find(phase) + 1, 0, phases.size())])
-	set_phase(next_phase)
+	set_phase(next_phase, phase)
 
 
 func set_phase(new_phase : Phase, previous_phase : Phase = null):
@@ -29,26 +29,26 @@ func set_phase(new_phase : Phase, previous_phase : Phase = null):
 	phase = new_phase
 	
 	
-	_update_player_ui()
+	#_update_player_ui()
 	
 	phase.enter_state()
-	#EventBus.phase_changed.emit(phase)
+	EventBus.phase_changed.emit(phase)
 
 
-func _update_player_ui():
-	print("UI")
-	#var player = Global.get_local_player()
-	#if not player:
-		#return
-	#var phase_string : String = phase.state_name
-	#for player_id : int in state_by_player.keys():
-		#var player_name : String = Network.connected_players.get(player_id).get("name")
-		#var is_ready : bool = state_by_player.get(player_id)
-		#var icon_path : String = "res://testing/accept.png" if is_ready else "res://testing/error.png"
-		#var icon_bbcode := "[img]%s[/img]" % icon_path
-		#phase_string += "\n"
-		#phase_string += "%s %s" % [player_name, icon_bbcode]
-	#player.ui.set_phase_info(phase_string)
+#func _update_player_ui():
+	#print("UI")
+	##var player = Global.get_local_player()
+	##if not player:
+		##return
+	##var phase_string : String = phase.state_name
+	##for player_id : int in state_by_player.keys():
+		##var player_name : String = Network.connected_players.get(player_id).get("name")
+		##var is_ready : bool = state_by_player.get(player_id)
+		##var icon_path : String = "res://testing/accept.png" if is_ready else "res://testing/error.png"
+		##var icon_bbcode := "[img]%s[/img]" % icon_path
+		##phase_string += "\n"
+		##phase_string += "%s %s" % [player_name, icon_bbcode]
+	##player.ui.set_phase_info(phase_string)
 
 
 

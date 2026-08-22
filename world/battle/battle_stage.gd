@@ -19,7 +19,8 @@ func _ready() -> void:
 	mech2 = Mech.make(evil_config)
 	%BattleLine.add_child(mech2)
 	
-	
+	var agent := MechAgent.new()
+	mech2.add_child(agent)
 	
 	mech1.position.x = 0
 	mech2.position.x = 13 * Mech.WIDTH

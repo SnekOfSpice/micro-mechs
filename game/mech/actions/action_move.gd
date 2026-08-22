@@ -12,6 +12,9 @@ func do():
 	owner.move(distance)
 
 func can_do() -> bool:
-	if Global.get_other_mech(owner).is_in_spot(owner.get_spot() + distance):
+	var other : Mech = Global.get_other_mech(owner)
+	var query_distance := owner.get_spot() + distance
+	var in_spot := other.is_in_spot(query_distance)
+	if in_spot:
 		return false
 	return true
