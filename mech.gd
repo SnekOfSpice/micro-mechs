@@ -31,6 +31,8 @@ func load_mech():
 	load_legs(leg_id)
 	await get_tree().process_frame
 	load_weapons(weapon_list)
+	
+	%TorsoPivot.position.y = -_get_mech_height()
 
 
 func load_weapons(weapon_id_list : PackedStringArray):
@@ -107,5 +109,18 @@ func load_torso(tech_id : String):
 
 
 
-func _get_mech_height():
-	pass
+func _get_mech_height() -> float:
+	if not _torso:
+		return 0
+	var leg_height : float = 0
+	var leg_front : Pivot = %LegPivots.get_child(0)
+	if not leg_front:
+		return 0
+	if leg_front:
+		var leg_sprite : Sprite2D = leg_front.get_child(0)
+		leg_height += leg_sprite.texture.get_size().y
+		leg_height -= leg_sprite.position.y
+	
+	var pivot_offset : float = _torso.find_child("LegTransformFront").position.y
+	
+	return leg_height + pivot_offset# + _torso.texture.get_size().y * 0.5

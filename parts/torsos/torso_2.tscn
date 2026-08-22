@@ -3,15 +3,21 @@
 [ext_resource type="PackedScene" uid="uid://ntuh7267yt86" path="res://parts/torsos/torso.tscn" id="1_8ix0l"]
 [ext_resource type="Texture2D" uid="uid://cxw78k80uot1i" path="res://parts/torsos/torso2.png" id="2_y3u47"]
 
-[node name="Torso" unique_id=1025553937 instance=ExtResource("1_8ix0l")]
+[node name="Torso2" unique_id=1025553937 instance=ExtResource("1_8ix0l")]
 texture = ExtResource("2_y3u47")
 weapon_count = 3
 
-[node name="@RemoteTransform2D@47013" type="RemoteTransform2D" parent="WeaponPivots" parent_id_path=PackedInt32Array(148889375) index="0" unique_id=1993947358]
+[node name="LegTransformFront" parent="." index="0" unique_id=770917501]
+position = Vector2(-18, 27)
+
+[node name="LegTransformBack" parent="." index="1" unique_id=1968580162]
+position = Vector2(19, 28)
+
+[node name="@RemoteTransform2D@47013" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="0" unique_id=1993947358]
 position = Vector2(-16, -21)
 
-[node name="@RemoteTransform2D@49950" type="RemoteTransform2D" parent="WeaponPivots" parent_id_path=PackedInt32Array(148889375) index="1" unique_id=1923331704]
+[node name="@RemoteTransform2D@49950" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="1" unique_id=1923331704]
 position = Vector2(25, 1)
 
-[node name="@RemoteTransform2D@49951" type="RemoteTransform2D" parent="WeaponPivots" parent_id_path=PackedInt32Array(148889375) index="2" unique_id=267360278]
+[node name="@RemoteTransform2D@49951" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="2" unique_id=267360278]
 position = Vector2(-16, 11)

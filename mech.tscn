@@ -19,9 +19,9 @@ leg_id = "leg_1"
 
 [node name="TorsoPivot" type="Node2D" parent="." unique_id=2041020568]
 unique_name_in_owner = true
-position = Vector2(0, -64)
+position = Vector2(0, -61)
 
-[node name="@Sprite2D@29511" type="Sprite2D" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("2_6frl3")]
+[node name="Torso2" type="Sprite2D" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("2_6frl3")]
 texture = ExtResource("3_d1hbp")
 script = ExtResource("4_xoyw3")
 weapon_count = 3
@@ -30,13 +30,13 @@ weapon_count = 3
 unique_name_in_owner = true
 
 [node name="Leg1Front" type="Marker2D" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
-position = Vector2(-17, -47)
+position = Vector2(-18, -34)
 script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Leg1Back" type="Marker2D" parent="LegPivots" unique_id=997063249 instance=ExtResource("7_d1hbp")]
+[node name="Leg1Back" type="Marker2D" parent="LegPivots" unique_id=9195671 instance=ExtResource("7_d1hbp")]
 z_index = -1
-position = Vector2(18, -45)
+position = Vector2(19, -33)
 script = ExtResource("9_n3pud")
 in_front = false
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
@@ -46,19 +46,19 @@ unique_name_in_owner = true
 
 [node name="Cannon3" type="Marker2D" parent="WeaponPivots" unique_id=79986025 instance=ExtResource("5_6frl3")]
 z_index = 1
-position = Vector2(-16, -85)
+position = Vector2(-16, -82)
 script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=22643755 instance=ExtResource("9_d1hbp")]
+[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=1712673524 instance=ExtResource("9_d1hbp")]
 z_index = -1
-position = Vector2(25, -63)
+position = Vector2(25, -60)
 script = ExtResource("9_n3pud")
 in_front = false
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Cannon1" type="Marker2D" parent="WeaponPivots" unique_id=1226788629 instance=ExtResource("7_v0cvm")]
+[node name="Cannon1" type="Marker2D" parent="WeaponPivots" unique_id=1665499694 instance=ExtResource("7_v0cvm")]
 z_index = 1
-position = Vector2(-16, -53)
+position = Vector2(-16, -50)
 script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"

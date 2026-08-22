@@ -49,6 +49,8 @@ func set_weapon(pivot_index : int, weapon : Pivot):
 
 func free_weapon(weapon_index : int):
 	var remote_transform : RemoteTransform2D = %WeaponTransforms.get_child(weapon_index)
+	if not remote_transform:
+		return
 	if remote_transform.remote_path.is_empty():
 		return
 	var weapon := get_node(remote_transform.remote_path)
