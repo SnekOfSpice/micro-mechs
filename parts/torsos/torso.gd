@@ -34,6 +34,9 @@ class_name Torso
 func hook_up_legs(leg_front : Pivot, leg_back : Pivot):
 	%LegTransformFront.remote_path = leg_front.get_path()
 	%LegTransformBack.remote_path = leg_back.get_path()
+	
+	leg_front.in_front = true
+	leg_back.in_front = false
 
 
 func set_weapon(pivot_index : int, weapon : Pivot):

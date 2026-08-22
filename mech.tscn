@@ -5,11 +5,25 @@
 [ext_resource type="Texture2D" uid="uid://cxw78k80uot1i" path="res://parts/torsos/torso2.png" id="3_d1hbp"]
 [ext_resource type="Script" uid="uid://dm2eppebv8m75" path="res://parts/torsos/torso.gd" id="4_xoyw3"]
 [ext_resource type="PackedScene" uid="uid://crq12wrer5iln" path="res://parts/weapons/cannon_3.tscn" id="5_6frl3"]
-[ext_resource type="PackedScene" uid="uid://otfocs0xc7ab" path="res://parts/legs/leg_1_front.tscn" id="5_v0cvm"]
-[ext_resource type="PackedScene" uid="uid://bl7fubfmbpoq7" path="res://parts/legs/leg_1_back.tscn" id="7_d1hbp"]
+[ext_resource type="PackedScene" uid="uid://otfocs0xc7ab" path="res://parts/legs/leg_1.tscn" id="5_v0cvm"]
 [ext_resource type="PackedScene" uid="uid://dpdt0208uwpai" path="res://parts/weapons/cannon_1.tscn" id="7_v0cvm"]
+[ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="8_03qo4"]
 [ext_resource type="PackedScene" uid="uid://caqch3847jtne" path="res://parts/weapons/cannon_2.tscn" id="9_d1hbp"]
 [ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="9_n3pud"]
+[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="9_wgdda"]
+
+[sub_resource type="Resource" id="Resource_vq5ed"]
+script = ExtResource("9_wgdda")
+tech_id = "cannon_3"
+
+[sub_resource type="Resource" id="Resource_nb65s"]
+script = ExtResource("9_wgdda")
+tech_id = "cannon_2"
+metadata/_custom_type_script = "uid://d4g0xn01kf10"
+
+[sub_resource type="Resource" id="Resource_fraup"]
+script = ExtResource("9_wgdda")
+tech_id = "cannon_1"
 
 [node name="Mech" type="Node2D" unique_id=1584505707]
 script = ExtResource("1_qbvha")
@@ -19,7 +33,7 @@ leg_id = "leg_1"
 
 [node name="TorsoPivot" type="Node2D" parent="." unique_id=2041020568]
 unique_name_in_owner = true
-position = Vector2(0, -61)
+position = Vector2(0, -72)
 
 [node name="Torso2" type="Sprite2D" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("2_6frl3")]
 texture = ExtResource("3_d1hbp")
@@ -30,13 +44,14 @@ weapon_count = 3
 unique_name_in_owner = true
 
 [node name="Leg1Front" type="Marker2D" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
-position = Vector2(-18, -34)
+z_index = 1
+position = Vector2(-18, -45)
 script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Leg1Back" type="Marker2D" parent="LegPivots" unique_id=9195671 instance=ExtResource("7_d1hbp")]
+[node name="@Marker2D@53456" type="Marker2D" parent="LegPivots" unique_id=2090163036 instance=ExtResource("5_v0cvm")]
 z_index = -1
-position = Vector2(19, -33)
+position = Vector2(19, -44)
 script = ExtResource("9_n3pud")
 in_front = false
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
@@ -46,19 +61,22 @@ unique_name_in_owner = true
 
 [node name="Cannon3" type="Marker2D" parent="WeaponPivots" unique_id=79986025 instance=ExtResource("5_6frl3")]
 z_index = 1
-position = Vector2(-16, -82)
-script = ExtResource("9_n3pud")
+position = Vector2(-16, -93)
+script = ExtResource("8_03qo4")
+config = SubResource("Resource_vq5ed")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=1712673524 instance=ExtResource("9_d1hbp")]
+[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=609843250 instance=ExtResource("9_d1hbp")]
 z_index = -1
-position = Vector2(25, -60)
-script = ExtResource("9_n3pud")
+position = Vector2(25, -71)
+script = ExtResource("8_03qo4")
+config = SubResource("Resource_nb65s")
 in_front = false
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Cannon1" type="Marker2D" parent="WeaponPivots" unique_id=1665499694 instance=ExtResource("7_v0cvm")]
+[node name="Cannon1" type="Marker2D" parent="WeaponPivots" unique_id=1850876623 instance=ExtResource("7_v0cvm")]
 z_index = 1
-position = Vector2(-16, -50)
-script = ExtResource("9_n3pud")
+position = Vector2(-16, -61)
+script = ExtResource("8_03qo4")
+config = SubResource("Resource_fraup")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"

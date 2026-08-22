@@ -66,14 +66,13 @@ func load_weapon(weapon_id : String, weapon_index : int):
 func load_legs(tech_id : String) -> void:
 	if not _torso:
 		return
-	var front_path := "res://parts/legs/%s_front.tscn" % tech_id
-	var back_path := "res://parts/legs/%s_back.tscn" % tech_id
+	var leg_path := "res://parts/legs/%s.tscn" % tech_id
 	
-	if not (ResourceLoader.exists(front_path) and ResourceLoader.exists(back_path)):
+	if not ResourceLoader.exists(leg_path):
 		return
 	
-	var front : Pivot = load(front_path).instantiate()
-	var back : Pivot = load(back_path).instantiate()
+	var front : Pivot = load(leg_path).instantiate()
+	var back : Pivot = load(leg_path).instantiate()
 	
 	for child in %LegPivots.get_children():
 		child.queue_free()
@@ -119,7 +118,7 @@ func _get_mech_height() -> float:
 	if leg_front:
 		var leg_sprite : Sprite2D = leg_front.get_child(0)
 		leg_height += leg_sprite.texture.get_size().y
-		leg_height -= leg_sprite.position.y
+		leg_height += leg_sprite.position.y
 	
 	var pivot_offset : float = _torso.find_child("LegTransformFront").position.y
 	
