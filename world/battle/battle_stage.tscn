@@ -1,3 +1,58 @@
 [gd_scene format=3 uid="uid://drxhy51g8st7w"]
 
+[ext_resource type="Script" uid="uid://csgyet2aa78c0" path="res://world/battle/battle_stage.gd" id="1_mlyy2"]
+[ext_resource type="Texture2D" uid="uid://cewkao3s486aw" path="res://slot.png" id="2_2c4jw"]
+
 [node name="BattleStage" type="Node2D" unique_id=334141487]
+script = ExtResource("1_mlyy2")
+
+[node name="MechSlots" type="HBoxContainer" parent="." unique_id=1830012365]
+unique_name_in_owner = true
+offset_left = -19.0
+offset_top = 353.0
+offset_right = 1297.0
+offset_bottom = 481.0
+
+[node name="TextureRect" type="TextureRect" parent="MechSlots" unique_id=893561670]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect2" type="TextureRect" parent="MechSlots" unique_id=1357618589]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect3" type="TextureRect" parent="MechSlots" unique_id=768030821]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect4" type="TextureRect" parent="MechSlots" unique_id=907302986]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect5" type="TextureRect" parent="MechSlots" unique_id=1922622099]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect6" type="TextureRect" parent="MechSlots" unique_id=401692246]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect7" type="TextureRect" parent="MechSlots" unique_id=878681915]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect8" type="TextureRect" parent="MechSlots" unique_id=198026663]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect9" type="TextureRect" parent="MechSlots" unique_id=1416948508]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="TextureRect10" type="TextureRect" parent="MechSlots" unique_id=536643857]
+layout_mode = 2
+texture = ExtResource("2_2c4jw")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=88614104]
+position = Vector2(643, 285)
+zoom = Vector2(0.77, 0.77)

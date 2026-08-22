@@ -59,3 +59,16 @@ func free_weapon(weapon_index : int):
 	var weapon := get_node(remote_transform.remote_path)
 	if weapon: # can be null if no weapon is set
 		weapon.queue_free()
+
+
+func set_flipped(flipped : bool):
+	if flip_h == flipped:
+		return
+	
+	flip_h = flipped
+	for t : RemoteTransform2D in %WeaponTransforms.get_children():
+		t.position.x = -t.position.x
+	
+	%LegTransformBack.position.x = -%LegTransformBack.position.x
+	%LegTransformFront.position.x = -%LegTransformFront.position.x
+	

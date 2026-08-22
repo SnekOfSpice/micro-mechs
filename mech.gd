@@ -1,22 +1,19 @@
 @tool
 extends Node2D
+class_name Mech
 
 
-@export var torso_id := "":
+@export var config : MechConfig:
 	set(value):
-		torso_id = value
-		load_mech()
+		config = value
+		if config:
+			config.changed.connect(load_mech)
+			config.changed.emit()
 
-@export var weapon_list : PackedStringArray = []:
+@export var flipped: bool:
 	set(value):
-		weapon_list = value
-		load_mech()
-
-@export var leg_id := "":
-	set(value):
-		leg_id = value
-		load_mech()
-
+		flipped = value
+		set_flip(flipped)
 
 var _torso : Torso:
 	get():
@@ -24,36 +21,39 @@ var _torso : Torso:
 			_torso = %TorsoPivot.get_child(0)
 		return _torso
 
-
 func load_mech():
-	load_torso(torso_id)
+	if not config:
+		return
+	if not is_inside_tree():
+		return
+	
+	# load order is important
+	_load_torso(config.torso_id)
 	await get_tree().process_frame
-	load_legs(leg_id)
+	_load_legs(config.leg_id)
 	await get_tree().process_frame
-	load_weapons(weapon_list)
+	_load_weapons(config.weapon_list)
 	
 	%TorsoPivot.position.y = -_get_mech_height()
 
 
-func load_weapons(weapon_id_list : PackedStringArray):
+func _load_weapons(weapon_id_list : PackedStringArray):
 	if not find_child("WeaponPivots"):
 		return
 	for child in %WeaponPivots.get_children():
 		child.queue_free()
 	var i := 0
 	while i < weapon_id_list.size():
-		load_weapon(weapon_id_list[i], i)
+		_load_weapon(weapon_id_list[i], i)
 		i += 1
 
 
-func load_weapon(weapon_id : String, weapon_index : int):
+func _load_weapon(weapon_id : String, weapon_index : int):
 	if not _torso:
 		return
 	var weapon_path := "res://parts/weapons/%s.tscn" % weapon_id
 	if not ResourceLoader.exists(weapon_path):
-		print("no weapon")
 		return
-	print("making weapon")
 	var weapon : Pivot = load(weapon_path).instantiate()
 	
 	_torso.free_weapon(weapon_index)
@@ -63,7 +63,10 @@ func load_weapon(weapon_id : String, weapon_index : int):
 	
 	_torso.set_weapon(weapon_index, weapon)
 
-func load_legs(tech_id : String) -> void:
+
+func _load_legs(tech_id : String) -> void:
+	if not find_child("LegPivots"):
+		return
 	if not _torso:
 		return
 	var leg_path := "res://parts/legs/%s.tscn" % tech_id
@@ -85,16 +88,14 @@ func load_legs(tech_id : String) -> void:
 	_torso.hook_up_legs(front, back)
 	
 
-func load_torso(tech_id : String):
+func _load_torso(tech_id : String):
 	if not find_child("TorsoPivot"):
 		return
 	
 	var path := "res://parts/torsos/%s.tscn" % tech_id
 	
 	if not ResourceLoader.exists(path):
-		print("no torso")
 		return
-	print("torso")
 	
 	for child in %TorsoPivot.get_children():
 		child.queue_free()
@@ -106,9 +107,9 @@ func load_torso(tech_id : String):
 	_torso = torso
 
 
-
-
 func _get_mech_height() -> float:
+	if not find_child("LegPivots"):
+		return 0
 	if not _torso:
 		return 0
 	var leg_height : float = 0
@@ -123,3 +124,19 @@ func _get_mech_height() -> float:
 	var pivot_offset : float = _torso.find_child("LegTransformFront").position.y
 	
 	return leg_height + pivot_offset# + _torso.texture.get_size().y * 0.5
+
+
+static func make(from_config : MechConfig) -> Mech:
+	var mech := preload("res://mech.tscn").instantiate()
+	mech.config = from_config
+	return mech
+
+
+func set_flip(flipped : bool):
+	_torso.set_flipped(flipped)
+	#%TorsoPivot.scale.x = -1 if flipped else 1
+	for pivot : Pivot in %LegPivots.get_children():
+		pivot.set_flipped(flipped)
+	for pivot : Pivot in %WeaponPivots.get_children():
+		pivot.set_flipped(flipped)
+	#%WeaponPivots.scale.x = -1 if flipped else 1
