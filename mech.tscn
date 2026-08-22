@@ -68,3 +68,27 @@ z_index = -1
 position = Vector2(25, -45)
 config = SubResource("Resource_nb65s")
 in_front = false
+
+[node name="VisibleGuarantee" type="Node2D" parent="." unique_id=274225177]
+unique_name_in_owner = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="VisibleGuarantee" unique_id=1501209964]
+position = Vector2(-61, -113)
+
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="VisibleGuarantee" unique_id=366482637]
+position = Vector2(98, -113)
+
+[node name="VisibleOnScreenNotifier2D3" type="VisibleOnScreenNotifier2D" parent="VisibleGuarantee" unique_id=92789911]
+position = Vector2(-61, 59)
+
+[node name="VisibleOnScreenNotifier2D4" type="VisibleOnScreenNotifier2D" parent="VisibleGuarantee" unique_id=1358138197]
+position = Vector2(98, 59)
+
+[node name="DeadSpaceEliminators" type="Node2D" parent="." unique_id=372224294]
+unique_name_in_owner = true
+
+[node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier2D" parent="DeadSpaceEliminators" unique_id=2008328469]
+position = Vector2(391, 0)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="DeadSpaceEliminators" unique_id=15760546]
+position = Vector2(-329, 0)

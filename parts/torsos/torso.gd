@@ -3,6 +3,8 @@ extends Sprite2D
 class_name Torso
 
 
+@export var config : TorsoConfig
+
 
 @export var weapon_count := 0:
 	set(value):

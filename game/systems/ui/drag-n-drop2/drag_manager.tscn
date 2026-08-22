@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://c0uajlekytifx"]
-
-[ext_resource type="Script" uid="uid://cla3lcq0vkaya" path="res://game/systems/ui/drag-n-drop2/drag_manager.gd" id="1_i4owb"]
-
-[node name="DragManager" type="Node2D" unique_id=1288399694]
-script = ExtResource("1_i4owb")

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TorsoConfig" format=3 uid="uid://cbpphg438yaf6"]
+
+[ext_resource type="Script" uid="uid://dyvy5uipvdaox" path="res://parts/torsos/torso_config.gd" id="1_opt74"]
+
+[resource]
+script = ExtResource("1_opt74")
+metadata/_custom_type_script = "uid://dyvy5uipvdaox"

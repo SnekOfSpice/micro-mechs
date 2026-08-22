@@ -7,11 +7,15 @@ var mech2 : Mech
 
 
 func _ready() -> void:
-	mech1 = preload("res://mech.tscn").instantiate()
+	var config := ResourceLoader.load("user://mech_config.tres")
+	mech1 = Mech.make(config)
 	%BattleLine.add_child(mech1)
 	
 	mech2 = preload("res://mech.tscn").instantiate()
 	%BattleLine.add_child(mech2)
+	
+	mech1.initialize_combat_stats()
+	mech2.initialize_combat_stats()
 	
 	mech1.position.x = 0
 	mech2.position.x = 13 * Mech.WIDTH
@@ -19,6 +23,21 @@ func _ready() -> void:
 	Global.player_mech = mech1
 	Global.npc_mech = mech2
 	Global.battle_stage = self
+	
+	mech1.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
+	mech2.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
+	
+	await get_tree().process_frame
+	%PlayerHUD.register_mechs_to_track(mech1, mech2)
+	
+
+var blockers := 1
+func _decrement_blocker():
+	blockers -= 1
+	if blockers <= 0:
+		_begin_battle()
+
+func _begin_battle():
 	_update_flips()
 	
 	%PlayerHUD.populate_player_actions(mech1.get_action_list())
@@ -61,3 +80,7 @@ func _update_flips():
 
 func do_attack(attacking_mech : Mech, weapon_index : int):
 	print("pew pew")
+
+
+func _on_main_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")

@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://bdfi4e7ulkx4e"]
-
-[ext_resource type="Script" uid="uid://bhj5eo5t7hbrt" path="res://game/systems/ui/cables/wire_renderer.gd" id="1_uwjfv"]
-
-[node name="WireRenderer" type="Node2D" unique_id=657931115]
-script = ExtResource("1_uwjfv")

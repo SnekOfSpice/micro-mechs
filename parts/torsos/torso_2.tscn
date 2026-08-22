@@ -2,9 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://ntuh7267yt86" path="res://parts/torsos/torso.tscn" id="1_8ix0l"]
 [ext_resource type="Texture2D" uid="uid://cxw78k80uot1i" path="res://parts/torsos/torso2.png" id="2_y3u47"]
+[ext_resource type="Resource" uid="uid://cbpphg438yaf6" path="res://parts/torsos/configs/torso_2.tres" id="3_1apnw"]
 
 [node name="Torso2" unique_id=1025553937 instance=ExtResource("1_8ix0l")]
 texture = ExtResource("2_y3u47")
+config = ExtResource("3_1apnw")
 weapon_count = 3
 
 [node name="LegTransformFront" parent="." index="0" unique_id=770917501]

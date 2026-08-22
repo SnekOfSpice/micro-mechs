@@ -11,7 +11,8 @@ script = ExtResource("1_nocc1")
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1470907998]
 layout_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=1534464393]
+[node name="Health" type="ProgressBar" parent="VBoxContainer" unique_id=1534464393]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
@@ -19,30 +20,78 @@ layout_mode = 2
 layout_mode = 2
 columns = 2
 
-[node name="ProgressBar4" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1267258419]
+[node name="Heat" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1267258419]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 value = 100.0
 texture_progress = ExtResource("2_fbbku")
 tint_progress = Color(1, 0.43137255, 0.20392157, 1)
 
-[node name="ProgressBar2" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1005740156]
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer/Heat" unique_id=151006801]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Heat"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Energy" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1005740156]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 value = 100.0
 texture_progress = ExtResource("2_fbbku")
 tint_progress = Color(0, 0.5411765, 0.67058825, 1)
 
-[node name="ProgressBar3" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=2099014465]
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer/Energy" unique_id=1588616813]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Energy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rockets" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=2099014465]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 value = 100.0
 texture_progress = ExtResource("2_fbbku")
 tint_progress = Color(1, 0.20392157, 0.24313726, 1)
 
-[node name="ProgressBar" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=56114837]
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer/Rockets" unique_id=1583997726]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Rockets"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bullets" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=56114837]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
 layout_mode = 2
 value = 100.0
 texture_progress = ExtResource("2_fbbku")
 tint_progress = Color(1, 0.79607844, 0.20392157, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/GridContainer/Bullets" unique_id=546824903]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Bullets"
+horizontal_alignment = 1
+vertical_alignment = 1

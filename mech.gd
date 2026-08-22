@@ -11,7 +11,8 @@ var combat_stats : CombatStats
 	set(value):
 		config = value
 		if config:
-			config.changed.connect(load_mech)
+			if not config.changed.is_connected(load_mech):
+				config.changed.connect(load_mech)
 			config.changed.emit()
 
 @export var flipped: bool:
@@ -39,17 +40,39 @@ func load_mech():
 	_load_weapons(config.weapon_list)
 	
 	%TorsoPivot.position.y = -_get_mech_height()
+	
+	mech_loaded.emit()
 
 
+signal mech_loaded()
 
-func _initialize_combat_stats():
-	pass
+
+func initialize_combat_stats():
+	if combat_stats:
+		combat_stats.queue_free()
+	
+	var torso_config : TorsoConfig = _torso.config
+	var leg_config : LegConfig = _get_leg_config()
+	
+	combat_stats = CombatStats.new()
+	for thing in ["health", "energy", "heat", "bullets", "rockets"]:
+		var max_name := "%s_max" % thing
+		var torso_value = torso_config.get(max_name)
+		combat_stats.set(thing, torso_value)
+		combat_stats.set(max_name, torso_value)
+	combat_stats.health += leg_config.health
+	
+	EventBus.combat_stats_changed.emit(self)
+	combat_stats.changed.connect(EventBus.combat_stats_changed.emit.bind(self))
+	
+
+
 
 func _load_weapons(weapon_id_list : PackedStringArray):
 	if not find_child("WeaponPivots"):
 		return
 	for child in %WeaponPivots.get_children():
-		child.queue_free()
+		child.free()
 	var i := 0
 	while i < weapon_id_list.size():
 		_load_weapon(weapon_id_list[i], i)
@@ -150,6 +173,11 @@ func set_flip(flipped : bool):
 	#%WeaponPivots.scale.x = -1 if flipped else 1
 
 
+
+func _get_leg_config() -> LegConfig:
+	return %LegPivots.get_child(0).config
+
+
 func get_action_list() -> Array[Action]:
 	var result : Array[Action] = []
 	
@@ -157,7 +185,7 @@ func get_action_list() -> Array[Action]:
 	cd_action.owner = self
 	result.append(cd_action)
 	
-	var leg_config : LegConfig = %LegPivots.get_child(0).config
+	var leg_config : LegConfig = _get_leg_config()
 	for i in range(1, leg_config.movement + 1):
 		for factor in [-1, 1]:
 			var move_action := ActionMove.new()
@@ -219,3 +247,17 @@ func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 	
 	return true
 	
+
+
+func is_entirely_on_screen() -> bool:
+	for vis : VisibleOnScreenNotifier2D in %VisibleGuarantee.get_children():
+		if not vis.is_on_screen():
+			return false
+	return true
+
+
+func too_much_dead_space() -> bool:
+	for vis : VisibleOnScreenNotifier2D in %DeadSpaceEliminators.get_children():
+		if not vis.is_on_screen():
+			return false
+	return true

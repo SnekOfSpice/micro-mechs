@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ciqf4dk804200"]
+
+[ext_resource type="Script" uid="uid://bu8mfakjtmv43" path="res://game/main_menu/main_menu.gd" id="1_f1bok"]
+
+[node name="MainMenu" type="Control" unique_id=1815764843]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f1bok")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1567521397]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WorkshopButton" type="Button" parent="VBoxContainer" unique_id=1134669449]
+layout_mode = 2
+text = "Workshop"
+
+[node name="BattleButton" type="Button" parent="VBoxContainer" unique_id=612334477]
+layout_mode = 2
+text = "Battle"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1949257212]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/WorkshopButton" to="." method="_on_workshop_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/BattleButton" to="." method="_on_battle_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
