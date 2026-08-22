@@ -44,6 +44,10 @@ text = "leg_1"
 layout_mode = 2
 text = "leg_2"
 
+[node name="WeaponsSelection" type="HBoxContainer" parent="VBoxContainer" unique_id=1099144288]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="CloseButton" type="Button" parent="." unique_id=159429627]
 layout_mode = 1
 anchors_preset = 1
@@ -53,5 +57,16 @@ offset_left = -8.0
 offset_bottom = 8.0
 grow_horizontal = 0
 text = "Close"
+
+[node name="CombatStatsLabel" type="RichTextLabel" parent="." unique_id=224354290]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+fit_content = true
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

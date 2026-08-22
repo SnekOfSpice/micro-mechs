@@ -24,7 +24,15 @@ var _torso : Torso:
 	get():
 		if not _torso and %TorsoPivot.get_child(0) is Torso:
 			_torso = %TorsoPivot.get_child(0)
+		config.weapon_list.resize(_torso.weapon_count)
 		return _torso
+
+
+# TODO refactor this to be part of torso config
+var weapon_capacity : int:
+	get():
+		return _torso.weapon_count
+
 
 func load_mech():
 	if not config:
@@ -34,9 +42,9 @@ func load_mech():
 	
 	# load order is important
 	_load_torso(config.torso_id)
-	await get_tree().process_frame
+	#await get_tree().process_frame
 	_load_legs(config.leg_id)
-	await get_tree().process_frame
+	#await get_tree().process_frame
 	_load_weapons(config.weapon_list)
 	
 	%TorsoPivot.position.y = -_get_mech_height()
@@ -47,9 +55,10 @@ func load_mech():
 signal mech_loaded()
 
 
-func initialize_combat_stats():
+func initialize_combat_stats() -> CombatStats:
 	if combat_stats:
-		combat_stats.queue_free()
+		combat_stats.unreference()
+		combat_stats = null
 	
 	var torso_config : TorsoConfig = _torso.config
 	var leg_config : LegConfig = _get_leg_config()
@@ -61,10 +70,12 @@ func initialize_combat_stats():
 		combat_stats.set(thing, torso_value)
 		combat_stats.set(max_name, torso_value)
 	combat_stats.health += leg_config.health
+	combat_stats.health_max += leg_config.health
 	
 	EventBus.combat_stats_changed.emit(self)
 	combat_stats.changed.connect(EventBus.combat_stats_changed.emit.bind(self))
 	
+	return combat_stats
 
 
 
@@ -104,20 +115,23 @@ func _load_legs(tech_id : String) -> void:
 	
 	if not ResourceLoader.exists(leg_path):
 		return
-	
-	var front : Pivot = load(leg_path).instantiate()
-	var back : Pivot = load(leg_path).instantiate()
+	print("loading legs" , tech_id)
+	var front : LegPivot = load(leg_path).instantiate()
+	var back : LegPivot = load(leg_path).instantiate()
 	
 	for child in %LegPivots.get_children():
 		child.queue_free()
 	
+	_leg_config = front.config
 	%LegPivots.add_child(front)
 	front.owner = get_tree().edited_scene_root
 	%LegPivots.add_child(back)
 	back.owner = get_tree().edited_scene_root
 	
 	_torso.hook_up_legs(front, back)
-	
+
+var _leg_config : LegConfig
+
 
 func _load_torso(tech_id : String):
 	if not find_child("TorsoPivot"):
@@ -175,7 +189,9 @@ func set_flip(flipped : bool):
 
 
 func _get_leg_config() -> LegConfig:
-	return %LegPivots.get_child(0).config
+	if not _leg_config:
+		_leg_config = %LegPivots.get_child(0).config
+	return _leg_config
 
 
 func get_action_list() -> Array[Action]:

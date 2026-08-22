@@ -2,17 +2,12 @@
 
 [ext_resource type="Script" uid="uid://binxewfhgr2bv" path="res://parts/legs/leg_pivot.gd" id="1_j37cy"]
 [ext_resource type="Texture2D" uid="uid://im3wl2c4v41n" path="res://parts/legs/leg1_back.png" id="2_6ckfs"]
-[ext_resource type="Script" uid="uid://dvua23rncvore" path="res://parts/legs/leg_config.gd" id="2_13c2g"]
-
-[sub_resource type="Resource" id="Resource_6frl3"]
-script = ExtResource("2_13c2g")
-movement = 2
-metadata/_custom_type_script = "uid://dvua23rncvore"
+[ext_resource type="Resource" uid="uid://cviljg8bofs3x" path="res://parts/legs/configs/leg_2.tres" id="2_13c2g"]
 
 [node name="Leg2" type="Marker2D" unique_id=939276063]
 z_index = -1
 script = ExtResource("1_j37cy")
-config = SubResource("Resource_6frl3")
+config = ExtResource("2_13c2g")
 in_front = false
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 

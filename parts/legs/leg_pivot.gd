@@ -1,6 +1,6 @@
 @tool
 extends Pivot
-
+class_name LegPivot
 
 
 @export var config := LegConfig.new()

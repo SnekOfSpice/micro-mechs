@@ -23,3 +23,10 @@ class_name MechConfig
 		if weapon_list != new_value:
 			weapon_list = new_value
 			emit_changed()
+
+
+func set_weapon(index : int, weapon_id : String):
+	if index >= weapon_list.size():
+		weapon_list.resize(index + 1)
+	weapon_list[index] = weapon_id
+	emit_changed()

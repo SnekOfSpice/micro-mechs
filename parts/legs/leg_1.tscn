@@ -2,15 +2,11 @@
 
 [ext_resource type="Script" uid="uid://binxewfhgr2bv" path="res://parts/legs/leg_pivot.gd" id="1_d3ym4"]
 [ext_resource type="Texture2D" uid="uid://ckepbild1bxog" path="res://parts/legs/leg1_front.png" id="2_6rsk6"]
-[ext_resource type="Script" uid="uid://dvua23rncvore" path="res://parts/legs/leg_config.gd" id="2_o4tax"]
-
-[sub_resource type="Resource" id="Resource_13c2g"]
-script = ExtResource("2_o4tax")
-metadata/_custom_type_script = "uid://dvua23rncvore"
+[ext_resource type="Resource" uid="uid://ckh4d14kgvejb" path="res://parts/legs/configs/leg_1.tres" id="2_o4tax"]
 
 [node name="Leg1Front" type="Marker2D" unique_id=939276063]
 script = ExtResource("1_d3ym4")
-config = SubResource("Resource_13c2g")
+config = ExtResource("2_o4tax")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
 [node name="Leg1Front" type="Sprite2D" parent="." unique_id=844319122]

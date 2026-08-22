@@ -11,11 +11,15 @@ func _ready() -> void:
 	mech1 = Mech.make(config)
 	%BattleLine.add_child(mech1)
 	
-	mech2 = preload("res://mech.tscn").instantiate()
+	
+	var evil_config := MechConfig.new()
+	evil_config.leg_id = "leg_1"
+	evil_config.torso_id = "torso_1"
+	evil_config.weapon_list = PackedStringArray(["cannon_1", "cannon_2"])
+	mech2 = Mech.make(evil_config)
 	%BattleLine.add_child(mech2)
 	
-	mech1.initialize_combat_stats()
-	mech2.initialize_combat_stats()
+	
 	
 	mech1.position.x = 0
 	mech2.position.x = 13 * Mech.WIDTH
@@ -24,8 +28,9 @@ func _ready() -> void:
 	Global.npc_mech = mech2
 	Global.battle_stage = self
 	
-	mech1.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
-	mech2.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
+	_begin_battle()
+	#mech1.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
+	#mech2.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
 	
 	await get_tree().process_frame
 	%PlayerHUD.register_mechs_to_track(mech1, mech2)
@@ -40,7 +45,12 @@ func _decrement_blocker():
 func _begin_battle():
 	_update_flips()
 	
+	await get_tree().process_frame
+	mech1.initialize_combat_stats()
+	mech2.initialize_combat_stats()
 	%PlayerHUD.populate_player_actions(mech1.get_action_list())
+	
+	
 
 
 func _update_flips():

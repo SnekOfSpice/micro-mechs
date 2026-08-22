@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LegConfig" format=3 uid="uid://ckh4d14kgvejb"]
+
+[ext_resource type="Script" uid="uid://dvua23rncvore" path="res://parts/legs/leg_config.gd" id="1_e4nri"]
+
+[resource]
+script = ExtResource("1_e4nri")
+health = 10
+metadata/_custom_type_script = "uid://dvua23rncvore"
