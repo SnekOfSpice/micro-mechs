@@ -1,44 +1,64 @@
 [gd_scene format=3 uid="uid://dfuldwx85p728"]
 
 [ext_resource type="Script" uid="uid://b8t2hbd1sq8oh" path="res://mech.gd" id="1_qbvha"]
-[ext_resource type="PackedScene" uid="uid://ntuh7267yt86" path="res://torso.tscn" id="2_v0cvm"]
+[ext_resource type="PackedScene" uid="uid://xqt7nguas4ar" path="res://parts/torsos/torso_2.tscn" id="2_6frl3"]
+[ext_resource type="Texture2D" uid="uid://cxw78k80uot1i" path="res://parts/torsos/torso2.png" id="3_d1hbp"]
+[ext_resource type="Script" uid="uid://dm2eppebv8m75" path="res://parts/torsos/torso.gd" id="4_xoyw3"]
 [ext_resource type="PackedScene" uid="uid://crq12wrer5iln" path="res://parts/weapons/cannon_3.tscn" id="5_6frl3"]
 [ext_resource type="PackedScene" uid="uid://otfocs0xc7ab" path="res://parts/legs/leg_1_front.tscn" id="5_v0cvm"]
-[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="6_6frl3"]
 [ext_resource type="PackedScene" uid="uid://bl7fubfmbpoq7" path="res://parts/legs/leg_1_back.tscn" id="7_d1hbp"]
-[ext_resource type="PackedScene" uid="uid://caqch3847jtne" path="res://parts/weapons/cannon_2.tscn" id="7_v0cvm"]
+[ext_resource type="PackedScene" uid="uid://dpdt0208uwpai" path="res://parts/weapons/cannon_1.tscn" id="7_v0cvm"]
+[ext_resource type="PackedScene" uid="uid://caqch3847jtne" path="res://parts/weapons/cannon_2.tscn" id="9_d1hbp"]
+[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="9_n3pud"]
 
 [node name="Mech" type="Node2D" unique_id=1584505707]
 script = ExtResource("1_qbvha")
-weapon_list = PackedStringArray("cannon_3", "cannon_2")
+torso_id = "torso_2"
+weapon_list = PackedStringArray("cannon_3", "cannon_2", "cannon_1")
 leg_id = "leg_1"
 
-[node name="Torso" parent="." unique_id=1025553937 instance=ExtResource("2_v0cvm")]
+[node name="TorsoPivot" type="Node2D" parent="." unique_id=2041020568]
 unique_name_in_owner = true
-position = Vector2(-8, -62)
+position = Vector2(0, -64)
+
+[node name="@Sprite2D@29511" type="Sprite2D" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("2_6frl3")]
+texture = ExtResource("3_d1hbp")
+script = ExtResource("4_xoyw3")
+weapon_count = 3
 
 [node name="LegPivots" type="Node2D" parent="." unique_id=502255764]
 unique_name_in_owner = true
 
-[node name="@Marker2D@23692" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
-z_index = 1
-position = Vector2(-25, -45)
+[node name="Leg1Front" type="Marker2D" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
+position = Vector2(-17, -47)
+script = ExtResource("9_n3pud")
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="@Marker2D@23693" parent="LegPivots" unique_id=56921106 instance=ExtResource("7_d1hbp")]
-position = Vector2(10, -43)
+[node name="Leg1Back" type="Marker2D" parent="LegPivots" unique_id=997063249 instance=ExtResource("7_d1hbp")]
+z_index = -1
+position = Vector2(18, -45)
+script = ExtResource("9_n3pud")
+in_front = false
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
 [node name="WeaponPivots" type="Node2D" parent="." unique_id=1380579439]
 unique_name_in_owner = true
 
-[node name="@Marker2D@44155" type="Marker2D" parent="WeaponPivots" unique_id=79986025 instance=ExtResource("5_6frl3")]
+[node name="Cannon3" type="Marker2D" parent="WeaponPivots" unique_id=79986025 instance=ExtResource("5_6frl3")]
 z_index = 1
-position = Vector2(-20, -74)
-script = ExtResource("6_6frl3")
+position = Vector2(-16, -85)
+script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
-[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=1769303223 instance=ExtResource("7_v0cvm")]
+[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=22643755 instance=ExtResource("9_d1hbp")]
 z_index = -1
-position = Vector2(11, -69)
-script = ExtResource("6_6frl3")
+position = Vector2(25, -63)
+script = ExtResource("9_n3pud")
 in_front = false
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
+
+[node name="Cannon1" type="Marker2D" parent="WeaponPivots" unique_id=1226788629 instance=ExtResource("7_v0cvm")]
+z_index = 1
+position = Vector2(-16, -53)
+script = ExtResource("9_n3pud")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"

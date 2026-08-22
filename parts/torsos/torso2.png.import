@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxw78k80uot1i"
-path="res://.godot/imported/torso2.png-78e6101380f619f027008ea39afd3f2f.ctex"
+path="res://.godot/imported/torso2.png-ef08dde649ee047552cd0db634404a5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://torso2.png"
-dest_files=["res://.godot/imported/torso2.png-78e6101380f619f027008ea39afd3f2f.ctex"]
+source_file="res://parts/torsos/torso2.png"
+dest_files=["res://.godot/imported/torso2.png-ef08dde649ee047552cd0db634404a5a.ctex"]
 
 [params]
 

@@ -4,14 +4,14 @@ class_name Torso
 
 
 
-@export var weapon_count := 2:
+@export var weapon_count := 0:
 	set(value):
 		weapon_count = max(0, value)
 		
 		if not is_inside_tree():
 			return
 		
-		var pivot_count : int = %WeaponPivots.get_child_count()
+		var pivot_count : int = %WeaponTransforms.get_child_count()
 		if pivot_count == weapon_count:
 			return
 		
@@ -20,14 +20,16 @@ class_name Torso
 			var difference := weapon_count - pivot_count
 			for i in difference:
 				var remote_transform := RemoteTransform2D.new()
-				%WeaponPivots.add_child(remote_transform)
+				%WeaponTransforms.add_child(remote_transform)
 				remote_transform.owner = get_tree().edited_scene_root
 		
 		# cull excess remotetransforms
 		if pivot_count > weapon_count:
 			for i in pivot_count - weapon_count:
-				var remote_transform = %WeaponPivots.get_child(%WeaponPivots.get_child_count() - 1)
+				var remote_transform = %WeaponTransforms.get_child(%WeaponTransforms.get_child_count() - 1)
 				remote_transform.free()
+
+
 
 func hook_up_legs(leg_front : Pivot, leg_back : Pivot):
 	%LegTransformFront.remote_path = leg_front.get_path()
@@ -39,14 +41,14 @@ func set_weapon(pivot_index : int, weapon : Pivot):
 		push_warning("Tried to add weapon outside of weapon count.")
 		return
 	
-	var remote_transform : RemoteTransform2D = %WeaponPivots.get_child(pivot_index)
+	var remote_transform : RemoteTransform2D = %WeaponTransforms.get_child(pivot_index)
 	remote_transform.remote_path = weapon.get_path()
 	
 	weapon.in_front = pivot_index % 2 == 0
 
 
 func free_weapon(weapon_index : int):
-	var remote_transform : RemoteTransform2D = %WeaponPivots.get_child(weapon_index)
+	var remote_transform : RemoteTransform2D = %WeaponTransforms.get_child(weapon_index)
 	if remote_transform.remote_path.is_empty():
 		return
 	var weapon := get_node(remote_transform.remote_path)

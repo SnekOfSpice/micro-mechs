@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ntuh7267yt86"]
+
+[ext_resource type="Script" uid="uid://dm2eppebv8m75" path="res://parts/torsos/torso.gd" id="2_ldi0w"]
+
+[node name="Torso" type="Sprite2D" unique_id=1025553937]
+script = ExtResource("2_ldi0w")
+
+[node name="LegTransformFront" type="RemoteTransform2D" parent="." unique_id=770917501]
+unique_name_in_owner = true
+position = Vector2(-17, 17)
+remote_path = NodePath("../../LegPivotFront")
+
+[node name="LegTransformBack" type="RemoteTransform2D" parent="." unique_id=1968580162]
+unique_name_in_owner = true
+position = Vector2(18, 19)
+remote_path = NodePath("../../LegPivotBack")
+
+[node name="WeaponTransforms" type="Node2D" parent="." unique_id=148889375]
+unique_name_in_owner = true
