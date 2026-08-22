@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckepbild1bxog"
-path="res://.godot/imported/leg1_front.png-8cd14fbf114199a4be1579a85e789329.ctex"
+path="res://.godot/imported/leg1_front.png-5f68c888ab7c7f79336c1b296a8eab81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://leg1_front.png"
-dest_files=["res://.godot/imported/leg1_front.png-8cd14fbf114199a4be1579a85e789329.ctex"]
+source_file="res://parts/legs/leg1_front.png"
+dest_files=["res://.godot/imported/leg1_front.png-5f68c888ab7c7f79336c1b296a8eab81.ctex"]
 
 [params]
 

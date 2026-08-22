@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://fu04btt1qyc8"]
+
+[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="1_7hjv0"]
+
+[node name="Pivot" type="Marker2D" unique_id=394520869]
+script = ExtResource("1_7hjv0")

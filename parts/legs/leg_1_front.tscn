@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://otfocs0xc7ab"]
+
+[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="1_raav5"]
+[ext_resource type="Texture2D" uid="uid://ckepbild1bxog" path="res://parts/legs/leg1_front.png" id="2_6rsk6"]
+
+[node name="Leg1Front" type="Marker2D" unique_id=939276063]
+script = ExtResource("1_raav5")
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
+
+[node name="Leg1Front" type="Sprite2D" parent="." unique_id=844319122]
+position = Vector2(10, 16)
+texture = ExtResource("2_6rsk6")

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://crq12wrer5iln"]
+
+[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="1_bo3g6"]
+[ext_resource type="Texture2D" uid="uid://cjhtejhjqaog6" path="res://parts/weapons/cannon3.png" id="2_bo3g6"]
+
+[node name="Cannon3" type="Marker2D" unique_id=79986025]
+script = ExtResource("1_bo3g6")
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
+
+[node name="Cannon" type="Sprite2D" parent="." unique_id=2077230813]
+position = Vector2(9, -9)
+texture = ExtResource("2_bo3g6")

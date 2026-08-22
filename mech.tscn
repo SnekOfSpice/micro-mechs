@@ -1,59 +1,44 @@
 [gd_scene format=3 uid="uid://dfuldwx85p728"]
 
-[ext_resource type="Texture2D" uid="uid://ftb4dk4fotj0" path="res://torso.png" id="1_ijhdg"]
-[ext_resource type="Texture2D" uid="uid://cpeuw0bgsufiv" path="res://cannon2.png" id="2_qbvha"]
-[ext_resource type="Texture2D" uid="uid://cjhtejhjqaog6" path="res://cannon3.png" id="3_v0cvm"]
-[ext_resource type="Texture2D" uid="uid://ckepbild1bxog" path="res://leg1_front.png" id="4_6frl3"]
-[ext_resource type="Texture2D" uid="uid://im3wl2c4v41n" path="res://leg1_back.png" id="5_d1hbp"]
+[ext_resource type="Script" uid="uid://b8t2hbd1sq8oh" path="res://mech.gd" id="1_qbvha"]
+[ext_resource type="PackedScene" uid="uid://ntuh7267yt86" path="res://torso.tscn" id="2_v0cvm"]
+[ext_resource type="PackedScene" uid="uid://crq12wrer5iln" path="res://parts/weapons/cannon_3.tscn" id="5_6frl3"]
+[ext_resource type="PackedScene" uid="uid://otfocs0xc7ab" path="res://parts/legs/leg_1_front.tscn" id="5_v0cvm"]
+[ext_resource type="Script" uid="uid://bbc26alh5vcw3" path="res://pivot.gd" id="6_6frl3"]
+[ext_resource type="PackedScene" uid="uid://bl7fubfmbpoq7" path="res://parts/legs/leg_1_back.tscn" id="7_d1hbp"]
+[ext_resource type="PackedScene" uid="uid://caqch3847jtne" path="res://parts/weapons/cannon_2.tscn" id="7_v0cvm"]
 
 [node name="Mech" type="Node2D" unique_id=1584505707]
+script = ExtResource("1_qbvha")
+weapon_list = PackedStringArray("cannon_3", "cannon_2")
+leg_id = "leg_1"
 
-[node name="Torso" type="Sprite2D" parent="." unique_id=1578354071]
+[node name="Torso" parent="." unique_id=1025553937 instance=ExtResource("2_v0cvm")]
+unique_name_in_owner = true
 position = Vector2(-8, -62)
-texture = ExtResource("1_ijhdg")
 
-[node name="WeaponTransform1" type="RemoteTransform2D" parent="Torso" unique_id=512634636]
-position = Vector2(-14, 7)
-remote_path = NodePath("../../Marker2D")
+[node name="LegPivots" type="Node2D" parent="." unique_id=502255764]
+unique_name_in_owner = true
 
-[node name="WeaponTransform2" type="RemoteTransform2D" parent="Torso" unique_id=445005090]
-position = Vector2(22, 7)
-remote_path = NodePath("../../Marker2D2")
-
-[node name="LegTransformFront" type="RemoteTransform2D" parent="Torso" unique_id=1342557257]
-position = Vector2(-17, 17)
-remote_path = NodePath("../../LegPivotFront")
-
-[node name="LegTransformBack" type="RemoteTransform2D" parent="Torso" unique_id=1811639132]
-position = Vector2(18, 19)
-remote_path = NodePath("../../LegPivotBack")
-
-[node name="Marker2D" type="Marker2D" parent="." unique_id=1554207268]
-position = Vector2(-22, -55)
-
-[node name="Cannon2" type="Sprite2D" parent="Marker2D" unique_id=767942682]
-position = Vector2(15, 0)
-texture = ExtResource("2_qbvha")
-
-[node name="Marker2D2" type="Marker2D" parent="." unique_id=576091519]
-position = Vector2(14, -55)
-
-[node name="Cannon3" type="Sprite2D" parent="Marker2D2" unique_id=1736389617]
-z_index = -1
-position = Vector2(12, -10)
-texture = ExtResource("3_v0cvm")
-
-[node name="LegPivotFront" type="Marker2D" parent="." unique_id=699079765]
+[node name="@Marker2D@23692" parent="LegPivots" unique_id=939276063 instance=ExtResource("5_v0cvm")]
+z_index = 1
 position = Vector2(-25, -45)
 
-[node name="Leg1Front" type="Sprite2D" parent="LegPivotFront" unique_id=1194507119]
-position = Vector2(14, 20)
-texture = ExtResource("4_6frl3")
-
-[node name="LegPivotBack" type="Marker2D" parent="." unique_id=797334684]
-z_index = -1
+[node name="@Marker2D@23693" parent="LegPivots" unique_id=56921106 instance=ExtResource("7_d1hbp")]
 position = Vector2(10, -43)
 
-[node name="Leg1Back" type="Sprite2D" parent="LegPivotBack" unique_id=2105441531]
-position = Vector2(16, 19)
-texture = ExtResource("5_d1hbp")
+[node name="WeaponPivots" type="Node2D" parent="." unique_id=1380579439]
+unique_name_in_owner = true
+
+[node name="@Marker2D@44155" type="Marker2D" parent="WeaponPivots" unique_id=79986025 instance=ExtResource("5_6frl3")]
+z_index = 1
+position = Vector2(-20, -74)
+script = ExtResource("6_6frl3")
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
+
+[node name="Cannon2" type="Marker2D" parent="WeaponPivots" unique_id=1769303223 instance=ExtResource("7_v0cvm")]
+z_index = -1
+position = Vector2(11, -69)
+script = ExtResource("6_6frl3")
+in_front = false
+metadata/_custom_type_script = "uid://bbc26alh5vcw3"
