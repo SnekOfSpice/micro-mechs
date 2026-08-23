@@ -257,6 +257,10 @@ func is_in_spot(index : int) -> bool:
 	return abs(distance) < 0.001
 
 
+func get_distance_to_spot(spot : int) -> int:
+	return abs(get_spot() - spot)
+
+
 
 func is_in_range(r : Vector2i) -> bool:
 	var lower := mini(r.x, r.y)
@@ -276,22 +280,28 @@ func is_overheated():
 	return combat_stats.heat > combat_stats.heat_max
 
 
-func can_use_weapon(weapon_config : WeaponConfig) -> bool:
+var weapon_configs_used_this_turn := []
+
+
+func can_use_weapon(weapon_config : WeaponConfig) -> Action.CanDoResult:
 	if not combat_stats:
-		return false
+		return Action.CanDoResult.NO_COMBAT_STATS_ERR
+	
+	if weapon_config in weapon_configs_used_this_turn:
+		return Action.CanDoResult.USED_THIS_TURN
 	
 	if weapon_config.bullet_consumption > combat_stats.bullets:
-		return false
+		return Action.CanDoResult.OUT_OF_BULLETS
 	
 	if weapon_config.rocket_consumption > combat_stats.rockets:
-		return false
+		return Action.CanDoResult.OUT_OF_ROCKETS
 	
 	if weapon_config.energy_consumption_self > combat_stats.energy:
-		return false
+		return Action.CanDoResult.OUT_OF_ENERGY
 	
 	if weapon_config.uses > -1:
-		if weapon_config.uses == 0:
-			return false
+		if weapon_config.uses_left == 0:
+			return Action.CanDoResult.OUT_OF_USES
 	
 	var adjusted_range : Vector2i = Vector2i(get_spot(), get_spot())
 	if flipped:
@@ -301,7 +311,11 @@ func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 	#weapon_config.weapon_range
 	#adjusted_range.x += get_spot()
 	#adjusted_range.y += get_spot()
-	return Global.get_other_mech(self).is_in_range(adjusted_range)
+	var in_range : bool = Global.get_other_mech(self).is_in_range(adjusted_range)
+	if in_range:
+		return Action.CanDoResult.CAN_DO
+	else:
+		return Action.CanDoResult.OUT_OF_RANGE
 	
 
 
@@ -377,6 +391,7 @@ func get_weapon_config(weapon_index : int) -> WeaponConfig:
 func do_attack(target : Mech, weapon_index : int):
 	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
 	var weapon_config : WeaponConfig = weapon.config
+	weapon_configs_used_this_turn.append(weapon_config)
 	
 	combat_stats.bullets -= weapon_config.bullet_consumption
 	combat_stats.rockets -= weapon_config.rocket_consumption

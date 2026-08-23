@@ -8,6 +8,11 @@ var command_queue : Array[Command] = []
 var awaiting_execution : bool = false
 
 
+func clear():
+	command_queue.clear()
+	awaiting_execution = false
+
+
 func add_command(command : Command) -> void:
 	command_queue.append(command)
 	execute_next_command()

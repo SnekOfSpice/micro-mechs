@@ -30,7 +30,13 @@ func _rebuild():
 	elif action is ActionStomp:
 		text = "stomp"
 	
-	disabled = not action.can_do()
+	var can_do : Action.CanDoResult = action.can_do()
+	if can_do == Action.CanDoResult.CAN_DO:
+		disabled = false
+		$Label.text = ""
+	else:
+		$Label.text = Action.CanDoResult.keys()[can_do]
+		disabled = true 
 
 
 

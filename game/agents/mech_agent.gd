@@ -2,11 +2,16 @@ extends Node
 class_name MechAgent
 
 
+var agent_config : AgentConfig
+
+
 func _ready() -> void:
 	if get_parent() is Mech:
 		get_parent().agent = self
 	
 	CommandHandler.command_executed.connect(on_command_executed)
+	
+	agent_config = AgentConfig.get_randomized()
 
 
 func on_command_executed(_command):
@@ -23,23 +28,27 @@ func act():
 	_pick_next_action()
 
 func _pick_next_action():
-	var mech : Mech= Global.active_mech
+	var mech : Mech = Global.active_mech
 	var action_list := mech.get_action_list()
-	
-	action_list.shuffle()
+	var viable_actions : Array[Action] = []
+	#action_list.shuffle()
 	
 	var action_index := 0
 	var action : Action
 	while action_index < action_list.size():
 		action = action_list[action_index]
-		var can_do_action : bool = action.can_do()
+		var can_do_action : bool = action.can_do() == Action.CanDoResult.CAN_DO
 		if can_do_action:
-			break
+			viable_actions.append(action)
 		action_index += 1
 	
 	if not action:
 		push_warning("couldnt find doable action")
 		return
 	
-	action.do()
+	agent_config.pick_next_action(
+		viable_actions,
+		mech,
+		Global.get_other_mech(mech)
+	).do()
 	

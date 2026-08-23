@@ -8,5 +8,6 @@ tech_id = "shotgun"
 damage = Vector2i(2, 3)
 projectiles = 8
 uses = 2
+bullet_consumption = 10
 knockback = 1
 metadata/_custom_type_script = "uid://d4g0xn01kf10"

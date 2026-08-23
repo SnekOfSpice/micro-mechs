@@ -96,4 +96,5 @@ func begin_turn():
 
 
 func _on_main_menu_button_pressed() -> void:
+	CommandHandler.clear()
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")

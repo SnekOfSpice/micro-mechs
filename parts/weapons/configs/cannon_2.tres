@@ -6,7 +6,7 @@
 resource_local_to_scene = true
 script = ExtResource("1_iwvya")
 tech_id = "cannon_2"
-damage = Vector2i(13, 13)
+damage = Vector2i(8, 8)
 weapon_range = Vector2i(2, 4)
 uses = 2
 damage_type = 1

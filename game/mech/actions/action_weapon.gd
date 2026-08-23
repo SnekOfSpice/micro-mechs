@@ -10,7 +10,7 @@ func do():
 	Global.battle_stage.command_do_attack(owner, weapon_index)
 
 
-func can_do() -> bool:
+func can_do() -> CanDoResult:
 	if owner.is_overheated():
-		return false
+		return CanDoResult.OVERHEATED
 	return owner.can_use_weapon(config)
