@@ -12,7 +12,7 @@ func do():
 
 func can_do() -> bool:
 	if owner.is_overheated():
-		return abs(distance) <= 1
+		return false #abs(distance) <= 1
 	var other : Mech = Global.get_other_mech(owner)
 	var query_distance := owner.get_spot() + distance
 	var in_spot := other.is_in_spot(query_distance)

@@ -29,11 +29,13 @@ func display_combat_stats(combat_stats : CombatStats):
 		"bullets",
 	]:
 		var node : Control = find_child(thing.capitalize())
-		node.max_value = combat_stats.get("%s_max" % thing)
-		node.value = combat_stats.get(thing)
+		var max_value = combat_stats.get("%s_max" % thing)
+		var value = combat_stats.get(thing)
+		node.max_value = max_value
+		node.value = value
 		
 		var label : Label = node.get_child(0)
-		label.text = "%s / %s" % [node.value, node.max_value]
+		label.text = "%s / %s" % [value, max_value]
 	
 	
 

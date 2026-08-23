@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_kdra2")
+health_max = 30
 rockets_max = 16
 heat_max = 12
 energy_max = 8

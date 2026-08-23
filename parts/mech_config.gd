@@ -43,6 +43,7 @@ static func get_randomized() -> MechConfig:
 		"cannon_1",
 		"cannon_2",
 		"cannon_3",
+		"flamethrower",
 	]
 	for count in weapon_count:
 		config.weapon_list.append(weapons.pick_random())

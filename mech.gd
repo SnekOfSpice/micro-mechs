@@ -391,11 +391,12 @@ func handle_attacked(with : WeaponConfig):
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
 	combat_stats.energy -= with.energy_consumption_target
-	combat_stats.heat -= with.heat_generation_target
+	combat_stats.heat += with.heat_generation_target
 	
-	var knockback_direction : int = 1 if flipped else -1
-	var target := get_spot() + with.knockback * knockback_direction
-	move(Vector2(target * WIDTH, position.y), 0.2)
+	if with.knockback > 0:
+		var knockback_direction : int = 1 if flipped else -1
+		var target := get_spot() + with.knockback * knockback_direction
+		move(Vector2(target * WIDTH, position.y), 0.2)
 
 
 func _on_combat_stats_changed():
@@ -419,3 +420,9 @@ func generate_energy():
 	
 	
 	
+func get_projectile_point():
+	var base := _torso.global_position
+	return base + Vector2(
+		randf_range(-2, 2),
+		randf_range(-2, 2),
+	)

@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_auftt")
 tech_id = "cannon_3"
+damage = Vector2i(12, 15)
 weapon_range = Vector2i(3, 5)
 damage_type = 2
 rocket_consumption = 6

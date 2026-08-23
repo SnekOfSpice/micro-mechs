@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponConfig" format=3 uid="uid://b348d3huuxd1u"]
+
+[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="1_nokyf"]
+
+[resource]
+script = ExtResource("1_nokyf")
+tech_id = "flamethrower"
+damage = Vector2i(2, 4)
+weapon_range = Vector2i(1, 1)
+damage_type = 2
+energy_consumption_self = 3
+heat_generation_self = 5
+heat_generation_target = 12

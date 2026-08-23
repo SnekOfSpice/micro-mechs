@@ -13,7 +13,7 @@ func _ready() -> void:
 
 
 func attack_animation(attack_target : Mech) -> float:
-	var target_position := attack_target.global_position
+	var target_position : Vector2 = attack_target.get_projectile_point()
 	
 	var sprite : Sprite2D = get_child(0)
 	var factor := -1 if sprite.flip_h else 1
