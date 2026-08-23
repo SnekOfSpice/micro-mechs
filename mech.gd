@@ -268,6 +268,10 @@ func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 	if weapon_config.energy_consumption_self > combat_stats.energy:
 		return false
 	
+	if weapon_config.uses > -1:
+		if weapon_config.uses == 0:
+			return false
+	
 	var adjusted_range : Vector2 = weapon_config.weapon_range
 	adjusted_range.x += get_spot()
 	adjusted_range.y += get_spot()
@@ -340,6 +344,9 @@ func do_attack(target : Mech, weapon_index : int):
 	combat_stats.rockets -= weapon_config.rocket_consumption
 	combat_stats.energy -= weapon_config.energy_consumption_self
 	combat_stats.heat += weapon_config.heat_generation_self
+	
+	if weapon_config.uses > -1:
+		weapon_config.uses = max(0, weapon_config.uses - 1)
 	
 	var duration := weapon.attack_animation(Global.get_other_mech(self))
 	await get_tree().create_timer(duration).timeout

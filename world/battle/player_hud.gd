@@ -6,6 +6,7 @@ class_name PlayerHUD
 func _ready() -> void:
 	Global.hud = self
 	EventBus.phase_changed.connect(_on_phase_changed)
+	%TurnLabel.hide()
 	#EventBus.combat_stats_changed.connect(_on_combat_stats_changed)
 
 
@@ -67,3 +68,17 @@ func hide_weapon_visualizer():
 		visualizer_tween.kill()
 	%AttackInfoDisplay.position.x = - %AttackInfoDisplay.size.x
 	%DefenderInfoDisplay.position.x = size.x +  %DefenderInfoDisplay.size.x
+
+
+func begin_turn():
+	var is_player_turn : bool = Global.active_mech == Global.player_mech
+	if is_player_turn:
+		%TurnLabel.text = "PLAYER TURN"
+	else:
+		%TurnLabel.text = "ENEMY TURN"
+	
+	%TurnLabel.position.y = -50
+	%TurnLabel.show()
+	var t := create_tween()
+	t.tween_property(%TurnLabel, "position:y", size.y * 0.33, 2.0)
+	t.finished.connect(%TurnLabel.hide)

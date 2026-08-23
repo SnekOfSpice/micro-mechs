@@ -5,7 +5,10 @@
 [resource]
 script = ExtResource("1_iwvya")
 tech_id = "cannon_2"
+damage = Vector2i(13, 13)
 weapon_range = Vector2i(2, 4)
-energy_consumption_self = 2
+uses = 2
+damage_type = 1
+energy_consumption_self = 4
 knockback = 1
 metadata/_custom_type_script = "uid://d4g0xn01kf10"

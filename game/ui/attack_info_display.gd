@@ -14,7 +14,8 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 	
 	if perspective == Perspective.ATTACKER:
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_attacker.tres"))
-		weapon_config.uses
+		%UsesLabel.visible = weapon_config.uses != -1
+		%UsesLabel.text = str("Uses left: ", weapon_config.uses)
 		var energy := weapon_config.energy_consumption_self
 		%EnergyContainer.visible = energy > 0
 		%EnergyLabel.text = str(energy)
@@ -32,7 +33,10 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 	elif perspective == Perspective.DEFENDER:
 		%DamageContainer.visible = weapon_config.damage.x > 0 or weapon_config.damage.y > 0
 		%DamageTypeIcon.texture = load("res://icon_%s.png" % WeaponConfig.DamageType.keys()[weapon_config.damage_type].to_lower())
-		%DamageRangeLabel.text = "%s - %s" % [weapon_config.weapon_range.x, weapon_config.weapon_range.y]
+		if weapon_config.damage.x != weapon_config.damage.y:
+			%DamageRangeLabel.text = "%s - %s" % [weapon_config.damage.x, weapon_config.damage.y]
+		else:
+			%DamageRangeLabel.text = "%s" % weapon_config.damage.x
 		
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_defender.tres"))
 		

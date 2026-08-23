@@ -61,3 +61,13 @@ offset_top = 196.0
 offset_right = 992.0
 offset_bottom = 341.0
 grow_horizontal = 1
+
+[node name="TurnLabel" type="Label" parent="." unique_id=387689936]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -78.0
+offset_bottom = -55.0
+grow_horizontal = 2
+horizontal_alignment = 1

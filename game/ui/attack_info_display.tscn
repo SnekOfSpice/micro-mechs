@@ -94,3 +94,7 @@ texture = ExtResource("7_b16mp")
 [node name="KnockbackLabel" type="Label" parent="Containers/KnockbackContainer" unique_id=1240148288]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="UsesLabel" type="Label" parent="Containers" unique_id=145038181]
+unique_name_in_owner = true
+layout_mode = 2

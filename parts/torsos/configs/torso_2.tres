@@ -6,4 +6,5 @@
 script = ExtResource("1_opt74")
 health_max = 120
 bullets_max = 40
+energy_generation = 5
 metadata/_custom_type_script = "uid://dyvy5uipvdaox"

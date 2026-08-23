@@ -7,6 +7,7 @@ var first_turn := true
 
 func enter_state() -> void:
 	Global.active_mech.generate_energy()
+	Global.hud.begin_turn()
 	
 	super()
 	pass
