@@ -7,8 +7,7 @@ var weapon_index : int
 
 
 func do():
-	super()
-	Global.battle_stage.do_attack(owner, weapon_index)
+	Global.battle_stage.command_do_attack(owner, weapon_index)
 
 
 func can_do() -> bool:

@@ -3,7 +3,6 @@ class_name ActionCoolDown
 
 
 func do():
-	super()
 	owner.command_cool_down()
 
 

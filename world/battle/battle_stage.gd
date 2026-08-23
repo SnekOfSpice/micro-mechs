@@ -4,9 +4,11 @@ class_name BattleStage
 
 var mech1 : Mech
 var mech2 : Mech
+var commands_this_turn := []
 
 
 func _ready() -> void:
+	CommandHandler.command_executed.connect(_on_command_executed)
 	var config := ResourceLoader.load("user://mech_config.tres")
 	mech1 = Mech.make(config)
 	%BattleLine.add_child(mech1)
@@ -23,7 +25,7 @@ func _ready() -> void:
 	mech2.add_child(agent)
 	
 	mech1.position.x = 0
-	mech2.position.x = 13 * Mech.WIDTH
+	mech2.position.x = 7 * Mech.WIDTH
 	
 	Global.player_mech = mech1
 	Global.npc_mech = mech2
@@ -93,6 +95,21 @@ func _update_flips():
 func do_attack(attacking_mech : Mech, weapon_index : int):
 	print("pew pew")
 
+func command_do_attack(attacking_mech : Mech, weapon_index : int):
+	var c := CommandDoAttack.new()
+	c.attacker = attacking_mech
+	c.target = Global.get_other_mech(attacking_mech)
+	c.weapon_index = weapon_index
+	CommandHandler.add_command(c)
+
 
 func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")
+
+
+func _on_command_executed(command : Command):
+	commands_this_turn.append(command)
+	print(commands_this_turn)
+	if commands_this_turn.size() >= Global.active_mech.combat_stats.actions_left:
+		PhaseManager.advance_phase()
+	EventBus.commands_this_turn_changed.emit()

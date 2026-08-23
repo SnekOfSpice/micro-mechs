@@ -274,15 +274,17 @@ func too_much_dead_space() -> bool:
 	return true
 
 
-func decrement_actions():
-	var prev := combat_stats.actions_left
-	combat_stats.actions_left -= 1
-	if combat_stats.actions_left <= 0 and prev > 0:
-		PhaseManager.advance_phase()
+#func decrement_actions():
+	#var prev := combat_stats.actions_left
+	#combat_stats.actions_left -= 1
+	#if combat_stats.actions_left <= 0 and prev > 0:
+		#PhaseManager.advance_phase()
 
 func refill_actions(amount := 2):
 	combat_stats.actions_left = amount
 
+
+var agent : MechAgent
 
 
 func cool_down():
@@ -306,3 +308,9 @@ func command_move(distance : int):
 	c.targets = [self]
 	c.target_position = Vector2(target_position, position.y)
 	CommandHandler.add_command(c)
+
+
+func do_attack(target : Mech, weapon_index : int):
+	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
+	await weapon.attack_animation().finished
+	

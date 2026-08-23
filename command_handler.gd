@@ -1,9 +1,9 @@
 extends Node
 
 signal commands_changed()
+signal command_executed(command : Command)
 
 var command_queue : Array[Command] = []
-var undo_queue : Array[Command] = []
 var awaiting_execution : bool = false
 
 
@@ -20,24 +20,12 @@ func execute_next_command() -> void:
 		
 	awaiting_execution = true
 		
-	var command : Command = command_queue.front()
+	var command : Command = command_queue.pop_front()
+	await get_tree().create_timer(0.5).timeout
 	
 	@warning_ignore("redundant_await")
 	await command.execute()
-	undo_queue.push_front(command_queue.pop_front())
 	awaiting_execution = false
 	execute_next_command()
-
-func undo_last_command() -> void:
-	if awaiting_execution or undo_queue.is_empty():
-		return
 	
-	awaiting_execution = true
-	var command : Command = undo_queue.pop_front()
-	
-	commands_changed.emit()
-	
-	@warning_ignore("redundant_await")
-	await command.undo()
-	awaiting_execution = false
-	execute_next_command()
+	command_executed.emit(command)

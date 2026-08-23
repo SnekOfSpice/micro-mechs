@@ -4,7 +4,9 @@ class_name PhasePassToOther
 
 func enter_state() -> void:
 	print("pass to other")
+	Global.battle_stage.commands_this_turn.clear()
 	Global.active_mech = Global.get_other_mech(Global.active_mech)
+	Global.active_mech.refill_actions()
 	super()
 	pass
 

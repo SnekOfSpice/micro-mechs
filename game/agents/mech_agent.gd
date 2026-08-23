@@ -3,29 +3,40 @@ class_name MechAgent
 
 
 func _ready() -> void:
-	EventBus.phase_changed.connect(_on_phase_changed)
+	if get_parent() is Mech:
+		get_parent().agent = self
 
 
-
-func _on_phase_changed(phase : Phase):
-	if Global.active_mech == Global.npc_mech and phase is PhaseAct:
-		var mech : Mech= Global.active_mech
-		print("AGENT DOES")
-		while mech.combat_stats.actions_left > 0:
-			var action_list := mech.get_action_list()
-			
-			var action : Action = action_list.pick_random()
+func act():
+	var mech : Mech= Global.active_mech
+	#print("AGENT DOES")
+	var actions : int = mech.combat_stats.actions_left
+	var actions_to_do := []
+	for i in actions:
+		var action_list := mech.get_action_list()
+		
+		action_list.shuffle()
+		
+		var action_index := 0
+		var action : Action
+		while action_index < action_list.size():
+			action = action_list[action_index]
 			var can_do_action : bool = action.can_do()
-			while not can_do_action:
-				action = action_list.pick_random()
-				can_do_action = action.can_do()
-			
-			if action is ActionMove:
-				print("AGENT MOVES")
-			if action is ActionCoolDown:
-				print("AGENT COOLS DOWN")
-			if action is ActionWeapon:
-				print("AGENT SHOOTS")
-			
-			action.do()
-			await get_tree().process_frame
+			if can_do_action:
+				break
+			action_index += 1
+		
+		if not action:
+			push_warning("couldnt find doable action")
+			break
+		
+		if action is ActionMove:
+			print("AGENT MOVES")
+		if action is ActionCoolDown:
+			print("AGENT COOLS DOWN")
+		if action is ActionWeapon:
+			print("AGENT SHOOTS")
+		actions_to_do.append(action)
+		
+	for action in actions_to_do:
+		action.do()

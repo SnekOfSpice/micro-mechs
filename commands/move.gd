@@ -4,7 +4,7 @@ class_name CommandMove
 
 var target_position : Vector2
 var initial_position : Vector2
-var speed := 10.0
+var speed := 1.0
 
 func _init() -> void:
 	command_name = "move"
