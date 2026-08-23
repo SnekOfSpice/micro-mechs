@@ -36,8 +36,7 @@ func _update_weapons_selection():
 	for child in %WeaponsSelection.get_children():
 		child.queue_free()
 	
-	var weapons := ["cannon_1", "cannon_2", "cannon_3", "flamethrower"]
-	var weapons_selected : PackedStringArray = $Mech.config.weapon_list
+	var weapons := Global.get_weapon_configs()
 	
 	var weapon_count : int = $Mech.weapon_capacity
 	for i in weapon_count:

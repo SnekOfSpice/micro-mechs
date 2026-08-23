@@ -31,3 +31,10 @@ func get_uses_string(current, maximum) -> String:
 	for i in difference:
 		uses_string += "[img]res://parts/weapons/use_off.png[/img]"
 	return uses_string
+
+
+func get_weapon_configs() -> Array:
+	var result := []
+	for file in DirAccess.get_files_at("res://parts/weapons/configs/"):
+		result.append(file.trim_suffix(".tres"))
+	return result

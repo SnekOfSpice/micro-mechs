@@ -41,7 +41,10 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 	elif perspective == Perspective.DEFENDER:
 		%DamageContainer.visible = weapon_config.damage.x > 0 or weapon_config.damage.y > 0
 		%DamageTypeIcon.texture = load("res://icon_%s.png" % WeaponConfig.DamageType.keys()[weapon_config.damage_type].to_lower())
-		%DamageRangeLabel.text = Global.vec2_to_range_string(weapon_config.damage)
+		%DamageRangeLabel.text = ""
+		if weapon_config.projectiles > 1:
+			%DamageRangeLabel.text = "%s x " % weapon_config.projectiles
+		%DamageRangeLabel.text += Global.vec2_to_range_string(weapon_config.damage)
 		
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_defender.tres"))
 		

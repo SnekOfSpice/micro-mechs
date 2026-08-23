@@ -389,9 +389,17 @@ func do_attack(target : Mech, weapon_index : int):
 	var duration := weapon.attack_animation(Global.get_other_mech(self))
 	await get_tree().create_timer(duration).timeout
 
-func handle_attacked(with : WeaponConfig):
+
+# usedful for multi projectile
+var timestamps := []
+func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec()):
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
+	
+	if timestamp in timestamps:
+		return
+	
+	timestamps.append(timestamp)
 	combat_stats.energy -= with.energy_consumption_target
 	combat_stats.heat += with.heat_generation_target
 	

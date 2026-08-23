@@ -39,12 +39,7 @@ static func get_randomized() -> MechConfig:
 	var quick_torso : Torso = load("res://parts/torsos/%s.tscn" % config.torso_id).instantiate()
 	var weapon_count : int = quick_torso.weapon_count
 	quick_torso.queue_free()
-	var weapons := [
-		"cannon_1",
-		"cannon_2",
-		"cannon_3",
-		"flamethrower",
-	]
+	var weapons : Array = Global.get_weapon_configs()
 	for count in weapon_count:
 		config.weapon_list.append(weapons.pick_random())
 	return config
