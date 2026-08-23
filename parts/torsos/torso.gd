@@ -73,4 +73,8 @@ func set_flipped(flipped : bool):
 	
 	%LegTransformBack.position.x = -%LegTransformBack.position.x
 	%LegTransformFront.position.x = -%LegTransformFront.position.x
-	
+
+
+func anim(anim_name : StringName) -> float:
+	$AnimationPlayer.play(anim_name)
+	return $AnimationPlayer.get_animation(anim_name).get_length()

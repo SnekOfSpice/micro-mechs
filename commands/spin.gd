@@ -7,7 +7,6 @@ func _init() -> void:#() -> void:
 	command_name = "spin"
 
 
-
 func execute() -> bool:
 	for target in targets:
 		await target.rotate_animation(360).finished

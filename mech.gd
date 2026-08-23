@@ -222,15 +222,6 @@ func get_action_list() -> Array[Action]:
 	return result
 
 
-func cool_down():
-	print("TODO REDUCE HEAT")
-
-
-func move(distance : int):
-	var target_position := position.x + distance * WIDTH
-	
-	var t := create_tween()
-	t.tween_property(self, "position:x", target_position, distance * 0.1)
 
 
 
@@ -291,3 +282,27 @@ func decrement_actions():
 
 func refill_actions(amount := 2):
 	combat_stats.actions_left = amount
+
+
+
+func cool_down():
+	var dur : float = _torso.anim("cool_down")
+	await get_tree().create_timer(dur).timeout
+
+
+func move(target_position : Vector2, duration : float):
+	var t := create_tween()
+	t.tween_property(self, "position", target_position, duration)
+	await t.finished
+
+func command_cool_down():
+	var c = CommandCoolDown.new()
+	c.targets = [self]
+	CommandHandler.add_command(c)
+
+func command_move(distance : int):
+	var target_position := position.x + distance * WIDTH
+	var c = CommandMove.new()
+	c.targets = [self]
+	c.target_position = Vector2(target_position, position.y)
+	CommandHandler.add_command(c)

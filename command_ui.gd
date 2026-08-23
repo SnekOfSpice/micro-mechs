@@ -7,13 +7,12 @@ var player : Player
 
 
 signal spin()
-signal spin_all()
 signal move()
 
-func _ready() -> void:
+func _init(p_player : Player) -> void:
+	player = p_player
 	player = get_parent()
 	spin.connect(player.command_spin)
-	spin_all.connect(player.command_spin_all)
 	move.connect(player.command_move)
 	%SpinButton.text = "spin %s" % player.name
 
@@ -41,10 +40,6 @@ func create_label ( command : Command) -> Label:
 
 func _on_spin_button_pressed() -> void:
 	spin.emit()
-
-
-func _on_spin_both_button_pressed() -> void:
-	spin_all.emit()
 
 
 func _on_control_gui_input(event: InputEvent) -> void:

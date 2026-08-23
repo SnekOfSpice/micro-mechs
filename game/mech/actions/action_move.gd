@@ -9,7 +9,7 @@ var distance : int
 func do():
 	super()
 	# TODO fancier: if distance in config is > 1, get a selection for how far to go
-	owner.move(distance)
+	owner.command_move(distance)
 
 func can_do() -> bool:
 	var other : Mech = Global.get_other_mech(owner)

@@ -7,17 +7,9 @@ var undo_queue : Array[Command] = []
 var awaiting_execution : bool = false
 
 
-
-var world : World
-
-
-# this local handling is fine for a demo but should be put into global scope for larger projects
-
 func add_command(command : Command) -> void:
 	command_queue.append(command)
-	
 	execute_next_command()
-
 
 
 func execute_next_command() -> void:
@@ -30,6 +22,7 @@ func execute_next_command() -> void:
 		
 	var command : Command = command_queue.front()
 	
+	@warning_ignore("redundant_await")
 	await command.execute()
 	undo_queue.push_front(command_queue.pop_front())
 	awaiting_execution = false
@@ -44,6 +37,7 @@ func undo_last_command() -> void:
 	
 	commands_changed.emit()
 	
+	@warning_ignore("redundant_await")
 	await command.undo()
 	awaiting_execution = false
 	execute_next_command()

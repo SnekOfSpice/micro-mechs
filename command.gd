@@ -18,4 +18,3 @@ var targets := []
 # use return false for instant execution
 
 @abstract func execute() -> bool
-@abstract func undo() -> bool
