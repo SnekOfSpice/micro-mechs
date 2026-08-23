@@ -20,3 +20,4 @@ enum DamageType {
 @export var heat_generation_target := 0
 @export var bullet_consumption := 0
 @export var rocket_consumption := 0
+@export var knockback := 0

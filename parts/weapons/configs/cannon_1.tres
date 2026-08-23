@@ -6,3 +6,5 @@
 script = ExtResource("1_xpb2m")
 tech_id = "cannon_1"
 weapon_range = Vector2i(1, 3)
+energy_consumption_self = 1
+heat_generation_self = 1

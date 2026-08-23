@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://wo6rrdj6b0k2"]
+
+[ext_resource type="StyleBox" uid="uid://b28yw7v5cu8m8" path="res://game/ui/attack_style_box_defender.tres" id="1_m6bjk"]
+[ext_resource type="Script" uid="uid://wo55rih3n24s" path="res://game/ui/attack_info_display.gd" id="2_paojt"]
+
+[node name="AttackInfoDisplay" type="PanelContainer" unique_id=1416408057]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -9.5
+offset_right = 9.5
+offset_bottom = 145.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_m6bjk")
+script = ExtResource("2_paojt")
+
+[node name="Containers" type="VBoxContainer" parent="." unique_id=1367530059]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DamageContainer" type="HBoxContainer" parent="Containers" unique_id=821012466]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DamageTypeIcon" type="TextureRect" parent="Containers/DamageContainer" unique_id=1778349488]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DamageRangeLabel" type="Label" parent="Containers/DamageContainer" unique_id=706252419]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnergyContainer" type="HBoxContainer" parent="Containers" unique_id=2132197846]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnergyIcon" type="TextureRect" parent="Containers/EnergyContainer" unique_id=1374256885]
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="Containers/EnergyContainer" unique_id=266706774]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HeatContainer" type="HBoxContainer" parent="Containers" unique_id=2060591404]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HeatIcon" type="TextureRect" parent="Containers/HeatContainer" unique_id=962417751]
+layout_mode = 2
+
+[node name="HeatLabel" type="Label" parent="Containers/HeatContainer" unique_id=1936169999]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BulletsContainer" type="HBoxContainer" parent="Containers" unique_id=1620228966]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BulletsIcon" type="TextureRect" parent="Containers/BulletsContainer" unique_id=1139579265]
+layout_mode = 2
+
+[node name="BulletsLabel" type="Label" parent="Containers/BulletsContainer" unique_id=214973748]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RocketsContainer" type="HBoxContainer" parent="Containers" unique_id=187513878]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RocketsIcon" type="TextureRect" parent="Containers/RocketsContainer" unique_id=1355675198]
+layout_mode = 2
+
+[node name="RocketsLabel" type="Label" parent="Containers/RocketsContainer" unique_id=109001613]
+unique_name_in_owner = true
+layout_mode = 2

@@ -53,6 +53,8 @@ func _on_mouse_entered() -> void:
 				mech_spot + weapon_range.y,
 			)
 		)
+		Global.hud.visualize_weapon(action.config, action.owner)
 
 func _on_mouse_exited() -> void:
 	Global.battle_stage.hide_range()
+	Global.hud.hide_weapon_visualizer()

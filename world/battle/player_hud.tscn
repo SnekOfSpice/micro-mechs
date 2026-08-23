@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ch0jbyygyi7ix" path="res://world/battle/player_hud.gd" id="1_g2sh0"]
 [ext_resource type="PackedScene" uid="uid://kyqyl0rq54ol" path="res://world/battle/mech_status_container.tscn" id="2_6y46n"]
+[ext_resource type="PackedScene" uid="uid://wo6rrdj6b0k2" path="res://game/ui/attack_info_display.tscn" id="3_oe0lj"]
 
 [node name="PlayerHUD" type="Control" unique_id=1663708321]
 layout_mode = 3
@@ -36,3 +37,27 @@ offset_left = -260.0
 offset_right = 0.0
 offset_bottom = 83.0
 grow_horizontal = 0
+
+[node name="AttackInfoDisplay" parent="." unique_id=1416408057 instance=ExtResource("3_oe0lj")]
+unique_name_in_owner = true
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = -216.0
+offset_top = 196.0
+offset_right = -197.0
+offset_bottom = 341.0
+grow_horizontal = 1
+
+[node name="DefenderInfoDisplay" parent="." unique_id=390858742 instance=ExtResource("3_oe0lj")]
+unique_name_in_owner = true
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 973.0
+offset_top = 196.0
+offset_right = 992.0
+offset_bottom = 341.0
+grow_horizontal = 1
