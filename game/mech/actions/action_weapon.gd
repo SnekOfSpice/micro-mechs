@@ -11,4 +11,6 @@ func do():
 
 
 func can_do() -> bool:
+	if owner.is_overheated():
+		return false
 	return owner.can_use_weapon(config)

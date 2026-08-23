@@ -6,7 +6,7 @@ var first_turn := true
 
 
 func enter_state() -> void:
-	print("generate energy")
+	Global.active_mech.generate_energy()
 	
 	super()
 	pass

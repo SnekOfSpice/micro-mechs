@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://r1htg1ve0qr3" path="res://world/battle/mech_status_container.gd" id="1_nocc1"]
 [ext_resource type="Texture2D" uid="uid://ucyrjc0dswq7" path="res://Illustration11.png" id="2_fbbku"]
+[ext_resource type="Texture2D" uid="uid://chfpyr66kjfyw" path="res://icon_heat.png" id="2_hglqk"]
+[ext_resource type="Texture2D" uid="uid://deh8jkfhnmuj7" path="res://icon_energy.png" id="4_nwnot"]
+[ext_resource type="Texture2D" uid="uid://bqulqkbu7r50w" path="res://icon_rockets.png" id="5_xruic"]
+[ext_resource type="Texture2D" uid="uid://dja4a4r5ptn00" path="res://icon_bullets.png" id="6_tntiw"]
 
 [node name="MechStatusContainer" type="PanelContainer" unique_id=1072919913]
 offset_right = 40.0
@@ -13,12 +17,28 @@ layout_mode = 2
 
 [node name="Health" type="ProgressBar" parent="VBoxContainer" unique_id=1534464393]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/Health" unique_id=1470085706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Health"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer" unique_id=1290199101]
 layout_mode = 2
-columns = 2
+columns = 4
+
+[node name="HeatIcon" type="TextureRect" parent="VBoxContainer/GridContainer" unique_id=774276635]
+layout_mode = 2
+texture = ExtResource("2_hglqk")
 
 [node name="Heat" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1267258419]
 unique_name_in_owner = true
@@ -39,6 +59,10 @@ text = "Heat"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="EnergyIcon" type="TextureRect" parent="VBoxContainer/GridContainer" unique_id=1325644014]
+layout_mode = 2
+texture = ExtResource("4_nwnot")
+
 [node name="Energy" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=1005740156]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
@@ -58,6 +82,10 @@ text = "Energy"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="RocketsIcon" type="TextureRect" parent="VBoxContainer/GridContainer" unique_id=340602254]
+layout_mode = 2
+texture = ExtResource("5_xruic")
+
 [node name="Rockets" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=2099014465]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 0)
@@ -76,6 +104,10 @@ grow_vertical = 2
 text = "Rockets"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BulletsIcon" type="TextureRect" parent="VBoxContainer/GridContainer" unique_id=1685980019]
+layout_mode = 2
+texture = ExtResource("6_tntiw")
 
 [node name="Bullets" type="TextureProgressBar" parent="VBoxContainer/GridContainer" unique_id=56114837]
 unique_name_in_owner = true

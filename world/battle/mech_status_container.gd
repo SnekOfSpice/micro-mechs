@@ -25,9 +25,12 @@ func display_mech_state(mech : Mech):
 		"rockets",
 		"bullets",
 	]:
-		var node := find_child(thing.capitalize())
+		var node : Control = find_child(thing.capitalize())
 		node.max_value = mech.combat_stats.get("%s_max" % thing)
 		node.value = mech.combat_stats.get(thing)
+		
+		var label : Label = node.get_child(0)
+		label.text = "%s / %s" % [node.value, node.max_value]
 	
 	
 

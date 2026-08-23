@@ -11,3 +11,4 @@ class_name TorsoConfig
 @export var energy_max := 10
 @export var cooldown_active := 10
 @export var cooldown_passive := 1
+@export var energy_generation := 1

@@ -83,7 +83,7 @@ func initialize_combat_stats() -> CombatStats:
 		combat_stats.set(max_name, torso_value)
 	combat_stats.health += leg_config.health
 	combat_stats.health_max += leg_config.health
-	
+	combat_stats.heat = 0
 	EventBus.combat_stats_changed.emit(self)
 	combat_stats.changed.connect(EventBus.combat_stats_changed.emit.bind(self))
 	
@@ -251,6 +251,10 @@ func get_spot() -> int:
 	return int(position.x / float(WIDTH))
 
 
+func is_overheated():
+	return combat_stats.heat > combat_stats.heat_max
+
+
 func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 	if not combat_stats:
 		return false
@@ -300,6 +304,7 @@ var agent : MechAgent
 
 func cool_down():
 	var dur : float = _torso.anim("cool_down")
+	_reduce_heat_active()
 	await get_tree().create_timer(dur).timeout
 
 
@@ -355,3 +360,19 @@ func _on_combat_stats_changed():
 		return
 	if combat_stats.health <= 0:
 		print("DIe")
+
+
+func reduce_heat_passive():
+	combat_stats.heat -= _torso.config.cooldown_passive
+	combat_stats.heat = max(combat_stats.heat, 0)
+
+func _reduce_heat_active():
+	combat_stats.heat -= _torso.config.cooldown_active
+	combat_stats.heat = max(combat_stats.heat, 0)
+
+func generate_energy():
+	combat_stats.energy += _torso.config.energy_generation
+	combat_stats.energy = clamp(combat_stats.energy, 0, combat_stats.energy_max)
+	
+	
+	

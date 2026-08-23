@@ -3,7 +3,7 @@ class_name PhaseCleanup
 
 
 func enter_state() -> void:
-	print("reduce heat")
+	Global.active_mech.reduce_heat_passive()
 	super()
 	pass
 
