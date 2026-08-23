@@ -43,7 +43,9 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 		%HeatContainer.visible = heat > 0
 		%HeatLabel.text = str(heat)
 		
-		weapon_config.knockback
+		var knockback := weapon_config.knockback
+		%KnockbackContainer.visible = knockback > 0
+		%KnockbackLabel.text = str(knockback)
 	await RenderingServer.frame_post_draw
 	size = Vector2.ZERO
 	

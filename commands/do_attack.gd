@@ -9,4 +9,5 @@ var weapon_index : int
 
 func execute() -> bool:
 	await attacker.do_attack(target, weapon_index)
+	
 	return true

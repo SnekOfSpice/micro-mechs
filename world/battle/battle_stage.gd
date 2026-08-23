@@ -24,7 +24,7 @@ func _ready() -> void:
 	mech2.add_child(agent)
 	
 	mech1.position.x = 0
-	mech2.position.x = 7 * Mech.WIDTH
+	mech2.position.x = 3 * Mech.WIDTH
 	
 	Global.player_mech = mech1
 	Global.npc_mech = mech2

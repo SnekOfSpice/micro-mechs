@@ -2,6 +2,11 @@
 
 [ext_resource type="StyleBox" uid="uid://b28yw7v5cu8m8" path="res://game/ui/attack_style_box_defender.tres" id="1_m6bjk"]
 [ext_resource type="Script" uid="uid://wo55rih3n24s" path="res://game/ui/attack_info_display.gd" id="2_paojt"]
+[ext_resource type="Texture2D" uid="uid://deh8jkfhnmuj7" path="res://icon_energy.png" id="3_5meq6"]
+[ext_resource type="Texture2D" uid="uid://chfpyr66kjfyw" path="res://icon_heat.png" id="4_b16mp"]
+[ext_resource type="Texture2D" uid="uid://dja4a4r5ptn00" path="res://icon_bullets.png" id="5_ni1cg"]
+[ext_resource type="Texture2D" uid="uid://bqulqkbu7r50w" path="res://icon_rockets.png" id="6_xjg1m"]
+[ext_resource type="Texture2D" uid="uid://d000m4cvkugk4" path="res://icon_knockback.png" id="7_b16mp"]
 
 [node name="AttackInfoDisplay" type="PanelContainer" unique_id=1416408057]
 anchors_preset = 5
@@ -36,6 +41,7 @@ layout_mode = 2
 
 [node name="EnergyIcon" type="TextureRect" parent="Containers/EnergyContainer" unique_id=1374256885]
 layout_mode = 2
+texture = ExtResource("3_5meq6")
 
 [node name="EnergyLabel" type="Label" parent="Containers/EnergyContainer" unique_id=266706774]
 unique_name_in_owner = true
@@ -47,6 +53,7 @@ layout_mode = 2
 
 [node name="HeatIcon" type="TextureRect" parent="Containers/HeatContainer" unique_id=962417751]
 layout_mode = 2
+texture = ExtResource("4_b16mp")
 
 [node name="HeatLabel" type="Label" parent="Containers/HeatContainer" unique_id=1936169999]
 unique_name_in_owner = true
@@ -58,6 +65,7 @@ layout_mode = 2
 
 [node name="BulletsIcon" type="TextureRect" parent="Containers/BulletsContainer" unique_id=1139579265]
 layout_mode = 2
+texture = ExtResource("5_ni1cg")
 
 [node name="BulletsLabel" type="Label" parent="Containers/BulletsContainer" unique_id=214973748]
 unique_name_in_owner = true
@@ -69,7 +77,20 @@ layout_mode = 2
 
 [node name="RocketsIcon" type="TextureRect" parent="Containers/RocketsContainer" unique_id=1355675198]
 layout_mode = 2
+texture = ExtResource("6_xjg1m")
 
 [node name="RocketsLabel" type="Label" parent="Containers/RocketsContainer" unique_id=109001613]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="KnockbackContainer" type="HBoxContainer" parent="Containers" unique_id=960834504]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="KnockbackIcon" type="TextureRect" parent="Containers/KnockbackContainer" unique_id=73035327]
+layout_mode = 2
+texture = ExtResource("7_b16mp")
+
+[node name="KnockbackLabel" type="Label" parent="Containers/KnockbackContainer" unique_id=1240148288]
 unique_name_in_owner = true
 layout_mode = 2

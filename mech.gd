@@ -5,7 +5,13 @@ class_name Mech
 
 const WIDTH := 128
 const HALF_WIDTH : int = int(WIDTH * 0.5)
-var combat_stats : CombatStats
+var combat_stats : CombatStats:
+	set(value):
+		combat_stats = value
+		if combat_stats:
+			if not combat_stats.changed.is_connected(_on_combat_stats_changed):
+				combat_stats.changed.connect(_on_combat_stats_changed)
+			combat_stats.changed.emit()
 
 
 @export var config : MechConfig:
@@ -258,8 +264,10 @@ func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 	if weapon_config.energy_consumption_self > combat_stats.energy:
 		return false
 	
-	
-	return true
+	var adjusted_range : Vector2 = weapon_config.weapon_range
+	adjusted_range.x += get_spot()
+	adjusted_range.y += get_spot()
+	return Global.get_other_mech(self).is_in_range(adjusted_range)
 	
 
 
@@ -313,7 +321,37 @@ func command_move(distance : int):
 	CommandHandler.add_command(c)
 
 
+func get_weapon_config(weapon_index : int) -> WeaponConfig:
+	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
+	var weapon_config : WeaponConfig = weapon.config
+	return weapon_config
+
+
 func do_attack(target : Mech, weapon_index : int):
 	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
-	await weapon.attack_animation().finished
+	var weapon_config : WeaponConfig = weapon.config
 	
+	combat_stats.bullets -= weapon_config.bullet_consumption
+	combat_stats.rockets -= weapon_config.rocket_consumption
+	combat_stats.energy -= weapon_config.energy_consumption_self
+	combat_stats.heat += weapon_config.heat_generation_self
+	
+	var duration := weapon.attack_animation(Global.get_other_mech(self))
+	await get_tree().create_timer(duration).timeout
+
+func handle_attacked(with : WeaponConfig):
+	var damage := randi_range(with.damage.x, with.damage.y)
+	combat_stats.health -=  damage
+	combat_stats.energy -= with.energy_consumption_target
+	combat_stats.heat -= with.heat_generation_target
+	
+	var knockback_direction : int = -1 if flipped else 1
+	var target := get_spot() + with.knockback * knockback_direction
+	move(Vector2(target * WIDTH, position.y), 0.2)
+
+
+func _on_combat_stats_changed():
+	if not combat_stats:
+		return
+	if combat_stats.health <= 0:
+		print("DIe")
