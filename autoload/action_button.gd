@@ -19,8 +19,8 @@ func is_mouse_in() -> bool:
 
 
 func _rebuild():
-	#if is_mouse_in():
-		#_on_mouse_entered()
+	if is_mouse_in():
+		_on_mouse_entered()
 	if action is ActionCoolDown:
 		text = "cool down"
 	elif action is ActionMove:
@@ -43,7 +43,7 @@ func _on_pressed() -> void:
 
 
 func _on_mouse_entered() -> void:
-	EventBus.request_action_rebuild.emit()
+	#EventBus.request_action_rebuild.emit()
 	var mech_spot := action.owner.get_spot()
 	if action is ActionMove:
 		Global.battle_stage.highlight_range(

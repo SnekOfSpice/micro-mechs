@@ -19,7 +19,15 @@ func attack_animation(attack_target : Mech) -> float:
 	var factor := -1 if sprite.flip_h else 1
 	sprite.offset.x = -10 * factor
 	var projectile := ColorRect.new()
-	projectile.custom_minimum_size = Vector2.ONE * 50
+	match config.damage_type:
+		WeaponConfig.DamageType.Kinetic:
+			projectile.color = Color.YELLOW
+		WeaponConfig.DamageType.Electric:
+			projectile.color = Color.AQUA
+		WeaponConfig.DamageType.Explosive:
+			projectile.color = Color.CRIMSON
+	
+	projectile.custom_minimum_size = Vector2.ONE * config.damage.x * 2
 	Global.battle_stage.add_child(projectile)
 	projectile.global_position = global_position# get barrel
 	var distance_to_target := global_position.distance_to(target_position)
