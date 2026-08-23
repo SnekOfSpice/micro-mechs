@@ -25,5 +25,11 @@ func _rebuild():
 
 
 func _on_pressed() -> void:
+	if CommandHandler.awaiting_execution:
+		return
+	#var actions_left := action.owner.combat_stats.actions_left
+	#if CommandHandler.command_queue.size() >= actions_left - (1 if CommandHandler.awaiting_execution else 0):
+		#return
+	print()
 	action.do()
 	EventBus.request_action_rebuild.emit()

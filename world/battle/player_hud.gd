@@ -5,8 +5,18 @@ class_name PlayerHUD
 
 func _ready() -> void:
 	Global.hud = self
+	EventBus.phase_changed.connect(_on_phase_changed)
 	#EventBus.combat_stats_changed.connect(_on_combat_stats_changed)
-#
+
+
+func _on_phase_changed(phase : Phase):
+	%ActionsContainer.hide()
+	if not phase is PhaseAct:
+		return
+	
+	if Global.active_mech == Global.player_mech:
+		%ActionsContainer.visible = true
+
 #
 #func _on_combat_stats_changed(mech : Mech):
 	#if mech != Global.player_mech:

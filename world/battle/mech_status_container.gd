@@ -11,6 +11,7 @@ var tracking_mech : Mech:
 
 func _ready() -> void:
 	EventBus.combat_stats_changed.connect(display_mech_state)
+	EventBus.commands_begun_this_turn_changed.connect(_on_commands_begun_this_turn_changed)
 	EventBus.commands_this_turn_changed.connect(_on_commands_this_turn_changed)
 
 
@@ -32,6 +33,10 @@ func display_mech_state(mech : Mech):
 
 
 func _on_commands_this_turn_changed():
+	ugh()
+func _on_commands_begun_this_turn_changed():
+	ugh()
+func ugh():
 	var phase := PhaseManager.phase
 	%Actions.text = ""
 	if not phase is PhaseAct:
@@ -39,4 +44,4 @@ func _on_commands_this_turn_changed():
 	if Global.active_mech != tracking_mech:
 		return
 	
-	%Actions.text = str(Global.active_mech.combat_stats.actions_left - Global.battle_stage.commands_this_turn.size())
+	%Actions.text = str(Global.active_mech.combat_stats.actions_left - Global.battle_stage.commands_begun_this_turn.size())

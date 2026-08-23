@@ -2,6 +2,7 @@ extends Node
 
 signal commands_changed()
 signal command_executed(command : Command)
+signal command_executing(command : Command)
 
 var command_queue : Array[Command] = []
 var awaiting_execution : bool = false
@@ -21,10 +22,11 @@ func execute_next_command() -> void:
 	awaiting_execution = true
 		
 	var command : Command = command_queue.pop_front()
-	await get_tree().create_timer(0.5).timeout
+	command_executing.emit(command)
 	
 	@warning_ignore("redundant_await")
 	await command.execute()
+	await get_tree().create_timer(0.5).timeout
 	awaiting_execution = false
 	execute_next_command()
 	

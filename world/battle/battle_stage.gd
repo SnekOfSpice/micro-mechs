@@ -5,10 +5,12 @@ class_name BattleStage
 var mech1 : Mech
 var mech2 : Mech
 var commands_this_turn := []
+var commands_begun_this_turn := []
 
 
 func _ready() -> void:
 	CommandHandler.command_executed.connect(_on_command_executed)
+	CommandHandler.command_executing.connect(_on_command_executing)
 	var config := ResourceLoader.load("user://mech_config.tres")
 	mech1 = Mech.make(config)
 	%BattleLine.add_child(mech1)
@@ -107,6 +109,9 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")
 
 
+func _on_command_executing(command : Command):
+	commands_begun_this_turn.append(command)
+	EventBus.commands_begun_this_turn_changed.emit()
 func _on_command_executed(command : Command):
 	commands_this_turn.append(command)
 	print(commands_this_turn)
