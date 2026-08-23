@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ciqf4dk804200"]
 
 [ext_resource type="Script" uid="uid://bu8mfakjtmv43" path="res://game/main_menu/main_menu.gd" id="1_f1bok"]
+[ext_resource type="AudioStream" uid="uid://cxvojlifecfqj" path="res://demo title.ogg" id="2_rlutr"]
 
 [node name="MainMenu" type="Control" unique_id=1815764843]
 layout_mode = 3
@@ -27,6 +28,21 @@ text = "Battle"
 [node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1949257212]
 layout_mode = 2
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1699037765]
+stream = ExtResource("2_rlutr")
+volume_db = -24.225
+autoplay = true
+
+[node name="Label" type="Label" parent="." unique_id=2043242517]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "micro mechs demo"
 
 [connection signal="pressed" from="VBoxContainer/WorkshopButton" to="." method="_on_workshop_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/BattleButton" to="." method="_on_battle_button_pressed"]

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://fuhyfrpgypj1"]
+
+[ext_resource type="Script" uid="uid://fmm8o2k31kww" path="res://example_scene.gd" id="1_uabj3"]
+[ext_resource type="PackedScene" uid="uid://bts0qughcfqrp" path="res://player.tscn" id="2_5xswu"]
+[ext_resource type="PackedScene" uid="uid://daeydvqfkfbt2" path="res://player_ui.tscn" id="3_vqley"]
+
+[node name="ExampleScene" type="Node2D" unique_id=1548364320]
+script = ExtResource("1_uabj3")
+
+[node name="Player" parent="." unique_id=1576561838 instance=ExtResource("2_5xswu")]
+position = Vector2(229, 176)
+
+[node name="CanvasLayer" parent="Player" unique_id=2135450040 instance=ExtResource("3_vqley")]
