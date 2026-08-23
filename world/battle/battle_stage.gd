@@ -117,3 +117,25 @@ func _on_command_executed(command : Command):
 	if commands_this_turn.size() >= Global.active_mech.combat_stats.actions_left:
 		PhaseManager.advance_phase()
 	EventBus.commands_this_turn_changed.emit()
+
+
+func hide_range():
+	%Highlight.hide()
+
+func highlight_range(range : Vector2):
+	#if range == Vector2.ZERO:
+		#%Highlight.hide()
+		#return
+	if range.x > range.y:
+		var a := range.x
+		range.x = range.y
+		range.y = a
+	print(range)
+	%Highlight.show()
+	%Highlight.global_position = %BattleLine.global_position
+	#%Highlight.position.x += (range.x * Mech.WIDTH) - Mech.HALF_WIDTH
+	%Highlight.points = PackedVector2Array([
+		Vector2(range.x * Mech.WIDTH - Mech.HALF_WIDTH, 0),
+		Vector2(range.y * Mech.WIDTH + Mech.HALF_WIDTH, 0),
+	])
+	print(%Highlight.points)

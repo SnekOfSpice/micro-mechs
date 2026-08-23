@@ -4,6 +4,7 @@ class_name Mech
 
 
 const WIDTH := 128
+const HALF_WIDTH : int = int(WIDTH * 0.5)
 var combat_stats : CombatStats
 
 
@@ -203,13 +204,14 @@ func get_action_list() -> Array[Action]:
 	result.append(cd_action)
 	
 	var leg_config : LegConfig = _get_leg_config()
-	for i in range(1, leg_config.movement + 1):
-		for factor in [-1, 1]:
-			var move_action := ActionMove.new()
-			move_action.owner = self
-			move_action.config = leg_config
-			move_action.distance = i * factor
-			result.append(move_action)
+	for i in range(-leg_config.movement, leg_config.movement + 1):
+		if i == 0:
+			continue
+		var move_action := ActionMove.new()
+		move_action.owner = self
+		move_action.config = leg_config
+		move_action.distance = i
+		result.append(move_action)
 	
 	var i := 0
 	for weapon : WeaponPivot in %WeaponPivots.get_children():

@@ -36,4 +36,7 @@ offset_bottom = 8.0
 grow_horizontal = 0
 text = "main menu"
 
+[node name="Highlight" type="Line2D" parent="." unique_id=473816625]
+unique_name_in_owner = true
+
 [connection signal="pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_pressed"]

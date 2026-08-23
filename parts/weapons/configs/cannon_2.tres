@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponConfig" format=3 uid="uid://jfn78l3iqou"]
+
+[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="1_iwvya"]
+
+[resource]
+script = ExtResource("1_iwvya")
+tech_id = "cannon_2"
+weapon_range = Vector2i(2, 4)
+metadata/_custom_type_script = "uid://d4g0xn01kf10"

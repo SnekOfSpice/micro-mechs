@@ -2,16 +2,12 @@
 
 [ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="1_eavq0"]
 [ext_resource type="Texture2D" uid="uid://cjhtejhjqaog6" path="res://parts/weapons/cannon3.png" id="2_bo3g6"]
-[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="2_vyba7"]
-
-[sub_resource type="Resource" id="Resource_vq5ed"]
-script = ExtResource("2_vyba7")
-tech_id = "cannon_3"
+[ext_resource type="Resource" uid="uid://rl0ncb5qi8rl" path="res://parts/weapons/configs/cannon_3.tres" id="2_eavq0"]
 
 [node name="Cannon3" type="Marker2D" unique_id=79986025]
 z_index = 1
 script = ExtResource("1_eavq0")
-config = SubResource("Resource_vq5ed")
+config = ExtResource("2_eavq0")
 metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 
 [node name="Cannon" type="Sprite2D" parent="." unique_id=2077230813]

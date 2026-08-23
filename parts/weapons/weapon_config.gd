@@ -10,8 +10,8 @@ enum DamageType {
 
 
 @export var tech_id : String
-@export var damage := Vector2(10, 20)
-@export var weapon_range := Vector2(0, 1)
+@export var damage := Vector2i(10, 20)
+@export var weapon_range := Vector2i(1, 2)
 @export var uses := -1
 @export var damage_type := DamageType.Kinetic
 @export var energy_consumption_self := 0
