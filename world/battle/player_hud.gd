@@ -6,8 +6,19 @@ class_name PlayerHUD
 func _ready() -> void:
 	Global.hud = self
 	EventBus.phase_changed.connect(_on_phase_changed)
+	EventBus.mech_died.connect(_on_mech_died)
 	%TurnLabel.hide()
+	%MatchFinish.hide()
 	#EventBus.combat_stats_changed.connect(_on_combat_stats_changed)
+
+
+func _on_mech_died(mech : Mech):
+	%MatchFinish.show()
+	if mech == Global.npc_mech:
+		%MatchFinishLabel.text = "you win"
+	else:
+		%MatchFinishLabel.text = "you lose"
+
 
 
 func _on_phase_changed(phase : Phase):
@@ -82,3 +93,7 @@ func begin_turn():
 	var t := create_tween()
 	t.tween_property(%TurnLabel, "position:y", size.y * 0.33, 2.0)
 	t.finished.connect(%TurnLabel.hide)
+
+
+func _on_main_menu_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")

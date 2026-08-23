@@ -71,3 +71,46 @@ offset_top = -78.0
 offset_bottom = -55.0
 grow_horizontal = 2
 horizontal_alignment = 1
+
+[node name="MatchFinish" type="ColorRect" parent="." unique_id=1050075172]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5229489, 0.098664396, 0.43541214, 1)
+
+[node name="MatchFinishLabel" type="Label" parent="MatchFinish" unique_id=1642483575]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ghjghjgh"
+
+[node name="MainMenuButton" type="Button" parent="MatchFinish" unique_id=158654782]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Back To Main Menu "
+
+[connection signal="pressed" from="MatchFinish/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

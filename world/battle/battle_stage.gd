@@ -30,6 +30,8 @@ func _ready() -> void:
 	Global.npc_mech = mech2
 	Global.battle_stage = self
 	
+	EventBus.mech_died.connect(_on_mech_died)
+	
 	_begin_battle()
 	#mech1.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
 	#mech2.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
@@ -139,3 +141,7 @@ func highlight_range(range : Vector2):
 		Vector2(range.y * Mech.WIDTH + Mech.HALF_WIDTH, 0),
 	])
 	print(%Highlight.points)
+
+
+func _on_mech_died(mech : Mech):
+	pass

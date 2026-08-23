@@ -80,15 +80,17 @@ func initialize_combat_stats() -> CombatStats:
 	var torso_config : TorsoConfig = _torso.config
 	var leg_config : LegConfig = _get_leg_config()
 	
-	combat_stats = CombatStats.new()
+	var stats = CombatStats.new()
 	for thing in ["health", "energy", "heat", "bullets", "rockets"]:
 		var max_name := "%s_max" % thing
 		var torso_value = torso_config.get(max_name)
-		combat_stats.set(thing, torso_value)
-		combat_stats.set(max_name, torso_value)
-	combat_stats.health += leg_config.health
-	combat_stats.health_max += leg_config.health
-	combat_stats.heat = 0
+		stats.set(thing, torso_value)
+		stats.set(max_name, torso_value)
+	stats.health += leg_config.health
+	stats.health_max += leg_config.health
+	stats.heat = 0
+	
+	combat_stats = stats
 	EventBus.combat_stats_changed.emit(self)
 	combat_stats.changed.connect(EventBus.combat_stats_changed.emit.bind(self))
 	
@@ -403,7 +405,7 @@ func _on_combat_stats_changed():
 	if not combat_stats:
 		return
 	if combat_stats.health <= 0:
-		print("DIe")
+		EventBus.mech_died.emit(self)
 
 
 func reduce_heat_passive():
