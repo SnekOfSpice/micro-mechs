@@ -39,6 +39,7 @@ func display_combat_stats(combat_stats : CombatStats):
 	
 	
 
+## vvv i think my brain dies down here
 
 func _on_commands_this_turn_changed():
 	ugh()
@@ -52,4 +53,8 @@ func ugh():
 	if Global.active_mech != tracking_mech:
 		return
 	
-	%Actions.text = str(Global.active_mech.combat_stats.actions_left - Global.battle_stage.commands_begun_this_turn.size())
+	var a : int = (Global.active_mech.combat_stats.actions_left - 
+		Global.battle_stage.commands_begun_this_turn.size())
+	%Actions.text = Global.get_uses_string(a,
+		2
+	)

@@ -21,3 +21,13 @@ func vec2_to_range_string(rangee : Vector2i) -> String:
 	if rangee.x == rangee.y:
 		return str(rangee.x)
 	return "%s - %s" % [rangee.x, rangee.y]
+
+
+func get_uses_string(current, maximum) -> String:
+	var difference = maximum - current
+	var uses_string := ""
+	for i in current:
+		uses_string += "[img]res://parts/weapons/use_on.png[/img]"
+	for i in difference:
+		uses_string += "[img]res://parts/weapons/use_off.png[/img]"
+	return uses_string
