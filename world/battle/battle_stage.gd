@@ -95,9 +95,6 @@ func _update_flips():
 
 
 
-func do_attack(attacking_mech : Mech, weapon_index : int):
-	print("pew pew")
-
 func command_do_attack(attacking_mech : Mech, weapon_index : int):
 	var c := CommandDoAttack.new()
 	c.attacker = attacking_mech
@@ -115,7 +112,6 @@ func _on_command_executing(command : Command):
 	EventBus.commands_begun_this_turn_changed.emit()
 func _on_command_executed(command : Command):
 	commands_this_turn.append(command)
-	print(commands_this_turn)
 	if commands_this_turn.size() >= Global.active_mech.combat_stats.actions_left:
 		PhaseManager.advance_phase()
 	EventBus.commands_this_turn_changed.emit()
@@ -125,23 +121,32 @@ func hide_range():
 	%Highlight.hide()
 
 func highlight_range(range : Vector2):
-	#if range == Vector2.ZERO:
-		#%Highlight.hide()
-		#return
 	if range.x > range.y:
 		var a := range.x
 		range.x = range.y
 		range.y = a
-	print(range)
 	%Highlight.show()
 	%Highlight.global_position = %BattleLine.global_position
-	#%Highlight.position.x += (range.x * Mech.WIDTH) - Mech.HALF_WIDTH
 	%Highlight.points = PackedVector2Array([
 		Vector2(range.x * Mech.WIDTH - Mech.HALF_WIDTH, 0),
 		Vector2(range.y * Mech.WIDTH + Mech.HALF_WIDTH, 0),
 	])
-	print(%Highlight.points)
 
 
 func _on_mech_died(mech : Mech):
 	pass
+
+
+func add_floating_number(damage : int, at : Vector2):
+	var label := Label.new()
+	label.z_index = 5
+	add_child(label)
+	label.global_position = at
+	label.text = "-%s" % damage
+	var t := create_tween()
+	t.tween_property(label, "position", Vector2(
+		label.position.x + randf_range(-20, 20),
+		label.position.y - 50
+	),
+	2)
+	t.finished.connect(label.queue_free)

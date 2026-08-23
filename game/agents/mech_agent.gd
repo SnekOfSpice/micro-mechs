@@ -18,7 +18,7 @@ func on_command_executed(_command):
 	var mech : Mech = Global.active_mech
 	if mech != get_parent():
 		return
-	#print("AGENT DOES")
+	
 	var actions : int = mech.combat_stats.actions_left
 	if actions - Global.battle_stage.commands_begun_this_turn.size() > 0:
 		_pick_next_action()

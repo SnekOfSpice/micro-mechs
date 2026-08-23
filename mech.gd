@@ -407,9 +407,11 @@ func do_attack(target : Mech, weapon_index : int):
 
 # usedful for multi projectile
 var timestamps := []
-func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec()):
+func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), impact_position : Vector2 = get_projectile_point()):
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
+	
+	Global.battle_stage.add_floating_number(damage, impact_position)
 	
 	if timestamp in timestamps:
 		return
@@ -447,7 +449,11 @@ func generate_energy():
 	
 func get_projectile_point():
 	var base := _torso.global_position
+	var torso_size := _torso.texture.get_size()
+	torso_size -= torso_size * 0.5
+	torso_size *= 0.75
+	
 	return base + Vector2(
-		randf_range(-2, 2),
-		randf_range(-2, 2),
+		randf_range(-torso_size.x, torso_size.x),
+		randf_range(-torso_size.y, torso_size.y),
 	)

@@ -45,7 +45,7 @@ func attack_animation(attack_target : Mech) -> float:
 		var projectile_timer := get_tree().create_timer(projectile_flight_duration)
 		projectile_timer.timeout.connect(func():
 			projectile.queue_free()
-			attack_target.handle_attacked(config, attack_timestamp))
+			attack_target.handle_attacked(config, attack_timestamp, target_position))
 		# override for randomness
 		target_position = attack_target.get_projectile_point()
 	

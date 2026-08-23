@@ -105,7 +105,7 @@ static func get_randomized() -> AgentConfig:
 	var config := AgentConfig.new()
 	config.randomness = randf()
 	config.stomp_preference = randf() * 0.5
-	config.raw_aggression = randf() * 0.33
+	config.raw_aggression = randf() * 0.75
 	config.optimal_range_preference = randf()
 	config.move_or_cooldown_chance = randf() * 0.25
 	config.move_or_cooldown_bias = randf()
