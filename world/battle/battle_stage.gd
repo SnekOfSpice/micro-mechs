@@ -141,6 +141,7 @@ func add_floating_number(damage : int, at : Vector2):
 	var label := Label.new()
 	label.z_index = 5
 	add_child(label)
+	label.pivot_offset_ratio = Vector2(0.5, 0.5)
 	label.global_position = at
 	label.text = "-%s" % damage
 	var t := create_tween()
@@ -148,5 +149,8 @@ func add_floating_number(damage : int, at : Vector2):
 		label.position.x + randf_range(-20, 20),
 		label.position.y - 50
 	),
-	2)
+	3)
+	t.set_parallel()
+	label.scale = Vector2.ONE * clamp(damage, 2.5, 10)
+	t.tween_property(label, "scale", Vector2.ZERO, 1).set_delay(2).set_trans(Tween.TRANS_CUBIC)
 	t.finished.connect(label.queue_free)
