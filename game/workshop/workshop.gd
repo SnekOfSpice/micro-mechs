@@ -25,7 +25,9 @@ func _ready() -> void:
 func _on_config_changed():
 	await get_tree().process_frame
 	var combat_stats : CombatStats = $Mech.initialize_combat_stats()
-	%CombatStatsLabel.text = "health : %s" % combat_stats.health_max
+	
+	%MechStatusContainer.display_combat_stats(combat_stats)
+	%MobilityLabel.text = str("Movement: ", $Mech._leg_config.movement)
 
 
 func _update_weapons_selection():
@@ -47,6 +49,16 @@ func _update_weapons_selection():
 				$Mech.config.set_weapon(i, button.text)
 				)
 			selections.add_child(button)
+			
+			button.mouse_entered.connect(func():
+				%AttackInfos.show()
+				var config : WeaponConfig = load("res://parts/weapons/configs/%s.tres" % w)
+				%AttackInfoDisplay.render(config, AttackInfoDisplay.Perspective.ATTACKER)
+				%AttackInfoDisplay2.render(config, AttackInfoDisplay.Perspective.DEFENDER)
+				)
+			button.mouse_exited.connect(func():
+				%AttackInfos.hide())
+			
 
 
 func _on_close_button_pressed() -> void:

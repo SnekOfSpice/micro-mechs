@@ -23,6 +23,10 @@ script = ExtResource("2_paojt")
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="RangeLabel" type="Label" parent="Containers" unique_id=981065859]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="DamageContainer" type="HBoxContainer" parent="Containers" unique_id=821012466]
 unique_name_in_owner = true
 layout_mode = 2

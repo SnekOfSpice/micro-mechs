@@ -18,6 +18,9 @@ func _ready() -> void:
 func display_mech_state(mech : Mech):
 	if mech != tracking_mech:
 		return
+	display_combat_stats(mech.combat_stats)
+
+func display_combat_stats(combat_stats : CombatStats):
 	for thing : String in [
 		"health",
 		"heat",
@@ -26,8 +29,8 @@ func display_mech_state(mech : Mech):
 		"bullets",
 	]:
 		var node : Control = find_child(thing.capitalize())
-		node.max_value = mech.combat_stats.get("%s_max" % thing)
-		node.value = mech.combat_stats.get(thing)
+		node.max_value = combat_stats.get("%s_max" % thing)
+		node.value = combat_stats.get(thing)
 		
 		var label : Label = node.get_child(0)
 		label.text = "%s / %s" % [node.value, node.max_value]

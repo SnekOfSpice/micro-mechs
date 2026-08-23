@@ -8,9 +8,18 @@ enum Perspective {
 }
 
 
+@export var show_range := false
+
+
 func render(weapon_config : WeaponConfig, perspective : Perspective):
 	for container : Control in %Containers.get_children():
 		container.hide()
+	
+	%RangeLabel.visible = show_range
+	if weapon_config.weapon_range.x != weapon_config.weapon_range.y:
+		%RangeLabel.text = "Range: %s - %s" % [weapon_config.weapon_range.x, weapon_config.weapon_range.y]
+	else:
+		%RangeLabel.text = "Range: %s" % weapon_config.weapon_range.x
 	
 	if perspective == Perspective.ATTACKER:
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_attacker.tres"))
