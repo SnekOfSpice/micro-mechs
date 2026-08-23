@@ -16,10 +16,7 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 		container.hide()
 	
 	%RangeLabel.visible = show_range
-	if weapon_config.weapon_range.x != weapon_config.weapon_range.y:
-		%RangeLabel.text = "Range: %s - %s" % [weapon_config.weapon_range.x, weapon_config.weapon_range.y]
-	else:
-		%RangeLabel.text = "Range: %s" % weapon_config.weapon_range.x
+	%RangeLabel.text = "Range: %s" % Global.vec2_to_range_string(weapon_config.weapon_range)
 	
 	if perspective == Perspective.ATTACKER:
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_attacker.tres"))
@@ -42,10 +39,7 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 	elif perspective == Perspective.DEFENDER:
 		%DamageContainer.visible = weapon_config.damage.x > 0 or weapon_config.damage.y > 0
 		%DamageTypeIcon.texture = load("res://icon_%s.png" % WeaponConfig.DamageType.keys()[weapon_config.damage_type].to_lower())
-		if weapon_config.damage.x != weapon_config.damage.y:
-			%DamageRangeLabel.text = "%s - %s" % [weapon_config.damage.x, weapon_config.damage.y]
-		else:
-			%DamageRangeLabel.text = "%s" % weapon_config.damage.x
+		%DamageRangeLabel.text = Global.vec2_to_range_string(weapon_config.damage)
 		
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_defender.tres"))
 		

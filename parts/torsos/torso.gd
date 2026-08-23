@@ -41,6 +41,15 @@ func hook_up_legs(leg_front : Pivot, leg_back : Pivot):
 	leg_back.in_front = false
 
 
+func stomp_anim():
+	var leg : LegPivot
+	if flip_h:
+		leg = get_node(%LegTransformBack.remote_path)
+	else:
+		leg = get_node(%LegTransformBack.remote_path)
+	await get_tree().create_timer(1)
+
+
 func set_weapon(pivot_index : int, weapon : Pivot):
 	if pivot_index >= weapon_count:
 		push_warning("Tried to add weapon outside of weapon count.")

@@ -1,9 +1,9 @@
 extends Command
-class_name CommandCoolDown
+class_name CommandStomp
 
 func execute() -> bool:
 	for target : Mech in targets:
-		await target.cool_down()
+		await target.stomp()
 	return true
 
 func undo() -> bool:

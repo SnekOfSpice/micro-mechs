@@ -27,6 +27,11 @@ var combat_stats : CombatStats:
 		flipped = value
 		if is_inside_tree():
 			set_flip(flipped)
+	get():
+		if is_inside_tree():
+			if _torso:
+				return _torso.flip_h
+		return flipped
 
 var _torso : Torso:
 	get():
@@ -202,12 +207,22 @@ func _get_leg_config() -> LegConfig:
 	return _leg_config
 
 
+func is_in_front_of_other_mech() -> bool:
+	var spot := get_spot()
+	var other_spot : int = Global.get_other_mech(self).get_spot()
+	
+	return (abs(spot - other_spot)) == 1
+
+
 func get_action_list() -> Array[Action]:
 	var result : Array[Action] = []
 	
 	var cd_action := ActionCoolDown.new()
 	cd_action.owner = self
 	result.append(cd_action)
+	var stomp_action := ActionStomp.new()
+	stomp_action.owner = self
+	result.append(stomp_action)
 	
 	var leg_config : LegConfig = _get_leg_config()
 	for i in range(-leg_config.movement, leg_config.movement + 1):
@@ -241,10 +256,14 @@ func is_in_spot(index : int) -> bool:
 
 
 
-func is_in_range(r : Vector2) -> bool:
-	var index_range := r * WIDTH
-	
-	return position.x >= (index_range.x - 0.001) and position.x <= (index_range.y + 0.001)
+func is_in_range(r : Vector2i) -> bool:
+	var lower := mini(r.x, r.y)
+	var upper := maxi(r.x, r.y)
+	var spot := get_spot()
+	return spot >= lower and spot <= upper
+	#var index_range := r * WIDTH
+	#
+	#return position.x >= (index_range.x - 0.001) and position.x <= (index_range.y + 0.001)
 
 
 func get_spot() -> int:
@@ -272,9 +291,14 @@ func can_use_weapon(weapon_config : WeaponConfig) -> bool:
 		if weapon_config.uses == 0:
 			return false
 	
-	var adjusted_range : Vector2 = weapon_config.weapon_range
-	adjusted_range.x += get_spot()
-	adjusted_range.y += get_spot()
+	var adjusted_range : Vector2i = Vector2i(get_spot(), get_spot())
+	if flipped:
+		adjusted_range -= weapon_config.weapon_range
+	else:
+		adjusted_range += weapon_config.weapon_range
+	#weapon_config.weapon_range
+	#adjusted_range.x += get_spot()
+	#adjusted_range.y += get_spot()
 	return Global.get_other_mech(self).is_in_range(adjusted_range)
 	
 
@@ -312,6 +336,14 @@ func cool_down():
 	await get_tree().create_timer(dur).timeout
 
 
+func stomp():
+	await _torso.stomp_anim()
+	var stomp_attack := WeaponConfig.new()
+	stomp_attack.damage = _leg_config.stomp_damage
+	stomp_attack.knockback = 1
+	Global.get_other_mech(self).handle_attacked(stomp_attack)
+
+
 func move(target_position : Vector2, duration : float):
 	var t := create_tween()
 	t.tween_property(self, "position", target_position, duration)
@@ -321,12 +353,16 @@ func command_cool_down():
 	var c = CommandCoolDown.new()
 	c.targets = [self]
 	CommandHandler.add_command(c)
+func command_stomp():
+	var c = CommandStomp.new()
+	c.targets = [self]
+	CommandHandler.add_command(c)
 
 func command_move(distance : int):
 	var target_position := position.x + distance * WIDTH
 	var c = CommandMove.new()
 	c.targets = [self]
-	c.target_position = Vector2(target_position, position.y)
+	c.spots_to_move = distance
 	CommandHandler.add_command(c)
 
 
@@ -357,7 +393,7 @@ func handle_attacked(with : WeaponConfig):
 	combat_stats.energy -= with.energy_consumption_target
 	combat_stats.heat -= with.heat_generation_target
 	
-	var knockback_direction : int = -1 if flipped else 1
+	var knockback_direction : int = 1 if flipped else -1
 	var target := get_spot() + with.knockback * knockback_direction
 	move(Vector2(target * WIDTH, position.y), 0.2)
 

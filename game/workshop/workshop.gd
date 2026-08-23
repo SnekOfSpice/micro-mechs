@@ -27,7 +27,9 @@ func _on_config_changed():
 	var combat_stats : CombatStats = $Mech.initialize_combat_stats()
 	
 	%MechStatusContainer.display_combat_stats(combat_stats)
+	
 	%MobilityLabel.text = str("Movement: ", $Mech._leg_config.movement)
+	%MobilityLabel.text += str("\nStomp Damage: ", Global.vec2_to_range_string($Mech._leg_config.stomp_damage))
 
 
 func _update_weapons_selection():

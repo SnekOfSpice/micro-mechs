@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_e4nri")
 health = 10
+stomp_damage = Vector2i(12, 12)
 metadata/_custom_type_script = "uid://dvua23rncvore"

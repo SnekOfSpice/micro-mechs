@@ -30,12 +30,6 @@ func act():
 			push_warning("couldnt find doable action")
 			break
 		
-		if action is ActionMove:
-			print("AGENT MOVES")
-		if action is ActionCoolDown:
-			print("AGENT COOLS DOWN")
-		if action is ActionWeapon:
-			print("AGENT SHOOTS")
 		actions_to_do.append(action)
 		
 	for action in actions_to_do:
