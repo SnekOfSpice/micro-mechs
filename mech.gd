@@ -384,7 +384,7 @@ func do_attack(target : Mech, weapon_index : int):
 	combat_stats.heat += weapon_config.heat_generation_self
 	
 	if weapon_config.uses > -1:
-		weapon_config.uses = max(0, weapon_config.uses - 1)
+		weapon_config.uses_left = max(0, weapon_config.uses_left - 1)
 	
 	var duration := weapon.attack_animation(Global.get_other_mech(self))
 	await get_tree().create_timer(duration).timeout

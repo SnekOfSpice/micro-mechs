@@ -21,7 +21,15 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 	if perspective == Perspective.ATTACKER:
 		add_theme_stylebox_override("panel", load("res://game/ui/attack_style_box_attacker.tres"))
 		%UsesLabel.visible = weapon_config.uses != -1
-		%UsesLabel.text = str("Uses left: ", weapon_config.uses)
+		%UsesLabel.text = ""
+		if weapon_config.uses != -1:
+			var difference = weapon_config.uses - weapon_config.uses_left
+			var uses_string := ""
+			for i in weapon_config.uses_left:
+				uses_string += "[img]res://parts/weapons/use_on.png[/img]"
+			for i in difference:
+				uses_string += "[img]res://parts/weapons/use_off.png[/img]"
+			%UsesLabel.text = uses_string
 		var energy := weapon_config.energy_consumption_self
 		%EnergyContainer.visible = energy > 0
 		%EnergyLabel.text = str(energy)

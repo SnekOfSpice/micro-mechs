@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="1_iwvya"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_iwvya")
 tech_id = "cannon_2"
 damage = Vector2i(13, 13)

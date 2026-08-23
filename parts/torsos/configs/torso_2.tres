@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dyvy5uipvdaox" path="res://parts/torsos/torso_config.gd" id="1_opt74"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_opt74")
 health_max = 40
 bullets_max = 40

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dyvy5uipvdaox" path="res://parts/torsos/torso_config.gd" id="1_kdra2"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_kdra2")
 health_max = 30
 rockets_max = 16
