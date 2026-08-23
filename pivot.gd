@@ -28,4 +28,10 @@ func set_flipped(flipped : bool):
 		else:
 			sprite.position.x = -(width + sprite.position.x)
 	sprite.flip_h = flipped
-	in_front = not in_front
+	# sure what the hell ugh
+	#if flipped:
+	#print("pivot ", name, " needs to flip to ", flipped, " and is in front ", in_front)
+	#in_front = not in_front
+	#print("is now in front ", in_front)
+	#else:
+		#in_front = in_front

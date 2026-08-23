@@ -29,3 +29,21 @@ func set_weapon(index : int, weapon_id : String):
 		weapon_list.resize(index + 1)
 	weapon_list[index] = weapon_id
 	emit_changed()
+
+
+static func get_randomized() -> MechConfig:
+	randomize()
+	var config := MechConfig.new()
+	config.leg_id = ["leg_1", "leg_2"].pick_random()
+	config.torso_id = ["torso_1", "torso_2"].pick_random()
+	var quick_torso : Torso = load("res://parts/torsos/%s.tscn" % config.torso_id).instantiate()
+	var weapon_count : int = quick_torso.weapon_count
+	quick_torso.queue_free()
+	var weapons := [
+		"cannon_1",
+		"cannon_2",
+		"cannon_3",
+	]
+	for count in weapon_count:
+		config.weapon_list.append(weapons.pick_random())
+	return config

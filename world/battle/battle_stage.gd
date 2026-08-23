@@ -12,16 +12,13 @@ func _ready() -> void:
 	CommandHandler.command_executed.connect(_on_command_executed)
 	CommandHandler.command_executing.connect(_on_command_executing)
 	var config := ResourceLoader.load("user://mech_config.tres")
-	mech1 = Mech.make(config)
+	mech1 = preload("res://mech.tscn").instantiate()
 	%BattleLine.add_child(mech1)
+	mech1.config = config
 	
-	
-	var evil_config := MechConfig.new()
-	evil_config.leg_id = "leg_1"
-	evil_config.torso_id = "torso_1"
-	evil_config.weapon_list = PackedStringArray(["cannon_1", "cannon_2"])
-	mech2 = Mech.make(evil_config)
+	mech2 = preload("res://mech.tscn").instantiate()
 	%BattleLine.add_child(mech2)
+	mech2.config = MechConfig.get_randomized()
 	
 	var agent := MechAgent.new()
 	mech2.add_child(agent)
@@ -39,7 +36,9 @@ func _ready() -> void:
 	
 	await get_tree().process_frame
 	%PlayerHUD.register_mechs_to_track(mech1, mech2)
-	
+
+func _process(delta: float) -> void:
+	_update_flips()
 
 var blockers := 1
 func _decrement_blocker():

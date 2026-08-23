@@ -18,10 +18,13 @@ var combat_stats : CombatStats
 @export var flipped: bool:
 	set(value):
 		flipped = value
-		set_flip(flipped)
+		if is_inside_tree():
+			set_flip(flipped)
 
 var _torso : Torso:
 	get():
+		if not find_child("TorsoPivot"):
+			return _torso
 		if not _torso and %TorsoPivot.get_child(0) is Torso:
 			_torso = %TorsoPivot.get_child(0)
 		config.weapon_list.resize(_torso.weapon_count)
@@ -31,6 +34,8 @@ var _torso : Torso:
 # TODO refactor this to be part of torso config
 var weapon_capacity : int:
 	get():
+		if not _torso:
+			return 0
 		return _torso.weapon_count
 
 
@@ -171,10 +176,6 @@ func _get_mech_height() -> float:
 	return leg_height + pivot_offset# + _torso.texture.get_size().y * 0.5
 
 
-static func make(from_config : MechConfig) -> Mech:
-	var mech := preload("res://mech.tscn").instantiate()
-	mech.config = from_config
-	return mech
 
 
 func set_flip(flipped : bool):
