@@ -34,7 +34,16 @@ func get_uses_string(current, maximum) -> String:
 
 
 func get_weapon_configs() -> Array:
-	var result := []
-	for file in DirAccess.get_files_at("res://parts/weapons/configs/"):
-		result.append(file.trim_suffix(".tres"))
-	return result
+	return [
+		"cannon_1",
+		"cannon_2",
+		"cannon_3",
+		"shotgun",
+		"flamethrower",
+	]
+	
+	## vv this breaks in export
+	#var result := []
+	#for file in DirAccess.get_files_at("res://parts/weapons/configs/"):
+		#result.append(file.trim_suffix(".tres"))
+	#return result
