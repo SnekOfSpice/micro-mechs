@@ -25,6 +25,7 @@ func on_command_executed(_command):
 
 
 func act():
+	
 	_pick_next_action()
 
 func _pick_next_action():

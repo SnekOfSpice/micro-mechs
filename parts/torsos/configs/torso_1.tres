@@ -6,6 +6,7 @@
 resource_local_to_scene = true
 script = ExtResource("1_kdra2")
 health_max = 30
+bullets_max = 24
 rockets_max = 16
 heat_max = 12
 energy_max = 8

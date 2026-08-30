@@ -51,21 +51,25 @@ func _on_pressed() -> void:
 func _on_mouse_entered() -> void:
 	#EventBus.request_action_rebuild.emit()
 	var mech_spot := action.owner.get_spot()
+	var spot_vector := Vector2(mech_spot, mech_spot)
+	var flipped : bool = action.owner.flipped
 	if action is ActionMove:
-		Global.battle_stage.highlight_range(
-			Vector2(
-				mech_spot + action.distance,
-				mech_spot + action.distance,
-			)
-		)
+		var highlight_range : Vector2
+		var distance_vector := Vector2(action.distance, action.distance)
+		if flipped:
+			highlight_range = spot_vector - distance_vector
+		else:
+			highlight_range = spot_vector + distance_vector
+		Global.battle_stage.highlight_range(highlight_range)
 	if action is ActionWeapon:
+		var highlight_range : Vector2
 		var weapon_range : Vector2 = action.config.weapon_range
-		Global.battle_stage.highlight_range(
-			Vector2(
-				mech_spot + weapon_range.x,
-				mech_spot + weapon_range.y,
-			)
-		)
+		var range_vector := Vector2(weapon_range.x, weapon_range.y)
+		if flipped:
+			highlight_range = spot_vector - range_vector
+		else:
+			highlight_range = spot_vector + range_vector
+		Global.battle_stage.highlight_range(highlight_range)
 		Global.hud.visualize_weapon(action.config, action.owner)
 
 func _on_mouse_exited() -> void:

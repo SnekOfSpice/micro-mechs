@@ -36,6 +36,15 @@ func display_combat_stats(combat_stats : CombatStats):
 		
 		var label : Label = node.get_child(0)
 		label.text = "%s / %s" % [value, max_value]
+		
+		# bad and hacky
+		var icon : TextureRect = find_child("%sIcon" % thing.capitalize())
+		if max_value == 0:
+			node.modulate.a = 0
+			if icon: icon.modulate.a = 0
+		else:
+			node.modulate.a = 1
+			if icon: icon.modulate.a = 1
 	
 	
 

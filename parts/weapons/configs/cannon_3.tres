@@ -6,7 +6,9 @@
 resource_local_to_scene = true
 script = ExtResource("1_auftt")
 tech_id = "cannon_3"
-damage = Vector2i(12, 15)
+damage = Vector2i(2, 3)
+projectiles = 6
+inter_projectile_delay = 0.071
 weapon_range = Vector2i(3, 5)
 damage_type = 2
 rocket_consumption = 6
