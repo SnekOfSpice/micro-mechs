@@ -10,24 +10,30 @@ extends Marker2D
 			z_index = 1
 		else:
 			z_index = -1
-
+var _sprite : Sprite2D:
+	get():
+		if not _sprite:
+			for child in get_children():
+				if child is Sprite2D:
+					_sprite = child
+					break
+		return _sprite
 
 func set_flipped(flipped : bool):
-	var sprite : Sprite2D = get_child(0)
-	if not sprite:
+	if not _sprite:
 		return
-	if sprite.flip_h == flipped:
+	if _sprite.flip_h == flipped:
 		return
 	
-	if sprite.centered:
-		sprite.position.x = -sprite.position.x
+	if _sprite.centered:
+		_sprite.position.x = -_sprite.position.x
 	else:
-		var width := sprite.texture.get_width()
-		if sprite.flip_h:
-			sprite.position.x = -(sprite.position.x + width)
+		var width := _sprite.texture.get_width()
+		if _sprite.flip_h:
+			_sprite.position.x = -(_sprite.position.x + width)
 		else:
-			sprite.position.x = -(width + sprite.position.x)
-	sprite.flip_h = flipped
+			_sprite.position.x = -(width + _sprite.position.x)
+	_sprite.flip_h = flipped
 	# sure what the hell ugh
 	#if flipped:
 	#print("pivot ", name, " needs to flip to ", flipped, " and is in front ", in_front)

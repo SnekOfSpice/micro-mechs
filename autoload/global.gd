@@ -40,6 +40,7 @@ func get_weapon_configs() -> Array:
 		"cannon_3",
 		"shotgun",
 		"flamethrower",
+		"quad_cannon",
 	]
 	
 	## vv this breaks in export

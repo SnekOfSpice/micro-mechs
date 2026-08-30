@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dmjvajsq1m2s"]
+
+[ext_resource type="Script" uid="uid://dh1rv3gp4cmbr" path="res://autoload/file_loader.gd" id="1_jf83a"]
+
+[node name="FileLoader" type="Node" unique_id=1048211176]
+script = ExtResource("1_jf83a")

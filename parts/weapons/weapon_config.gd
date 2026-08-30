@@ -12,6 +12,7 @@ enum DamageType {
 @export var tech_id : String
 @export var damage := Vector2i(0, 0)
 @export var projectiles := 1
+@export var inter_projectile_delay := 0.0
 @export var weapon_range := Vector2i(1, 2)
 @export var uses := -1:
 	set(value):

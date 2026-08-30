@@ -18,14 +18,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="WorkshopButton" type="Button" parent="VBoxContainer" unique_id=1134669449]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 text = "Workshop"
 
+[node name="StockMarketButton" type="Button" parent="VBoxContainer" unique_id=1858019591]
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
+text = "StockMarket"
+
 [node name="BattleButton" type="Button" parent="VBoxContainer" unique_id=612334477]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 text = "Battle"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1949257212]
+custom_minimum_size = Vector2(200, 80)
 layout_mode = 2
 text = "Quit"
 
@@ -45,5 +53,6 @@ grow_horizontal = 0
 text = "micro mechs demo"
 
 [connection signal="pressed" from="VBoxContainer/WorkshopButton" to="." method="_on_workshop_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StockMarketButton" to="." method="_on_stock_market_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/BattleButton" to="." method="_on_battle_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

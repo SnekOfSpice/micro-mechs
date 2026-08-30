@@ -21,6 +21,8 @@ Global="*uid://npmcbeberrw5"
 PhaseManager="*uid://ddwj8mj0xrxeu"
 EventBus="*uid://c3svy8rvi4pmo"
 CommandHandler="*uid://dk7wp07pmrbje"
+FileLoader="*uid://dmjvajsq1m2s"
+StockMarketManager="*uid://n0ldttqdxskp"
 
 [display]
 

@@ -12,3 +12,6 @@ metadata/_custom_type_script = "uid://bbc26alh5vcw3"
 [node name="Cannon" type="Sprite2D" parent="." unique_id=2077230813]
 position = Vector2(17, 1)
 texture = ExtResource("2_8pukg")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1568739155]
+position = Vector2(41, -1)

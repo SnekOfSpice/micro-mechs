@@ -6,7 +6,7 @@ class_name AgentConfig
 # randomness := chance to pick a random action
 @export var randomness := 0.1
 @export var stomp_preference := 0.1
-@export var raw_aggression := 0.2
+@export var default_attack_chance := 0.2
 # heat aversion: does cooldown with a 0 - 100% guarantee in this relative threshold (should be Vec2([0,1], [0,1])
 @export var heat_aversion := Vector2(0.7, 0.9)
 # optimal range preference: chance to do the following behavior: averages all ranges of all weapons. if it is there, pick a weapon from among them. if not, move towards that spot.
@@ -33,7 +33,7 @@ func pick_next_action(viable_action_list : Array[Action],
 			if action is ActionStomp:
 				return action
 	
-	if randf() <= raw_aggression:
+	if randf() <= default_attack_chance:
 		for action in viable_action_list:
 			if action is ActionWeapon:
 				return action
@@ -105,7 +105,7 @@ static func get_randomized() -> AgentConfig:
 	var config := AgentConfig.new()
 	config.randomness = randf()
 	config.stomp_preference = randf() * 0.5
-	config.raw_aggression = randf() * 0.95
+	config.default_attack_chance = randf() * 0.95
 	config.optimal_range_preference = randf()
 	config.move_or_cooldown_chance = randf() * 0.25
 	config.move_or_cooldown_bias = randf()

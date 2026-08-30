@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponConfig" format=3 uid="uid://xj0eqow01i8k"]
+
+[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="1_t7iih"]
+
+[resource]
+script = ExtResource("1_t7iih")
+tech_id = "quad_cannon"
+damage = Vector2i(1, 1)
+projectiles = 4
+inter_projectile_delay = 0.25
+weapon_range = Vector2i(2, 4)
+uses = 2
+bullet_consumption = 8
+metadata/_custom_type_script = "uid://d4g0xn01kf10"

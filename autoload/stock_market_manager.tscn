@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://n0ldttqdxskp"]
+
+[ext_resource type="Script" uid="uid://cnh1i6vraahby" path="res://autoload/stock_market_manager.gd" id="1_nh6wk"]
+
+[node name="StockMarket" type="Node" unique_id=1439607046]
+script = ExtResource("1_nh6wk")
