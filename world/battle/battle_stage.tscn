@@ -4,6 +4,45 @@
 [ext_resource type="PackedScene" uid="uid://b14nvytfkkcr0" path="res://world/battle/player_hud.tscn" id="2_2c4jw"]
 [ext_resource type="Script" uid="uid://cijrx4y0b34ep" path="res://world/battle/battle_camera.gd" id="2_veacd"]
 
+[sub_resource type="Gradient" id="Gradient_x51i7"]
+colors = PackedColorArray(0.5765042, 0.1685636, 0, 1, 0.5619702, 0.42688814, 0.3254574, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_i0tb0"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8qm2f"]
+noise = SubResource("FastNoiseLite_i0tb0")
+color_ramp = SubResource("Gradient_x51i7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57van"]
+albedo_texture = SubResource("NoiseTexture2D_8qm2f")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_joysk"]
+material = SubResource("StandardMaterial3D_57van")
+size = Vector2(5000, 5000)
+
+[sub_resource type="Gradient" id="Gradient_dok5q"]
+colors = PackedColorArray(0.55336624, 0.7659935, 0.9890968, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ty4ei"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_canda"]
+noise = SubResource("FastNoiseLite_ty4ei")
+color_ramp = SubResource("Gradient_dok5q")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jjfmi"]
+panorama = SubResource("NoiseTexture2D_canda")
+
+[sub_resource type="Sky" id="Sky_veacd"]
+sky_material = SubResource("PanoramaSkyMaterial_jjfmi")
+
+[sub_resource type="Environment" id="Environment_joysk"]
+background_mode = 2
+sky = SubResource("Sky_veacd")
+tonemap_mode = 3
+tonemap_exposure = 0.59
+tonemap_white = 2.56
+
 [node name="BattleStage" type="Node3D" unique_id=311812168]
 script = ExtResource("1_mlyy2")
 
@@ -43,10 +82,17 @@ offset_bottom = -184.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Highlight" type="Line2D" parent="." unique_id=473816625]
+[node name="Highlight" type="Node3D" parent="." unique_id=1148060985]
 unique_name_in_owner = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2078045928]
 transform = Transform3D(0.76692486, -0.3786448, 0.51812583, 0, 0.80738044, 0.5900312, -0.64173687, -0.45250958, 0.6192001, 0, 17.692207, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=427628683]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6249847, -12.388954, 106.851776)
+mesh = SubResource("PlaneMesh_joysk")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1424576854]
+environment = SubResource("Environment_joysk")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_pressed"]

@@ -102,22 +102,22 @@ metadata/_custom_type_script = "uid://btpy4p1qf56fv"
 unique_name_in_owner = true
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier3D" parent="VisibleGuarantee" unique_id=1209589953]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61, -113, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7133555, 0)
 
 [node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier3D" parent="VisibleGuarantee" unique_id=423072969]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98, -113, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.3117404)
 
 [node name="VisibleOnScreenNotifier2D3" type="VisibleOnScreenNotifier3D" parent="VisibleGuarantee" unique_id=106956917]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61, 59, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.9004312, 0)
 
 [node name="VisibleOnScreenNotifier2D4" type="VisibleOnScreenNotifier3D" parent="VisibleGuarantee" unique_id=1145645057]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98, 59, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.4479318)
 
 [node name="DeadSpaceEliminators" type="Node3D" parent="." unique_id=1330714902]
 unique_name_in_owner = true
 
 [node name="VisibleOnScreenNotifier2D2" type="VisibleOnScreenNotifier3D" parent="DeadSpaceEliminators" unique_id=1696627379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 391, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.812281)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier3D" parent="DeadSpaceEliminators" unique_id=247919459]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -329, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.319427)

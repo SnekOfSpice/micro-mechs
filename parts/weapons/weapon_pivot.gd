@@ -36,7 +36,7 @@ func attack_animation(attack_target : Mech) -> float:
 	
 	var distance_to_target := global_position.distance_to(target_position)
 		# TODO put appearence into config
-	var projectile_flight_duration = distance_to_target / 75.0
+	var projectile_flight_duration = distance_to_target / 750.0
 	
 	for i in config.projectiles:
 		var t := create_tween()

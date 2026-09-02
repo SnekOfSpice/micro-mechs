@@ -3,7 +3,7 @@ extends Node3D
 class_name Mech
 
 
-const WIDTH := 14
+const WIDTH := 40
 const HALF_WIDTH : int = int(WIDTH * 0.5)
 var combat_stats : CombatStats:
 	set(value):
@@ -371,7 +371,7 @@ func move_to_index(index : int, duration : float = 0.0):
 	if not Global.battle_stage.is_spot_free(index):
 		return
 	Global.battle_stage.handle_spot_change(self, get_spot(), index)
-	_move(index * WIDTH, duration)
+	_move(index * WIDTH + HALF_WIDTH, duration)
 
 
 func _move(target_z : float, duration : float):

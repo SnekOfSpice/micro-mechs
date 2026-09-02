@@ -165,14 +165,31 @@ func _on_command_executed(command : Command):
 
 
 func hide_range():
-	%Highlight.hide()
+	for child in %Highlight.get_children():
+		child.queue_free()
 
 func highlight_range(range : Vector2):
-	return
+	# swap if reversed
 	if range.x > range.y:
 		var a := range.x
 		range.x = range.y
 		range.y = a
+	
+	for child in %Highlight.get_children():
+		child.queue_free()
+	
+	for i in range(range.x, range.y + 1):
+		var highlight := Label3D.new()
+		highlight.fixed_size = true
+		highlight.text = "____"
+		highlight.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		highlight.no_depth_test = true
+		if not is_spot_free(i):
+			highlight.modulate = Color.RED
+		%Highlight.add_child(highlight)
+		highlight.position.z = i * Mech.WIDTH + Mech.HALF_WIDTH
+	return
+	
 	%Highlight.show()
 	%Highlight.global_position = %BattleLine.global_position
 	%Highlight.points = PackedVector2Array([
