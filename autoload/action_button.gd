@@ -50,6 +50,7 @@ func _on_pressed() -> void:
 
 func _on_mouse_entered() -> void:
 	#EventBus.request_action_rebuild.emit()
+	
 	var mech_spot := action.owner.get_spot()
 	var spot_vector := Vector2(mech_spot, mech_spot)
 	var flipped : bool = action.owner.flipped

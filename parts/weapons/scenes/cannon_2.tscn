@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bm8rndef6axsm"]
+
+[ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="1_vrvmc"]
+[ext_resource type="Resource" uid="uid://jfn78l3iqou" path="res://parts/weapons/configs/cannon_2.tres" id="2_vrvmc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vrvmc"]
+albedo_color = Color(0.26188198, 0.70964354, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ul0fg"]
+size = Vector3(1, 0.22215271, 0.21557617)
+
+[sub_resource type="PrismMesh" id="PrismMesh_joysk"]
+left_to_right = 1.5
+size = Vector3(0.615, 0.155, 0.325)
+
+[node name="Cannon2" type="Marker3D" unique_id=1045056308]
+script = ExtResource("1_vrvmc")
+config = ExtResource("2_vrvmc")
+metadata/_custom_type_script = "uid://btpy4p1qf56fv"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1521116604]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.04073727, 0.032859683, -0.06975341)
+material_override = SubResource("StandardMaterial3D_vrvmc")
+mesh = SubResource("BoxMesh_ul0fg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=376604190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2093457, 0, 0)
+mesh = SubResource("PrismMesh_joysk")
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=767942666]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.030849576, 0.08344549, -0.72468925)

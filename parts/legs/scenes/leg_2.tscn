@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ylndt0jx3ods"]
+
+[ext_resource type="Script" uid="uid://binxewfhgr2bv" path="res://parts/legs/leg_pivot.gd" id="1_piw22"]
+[ext_resource type="Resource" uid="uid://cviljg8bofs3x" path="res://parts/legs/configs/leg_2.tres" id="2_piw22"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_joysk"]
+size = Vector3(0.946167, 0.52941895, 0.2617798)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5t7wi"]
+size = Vector3(0.22280884, 1.2832642, 0.14009094)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h10he"]
+size = Vector3(0.22280884, 0.7684479, 0.35521317)
+
+[node name="Leg2" type="Marker3D" unique_id=317777368]
+script = ExtResource("1_piw22")
+config = ExtResource("2_piw22")
+metadata/_custom_type_script = "uid://binxewfhgr2bv"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1951621903]
+transform = Transform3D(0.7394428, 0.6732194, 0, -0.6732194, 0.7394428, 0, 0, 0, 1, 0.1720221, -0.10351977, -0.09732056)
+mesh = SubResource("BoxMesh_joysk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=154397978]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36167914, -0.3769227, -0.004737854)
+mesh = SubResource("BoxMesh_5t7wi")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D/MeshInstance3D2" unique_id=1157205928]
+transform = Transform3D(0.67113245, 0.7413376, 0, -0.7413376, 0.67113245, 0, 0, 0, 1, 0.18318903, -0.42975497, 0.019403458)
+mesh = SubResource("BoxMesh_h10he")

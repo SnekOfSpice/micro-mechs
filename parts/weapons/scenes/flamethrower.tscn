@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cjx3giegf4cvv"]
+
+[ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="1_jr4e6"]
+[ext_resource type="Resource" uid="uid://b348d3huuxd1u" path="res://parts/weapons/configs/flamethrower.tres" id="2_jr4e6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1esv"]
+albedo_color = Color(0.62799096, 0.06090296, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jr4e6"]
+size = Vector3(1, 0.22215271, 0.21557617)
+
+[node name="Flamethrower" type="Marker3D" unique_id=1045056308]
+script = ExtResource("1_jr4e6")
+config = ExtResource("2_jr4e6")
+metadata/_custom_type_script = "uid://btpy4p1qf56fv"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=115197237]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.032859802, 0.009887695)
+material_override = SubResource("StandardMaterial3D_i1esv")
+mesh = SubResource("BoxMesh_jr4e6")

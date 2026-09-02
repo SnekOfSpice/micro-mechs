@@ -7,37 +7,25 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
+tracks/0/path = NodePath("MeshInstance3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_swvkv"]
 resource_name = "cool_down"
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
-tracks/0/interp = 2
+tracks/0/path = NodePath("CPUParticles2D")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.56, 1),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 15.845), Vector2(0, 0)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CPUParticles2D")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0.06666667, 0.68),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -48,12 +36,27 @@ tracks/1/keys = {
 "method": &"set"
 }]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.32761645, 0), Vector3(0, 0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_th58h"]
 _data = {
 &"RESET": SubResource("Animation_6muii"),
 &"cool_down": SubResource("Animation_swvkv")
 }
+
+[sub_resource type="QuadMesh" id="QuadMesh_joysk"]
+size = Vector2(0.1, 0.1)
 
 [sub_resource type="Curve" id="Curve_joysk"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.17010307), 0.0, 0.0, 0, 0]
@@ -64,35 +67,38 @@ interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.23266219, 0.45190156, 0.9149888, 1)
 colors = PackedColorArray(1, 0.47951823, 0.3004085, 1, 0.35906908, 0.35906908, 0.35906908, 1, 0.2846229, 0.2846229, 0.2846229, 0.96918064, 0.34117648, 0.34117648, 0.34117648, 0.5921569, 0.34, 0.34, 0.34, 0)
 
-[node name="Torso" type="Sprite2D" unique_id=1025553937]
+[node name="Torso" type="Node3D" unique_id=887892187]
 script = ExtResource("2_ldi0w")
 
-[node name="LegTransformFront" type="RemoteTransform2D" parent="." unique_id=770917501]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=824334862]
+
+[node name="LegTransformFront" type="RemoteTransform3D" parent="." unique_id=1220853069]
 unique_name_in_owner = true
-position = Vector2(-17, 17)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0158)
 remote_path = NodePath("../../LegPivotFront")
 
-[node name="LegTransformBack" type="RemoteTransform2D" parent="." unique_id=1968580162]
+[node name="LegTransformBack" type="RemoteTransform3D" parent="." unique_id=1827594356]
 unique_name_in_owner = true
-position = Vector2(18, 19)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01736885)
 remote_path = NodePath("../../LegPivotBack")
 
-[node name="WeaponTransforms" type="Node2D" parent="." unique_id=148889375]
+[node name="WeaponTransforms" type="Node3D" parent="." unique_id=1508328346]
 unique_name_in_owner = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=972675819]
 libraries/ = SubResource("AnimationLibrary_th58h")
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=917466249]
+[node name="CPUParticles2D" type="CPUParticles3D" parent="." unique_id=573534122]
 emitting = false
 lifetime = 5.89
 explosiveness = 0.78
 lifetime_randomness = 0.3
+mesh = SubResource("QuadMesh_joysk")
 emission_shape = 1
 emission_sphere_radius = 6.46
-direction = Vector2(0, -1)
+direction = Vector3(0, -1, 0)
 spread = 33.91
-gravity = Vector2(0, -3.62)
+gravity = Vector3(0, -3.62, 0)
 initial_velocity_min = 14.22
 initial_velocity_max = 33.18
 scale_amount_min = 4.0

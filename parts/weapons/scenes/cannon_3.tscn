@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c10dolmg2l1q1"]
+
+[ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="1_cg50c"]
+[ext_resource type="Resource" uid="uid://rl0ncb5qi8rl" path="res://parts/weapons/configs/cannon_3.tres" id="2_cg50c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0tgj"]
+albedo_color = Color(0.99999994, 0.19159445, 0.7208914, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cg50c"]
+size = Vector3(0.70751953, 0.22215271, 0.21557617)
+
+[node name="Cannon3" type="Marker3D" unique_id=1045056308]
+script = ExtResource("1_cg50c")
+config = ExtResource("2_cg50c")
+metadata/_custom_type_script = "uid://btpy4p1qf56fv"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1800219296]
+transform = Transform3D(-3.4205637e-08, 2.7215071e-08, 1.0000001, 0.62260824, 0.7825338, 0, -0.7825337, 0.6226082, -4.371139e-08, -0.01323352, 0.13709182, -0.2259874)
+material_override = SubResource("StandardMaterial3D_y0tgj")
+mesh = SubResource("BoxMesh_cg50c")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=302099125]
+transform = Transform3D(0.9012041, -0.4333948, 8.415498e-09, 0.43339473, 0.9012043, 1.7513273e-08, -1.517425e-08, -1.2135805e-08, 1, 0.021873988, 0.20899938, -1.2665987e-07)
+material_override = SubResource("StandardMaterial3D_y0tgj")
+mesh = SubResource("BoxMesh_cg50c")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D" unique_id=624436513]
+transform = Transform3D(0.90388167, 0.42778277, -1.4929924e-08, -0.42778277, 0.90388155, -1.20167165e-08, 8.354338e-09, 1.7248457e-08, 1, -0.02014041, -0.19733644, -1.1175871e-07)
+material_override = SubResource("StandardMaterial3D_y0tgj")
+mesh = SubResource("BoxMesh_cg50c")

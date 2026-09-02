@@ -5,53 +5,53 @@
 [ext_resource type="PackedScene" uid="uid://wo6rrdj6b0k2" path="res://game/ui/attack_info_display.tscn" id="3_cy0xm"]
 [ext_resource type="PackedScene" uid="uid://kyqyl0rq54ol" path="res://world/battle/mech_status_container.tscn" id="3_jnchr"]
 
-[node name="Workshop" type="Control" unique_id=543363938]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Workshop" type="Node3D" unique_id=861177137]
 script = ExtResource("1_duchl")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1690532087]
+transform = Transform3D(-0.5767704, 0.2696568, -0.7711168, -0.37586987, 0.7504928, 0.5435833, 0.72529835, 0.60336214, -0.33150607, 3.8146973e-06, 58.412148, 29.704548)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=618259664]
+transform = Transform3D(-0.95949, 0.03886094, -0.27904943, -8.8817837e-16, 0.9904418, 0.13793077, 0.2817423, 0.1323432, -0.9503192, -19.233484, 19.059464, -45.205093)
+current = true
+
 [node name="Mech" parent="." unique_id=1584505707 instance=ExtResource("2_jnchr")]
-position = Vector2(377, 306)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=183374459]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=957539602]
 
-[node name="TorsoSelector" type="GridContainer" parent="VBoxContainer" unique_id=62006450]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=183374459]
+offset_right = 65.0
+offset_bottom = 140.0
+
+[node name="TorsoSelector" type="GridContainer" parent="CanvasLayer/VBoxContainer" unique_id=62006450]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/TorsoSelector" unique_id=2033244742]
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/TorsoSelector" unique_id=2033244742]
 layout_mode = 2
 text = "torso_1"
 
-[node name="Button2" type="Button" parent="VBoxContainer/TorsoSelector" unique_id=1150091541]
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer/TorsoSelector" unique_id=1150091541]
 layout_mode = 2
 text = "torso_2"
 
-[node name="LegsContainer" type="GridContainer" parent="VBoxContainer" unique_id=152848080]
+[node name="LegsContainer" type="GridContainer" parent="CanvasLayer/VBoxContainer" unique_id=152848080]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/LegsContainer" unique_id=47953105]
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/LegsContainer" unique_id=47953105]
 layout_mode = 2
 text = "leg_1"
 
-[node name="Button2" type="Button" parent="VBoxContainer/LegsContainer" unique_id=758980286]
+[node name="Button2" type="Button" parent="CanvasLayer/VBoxContainer/LegsContainer" unique_id=758980286]
 layout_mode = 2
 text = "leg_2"
 
-[node name="WeaponsSelection" type="HBoxContainer" parent="VBoxContainer" unique_id=1099144288]
+[node name="WeaponsSelection" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1099144288]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="CloseButton" type="Button" parent="." unique_id=159429627]
-layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -61,7 +61,6 @@ grow_horizontal = 0
 text = "Close"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=446536556]
-layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0

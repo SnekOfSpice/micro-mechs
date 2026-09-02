@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://wbj8pe7d146a"]
+
+[ext_resource type="Script" uid="uid://binxewfhgr2bv" path="res://parts/legs/leg_pivot.gd" id="1_d3ym4"]
+[ext_resource type="Resource" uid="uid://ckh4d14kgvejb" path="res://parts/legs/configs/leg_1.tres" id="2_o4tax"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bfsu4"]
+top_radius = 0.2109375
+bottom_radius = 0.2109375
+height = 0.80566406
+
+[sub_resource type="BoxMesh" id="BoxMesh_joysk"]
+size = Vector3(0.8542175, 0.43359375, 0.32421875)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1wfh1"]
+size = Vector3(0.43382263, 0.5720215, 0.53637695)
+
+[node name="Leg1" type="Marker3D" unique_id=758318238]
+script = ExtResource("1_d3ym4")
+config = ExtResource("2_o4tax")
+metadata/_custom_type_script = "uid://binxewfhgr2bv"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=658794071]
+transform = Transform3D(0.47420585, -0.880414, 0, 0.880414, 0.47420585, 0, 0, 0, 1, 0.187002, -0.100722425, 0)
+mesh = SubResource("CylinderMesh_bfsu4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1968376815]
+transform = Transform3D(0.8696971, -0.4935858, 0, 0.4935858, 0.8696971, 0, 0, 0, 1, -0.3622039, -0.36276722, -0.0078125)
+mesh = SubResource("BoxMesh_joysk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D/MeshInstance3D" unique_id=1196623552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21019691, 0.0052490532, -0.006958008)
+mesh = SubResource("BoxMesh_1wfh1")

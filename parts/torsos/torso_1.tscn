@@ -1,19 +1,40 @@
 [gd_scene format=3 uid="uid://b30xwos54plgc"]
 
-[ext_resource type="Texture2D" uid="uid://ftb4dk4fotj0" path="res://parts/torsos/torso.png" id="1_50s6g"]
 [ext_resource type="PackedScene" uid="uid://ntuh7267yt86" path="res://parts/torsos/torso.tscn" id="1_qu8qj"]
-[ext_resource type="Resource" uid="uid://dtes37wa1ew05" path="res://parts/torsos/configs/torso_1.tres" id="3_8j1me"]
+[ext_resource type="Script" uid="uid://dyvy5uipvdaox" path="res://parts/torsos/torso_config.gd" id="3_8j1me"]
+
+[sub_resource type="Resource" id="Resource_lb5wx"]
+resource_local_to_scene = true
+script = ExtResource("3_8j1me")
+health_max = 30
+bullets_max = 24
+rockets_max = 16
+heat_max = 12
+energy_max = 8
+energy_generation = 2
+metadata/_custom_type_script = "uid://dyvy5uipvdaox"
+
+[sub_resource type="BoxMesh" id="BoxMesh_6muii"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_swvkv"]
+albedo_color = Color(1, 0.13999999, 0.13999999, 1)
 
 [node name="Torso1" unique_id=1025553937 instance=ExtResource("1_qu8qj")]
-texture = ExtResource("1_50s6g")
-config = ExtResource("3_8j1me")
+config = SubResource("Resource_lb5wx")
 weapon_count = 2
 
-[node name="LegTransformFront" parent="." index="0" unique_id=770917501]
-position = Vector2(-17, 19)
+[node name="MeshInstance3D" parent="." index="0" unique_id=824334862]
+mesh = SubResource("BoxMesh_6muii")
+surface_material_override/0 = SubResource("StandardMaterial3D_swvkv")
 
-[node name="@RemoteTransform2D@49497" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="0" unique_id=712188100]
-position = Vector2(-27, 2)
+[node name="LegTransformFront" parent="." index="1" unique_id=1220853069]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.5344469, -0.21357661, -0.013485753)
 
-[node name="@RemoteTransform2D@49498" type="RemoteTransform2D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(148889375) index="1" unique_id=1295720548]
-position = Vector2(25, 3)
+[node name="LegTransformBack" parent="." index="2" unique_id=1827594356]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.5344469, -0.21468917, -0.013485706)
+
+[node name="@RemoteTransform3D@42825" type="RemoteTransform3D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(1508328346) index="0" unique_id=17968571]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6033268, 0.14154464, -0.018219177)
+
+[node name="@RemoteTransform3D@42826" type="RemoteTransform3D" parent="WeaponTransforms" parent_id_path=PackedInt32Array(1508328346) index="1" unique_id=439945588]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6033268, 0.13736051, -0.018219229)

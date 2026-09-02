@@ -1,9 +1,9 @@
 @tool
-extends Node2D
+extends Node3D
 class_name Mech
 
 
-const WIDTH := 128
+const WIDTH := 14
 const HALF_WIDTH : int = int(WIDTH * 0.5)
 var combat_stats : CombatStats:
 	set(value):
@@ -29,8 +29,11 @@ var combat_stats : CombatStats:
 			set_flip(flipped)
 	get():
 		if is_inside_tree():
-			if _torso:
-				return _torso.flip_h
+			var other : Mech = Global.get_other_mech(self)
+			if other:
+				var self_spot : int = Global.battle_stage.get_spot(self)
+				var other_spot : int = Global.battle_stage.get_spot(other)
+				return self_spot > other_spot
 		return flipped
 
 var _torso : Torso:
@@ -112,7 +115,7 @@ func _load_weapons(weapon_id_list : PackedStringArray):
 func _load_weapon(weapon_id : String, weapon_index : int):
 	if not _torso:
 		return
-	var weapon_path := "res://parts/weapons/%s.tscn" % weapon_id
+	var weapon_path := "res://parts/weapons/scenes/%s.tscn" % weapon_id
 	if not ResourceLoader.exists(weapon_path):
 		return
 	var weapon : Pivot = load(weapon_path).instantiate()
@@ -130,7 +133,7 @@ func _load_legs(tech_id : String) -> void:
 		return
 	if not _torso:
 		return
-	var leg_path := "res://parts/legs/%s.tscn" % tech_id
+	var leg_path := "res://parts/legs/scenes/%s.tscn" % tech_id
 	
 	if not ResourceLoader.exists(leg_path):
 		return
@@ -180,10 +183,11 @@ func _get_mech_height() -> float:
 	var leg_front : Pivot = %LegPivots.get_child(0)
 	if not leg_front:
 		return 0
-	if leg_front:
-		var leg_sprite : Sprite2D = leg_front.get_child(0)
-		leg_height += leg_sprite.texture.get_size().y
-		leg_height += leg_sprite.position.y
+	print("TODO leg height")
+	#if leg_front:
+		#var leg_sprite : Sprite2D = leg_front.get_child(0)
+		#leg_height += leg_sprite.texture.get_size().y
+		#leg_height += leg_sprite.position.y
 	
 	var pivot_offset : float = _torso.find_child("LegTransformFront").position.y
 	
@@ -193,6 +197,8 @@ func _get_mech_height() -> float:
 
 
 func set_flip(flipped : bool):
+	# unneeded in 3d
+	return
 	_torso.set_flipped(flipped)
 	#%TorsoPivot.scale.x = -1 if flipped else 1
 	for pivot : Pivot in %LegPivots.get_children():
@@ -252,9 +258,7 @@ func get_action_list() -> Array[Action]:
 
 
 func is_in_spot(index : int) -> bool:
-	var index_position := index * WIDTH
-	var distance : float = position.x - index_position
-	return abs(distance) < 0.001
+	return index == Global.battle_stage.get_spot(self)
 
 
 func get_distance_to_spot(spot : int) -> int:
@@ -273,7 +277,9 @@ func is_in_range(r : Vector2i) -> bool:
 
 
 func get_spot() -> int:
-	return int(position.x / float(WIDTH))
+	if Global.battle_stage:
+		return Global.battle_stage.get_spot(self)
+	return int(position.z / float(WIDTH))
 
 
 func is_overheated():
@@ -320,14 +326,14 @@ func can_use_weapon(weapon_config : WeaponConfig) -> Action.CanDoResult:
 
 
 func is_entirely_on_screen() -> bool:
-	for vis : VisibleOnScreenNotifier2D in %VisibleGuarantee.get_children():
+	for vis : VisibleOnScreenNotifier3D in %VisibleGuarantee.get_children():
 		if not vis.is_on_screen():
 			return false
 	return true
 
 
 func too_much_dead_space() -> bool:
-	for vis : VisibleOnScreenNotifier2D in %DeadSpaceEliminators.get_children():
+	for vis : VisibleOnScreenNotifier3D in %DeadSpaceEliminators.get_children():
 		if not vis.is_on_screen():
 			return false
 	return true
@@ -360,10 +366,19 @@ func stomp():
 	Global.get_other_mech(self).handle_attacked(stomp_attack)
 
 
-func move(target_position : Vector2, duration : float):
+func move_to_index(index : int, duration : float = 0.0):
+	index = clampi(index, 0, BattleStage.ARENA_SIZE_RANGE.y - 1)
+	if not Global.battle_stage.is_spot_free(index):
+		return
+	Global.battle_stage.handle_spot_change(self, get_spot(), index)
+	_move(index * WIDTH, duration)
+
+
+func _move(target_z : float, duration : float):
 	var t := create_tween()
-	t.tween_property(self, "position", target_position, duration)
+	t.tween_property(self, "position:z", target_z, duration)
 	await t.finished
+	await get_tree().create_timer(1).timeout
 
 func command_cool_down():
 	var c = CommandCoolDown.new()
@@ -407,7 +422,7 @@ func do_attack(target : Mech, weapon_index : int):
 
 # usedful for multi projectile
 var timestamps := []
-func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), impact_position : Vector2 = get_projectile_point()):
+func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), impact_position : Vector3 = get_projectile_point()):
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
 	
@@ -423,7 +438,7 @@ func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), im
 	if with.knockback > 0:
 		var knockback_direction : int = 1 if flipped else -1
 		var target := get_spot() + with.knockback * knockback_direction
-		move(Vector2(target * WIDTH, position.y), 0.2)
+		move_to_index(target * with.knockback, 0.2)
 
 
 func _on_combat_stats_changed():
@@ -447,13 +462,14 @@ func generate_energy():
 	
 	
 	
-func get_projectile_point():
+func get_projectile_point() -> Vector3:
 	var base := _torso.global_position
-	var torso_size := _torso.texture.get_size()
-	torso_size -= torso_size * 0.5
+	var torso_size := _torso.get_size()
+	#torso_size -= torso_size * 0.5
 	torso_size *= 0.75
-	
-	return base + Vector2(
+	#
+	return base + Vector3(
 		randf_range(-torso_size.x, torso_size.x),
 		randf_range(-torso_size.y, torso_size.y),
+		randf_range(-torso_size.z, torso_size.z),
 	)

@@ -10,6 +10,7 @@ func do():
 	# TODO fancier: if distance in config is > 1, get a selection for how far to go
 	owner.command_move(distance)
 
+
 func can_do() -> CanDoResult:
 	if owner.is_overheated():
 		return CanDoResult.OVERHEATED #abs(distance) <= 1
@@ -18,4 +19,6 @@ func can_do() -> CanDoResult:
 	var in_spot := other.is_in_spot(query_distance)
 	if in_spot:
 		return CanDoResult.MECH_IN_SPOT
+	if not Global.battle_stage.is_in_arena(query_distance):
+		return CanDoResult.EDGE_OF_ARENA
 	return CanDoResult.CAN_DO

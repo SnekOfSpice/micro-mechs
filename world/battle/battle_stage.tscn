@@ -2,25 +2,18 @@
 
 [ext_resource type="Script" uid="uid://csgyet2aa78c0" path="res://world/battle/battle_stage.gd" id="1_mlyy2"]
 [ext_resource type="PackedScene" uid="uid://b14nvytfkkcr0" path="res://world/battle/player_hud.tscn" id="2_2c4jw"]
-[ext_resource type="Texture2D" uid="uid://chuqeoprsd1yl" path="res://pix-tresa-K4TFFWOrrVw-unsplash.jpg" id="2_jjfmi"]
 [ext_resource type="Script" uid="uid://cijrx4y0b34ep" path="res://world/battle/battle_camera.gd" id="2_veacd"]
 
-[node name="BattleStage" type="Node2D" unique_id=334141487]
+[node name="BattleStage" type="Node3D" unique_id=311812168]
 script = ExtResource("1_mlyy2")
 
-[node name="PixTresaK4tffwOrrVwUnsplash" type="Sprite2D" parent="." unique_id=885196346]
-z_index = -6
-position = Vector2(567, -372)
-texture = ExtResource("2_jjfmi")
-
-[node name="BattleCamera" type="Camera2D" parent="." unique_id=88614104]
-position = Vector2(643, 285)
-zoom = Vector2(0.49, 0.49)
+[node name="BattleCamera" type="Camera3D" parent="." unique_id=1505341304]
+transform = Transform3D(1.1978283e-07, 0.672264, -0.74031156, -2.9385586e-08, 0.74031156, 0.672264, 1, -5.8771192e-08, 1.0843148e-07, -109.048325, 68.81363, 84.6192)
+current = true
 script = ExtResource("2_veacd")
 
-[node name="BattleLine" type="Node2D" parent="." unique_id=1303242035]
+[node name="BattleLine" type="Node3D" parent="." unique_id=1772281237]
 unique_name_in_owner = true
-position = Vector2(265, 482)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=781033469]
 
@@ -36,7 +29,24 @@ offset_bottom = 8.0
 grow_horizontal = 0
 text = "main menu"
 
+[node name="TileDataLabel" type="Label" parent="CanvasLayer" unique_id=1456953307]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -33.0
+offset_top = -207.0
+offset_right = 7.0
+offset_bottom = -184.0
+grow_horizontal = 2
+grow_vertical = 0
+
 [node name="Highlight" type="Line2D" parent="." unique_id=473816625]
 unique_name_in_owner = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2078045928]
+transform = Transform3D(0.76692486, -0.3786448, 0.51812583, 0, 0.80738044, 0.5900312, -0.64173687, -0.45250958, 0.6192001, 0, 17.692207, 0)
 
 [connection signal="pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_pressed"]
