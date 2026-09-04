@@ -8,6 +8,17 @@ var commands_this_turn := []
 var commands_begun_this_turn := []
 
 
+var combat_order := []
+
+func register(mech : Mech):
+	combat_order.append(mech)
+
+func get_next_mech(mech : Mech) -> Mech:
+	var index := combat_order.find(mech)
+	if index >= combat_order.size() - 1:
+		return combat_order.front()
+	return combat_order[index + 1]
+
 var _tile_data := []
 
 func _on_tile_data_changed():
@@ -24,34 +35,41 @@ const ARENA_SIZE_RANGE := Vector2i(8, 13)
 
 
 func _ready() -> void:
+	Global.battle_stage = self
 	CommandHandler.command_executed.connect(_on_command_executed)
 	CommandHandler.command_executing.connect(_on_command_executing)
+	
+	
+	_tile_data.clear()
+	_tile_data.resize(randi_range(ARENA_SIZE_RANGE.x, ARENA_SIZE_RANGE.y))
+	
 	var config := ResourceLoader.load("user://mech_config.tres")
 	mech1 = preload("res://mech.tscn").instantiate()
 	%BattleLine.add_child(mech1)
 	mech1.config = config
 	
-	mech2 = preload("res://mech.tscn").instantiate()
-	%BattleLine.add_child(mech2)
-	mech2.config = MechConfig.get_randomized()
-	
-	%PhantomCamera3D.look_at_targets = [mech1, mech2] as Array[Node3D]
-	
-	var agent := MechAgent.new()
-	mech2.add_child(agent)
-	
-	Global.player_mech = mech1
-	Global.npc_mech = mech2
-	Global.battle_stage = self
-	
-	_tile_data.clear()
-	_tile_data.resize(randi_range(ARENA_SIZE_RANGE.x, ARENA_SIZE_RANGE.y))
-	
 	var player_start_position := randi_range(2, 4)
 	mech1.move_to_index(player_start_position)
-	var other_start_position := player_start_position + randi_range(1, 5)
-	other_start_position = clampi(other_start_position, 0, ARENA_SIZE_RANGE.y)
-	mech2.move_to_index(other_start_position)
+	Global.player_mech = mech1
+	
+	const NPC_COUNT := 2
+	for i in NPC_COUNT:
+		var mech = preload("res://mech.tscn").instantiate()
+		%BattleLine.add_child(mech)
+		mech.config = MechConfig.get_randomized()
+		
+		var agent := MechAgent.new()
+		mech.add_child(agent)
+			
+		mech.move_to_index(find_free_index())
+	
+	var targets : Array[Node3D] = []
+	for mech : Mech in %BattleLine.get_children():
+		targets.append(mech)
+	%PhantomCamera3D.look_at_targets = targets
+	
+	
+	
 	
 	
 	
@@ -62,8 +80,28 @@ func _ready() -> void:
 	#mech2.mech_loaded.connect(_decrement_blocker, CONNECT_ONE_SHOT)
 	
 	await get_tree().process_frame
-	%PlayerHUD.register_mechs_to_track(mech1, mech2)
+	%PlayerHUD.register_mechs_to_track(mech1)
 
+func find_free_index() -> int:
+	var indices := range(0, _tile_data.size())
+	indices.shuffle()
+	for index in indices:
+		if get_tile_data(index) == null:
+			return index
+	return -1
+
+
+func get_forward_data(spot : int, flipped : bool, distance : int = 1):
+	if flipped:
+		distance *= -1
+	return get_tile_data(spot + distance)
+
+
+func get_tile_data(index : int) -> Variant:
+	if index < 0 or index >= _tile_data.size():
+		return TileOutOfBounds.new() # return non-null to prevent weird code
+	index = clampi(index, 0, _tile_data.size() - 1)
+	return _tile_data[index]
 
 func _process(delta: float) -> void:
 	_update_flips()
@@ -78,6 +116,10 @@ func get_spot(mech : Mech) -> int:
 		if _tile_data[i] == mech:
 			return i
 	return -1
+
+
+func get_arena_size() -> int:
+	return _tile_data.size()
 
 
 func is_spot_free(index : int) -> bool:
@@ -98,18 +140,18 @@ func _begin_battle():
 	_update_flips()
 	
 	await get_tree().process_frame
-	mech1.initialize_combat_stats()
-	mech2.initialize_combat_stats()
+	for mech : Mech in %BattleLine.get_children():
+		mech.initialize_combat_stats()
 	
 	%PlayerHUD.populate_player_actions(mech1.get_action_list())
-	Global.active_mech = mech1
 	PhaseManager.begin_match()
 
 
 func _update_flips():
-	if mech1.global_position != mech2.global_position:
-		mech1.look_at(mech2.global_position)
-		mech2.look_at(mech1.global_position)
+	return
+	#if mech1.global_position != mech2.global_position:
+		#mech1.look_at(mech2.global_position)
+		#mech2.look_at(mech1.global_position)
 	#mech1.set_flip(mech1.global_position.x > mech2.global_position.x)
 	#mech2.set_flip(mech2.global_position.x > mech1.global_position.x)
 #
@@ -147,23 +189,43 @@ func _update_flips():
 func command_do_attack(attacking_mech : Mech, weapon_index : int):
 	var c := CommandDoAttack.new()
 	c.attacker = attacking_mech
-	c.target = Global.get_other_mech(attacking_mech)
+	c.targets = get_player_or_list_of_enemies(attacking_mech)
 	c.weapon_index = weapon_index
 	CommandHandler.add_command(c)
+
+
+func get_player_or_list_of_enemies(from_attacker : Mech) -> Array:
+	if from_attacker == Global.player_mech:
+		# return list of enemies
+		var result := []
+		for mech in combat_order:
+			if mech != Global.player_mech:
+				result.append(mech)
+		return result
+	else:
+		return [Global.player_mech]
+	
 
 
 func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")
 
 
-func _on_command_executing(command : Command):
-	commands_begun_this_turn.append(command)
+func clear_commands_begun_this_turn():
+	commands_begun_this_turn.clear()
 	EventBus.commands_begun_this_turn_changed.emit()
+
+
+func _on_command_executing(command : Command):
+	if PhaseManager.phase is PhasePlayerTurn:
+		commands_begun_this_turn.append(command)
+		EventBus.commands_begun_this_turn_changed.emit()
 func _on_command_executed(command : Command):
-	commands_this_turn.append(command)
-	if commands_this_turn.size() >= Global.active_mech.combat_stats.actions_left:
-		PhaseManager.advance_phase()
-	EventBus.commands_this_turn_changed.emit()
+	if PhaseManager.phase is PhasePlayerTurn:
+		commands_this_turn.append(command)
+		if commands_this_turn.size() >= Global.player_mech.combat_stats.actions_left:
+			PhaseManager.advance_phase()
+		EventBus.commands_this_turn_changed.emit()
 
 
 func hide_range():
@@ -183,11 +245,14 @@ func highlight_range(range : Vector2):
 	for i in range(range.x, range.y + 1):
 		var highlight := Label3D.new()
 		highlight.fixed_size = true
-		highlight.text = "____"
+		highlight.text = "x"
 		highlight.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		highlight.no_depth_test = true
-		if not is_spot_free(i):
+		var tile_data : Variant = get_tile_data(i)
+		if tile_data is Mech:
 			highlight.modulate = Color.RED
+		elif tile_data is TileOutOfBounds:
+			highlight.modulate.a = 0.3
 		%Highlight.add_child(highlight)
 		highlight.position.z = i * Mech.WIDTH + Mech.HALF_WIDTH
 	return
@@ -225,3 +290,27 @@ func add_floating_number(damage : int, at : Vector3):
 	label.scale = Vector2.ONE * clamp(damage, 2.5, 10)
 	t.tween_property(label, "scale", Vector2.ZERO, 1).set_delay(2).set_trans(Tween.TRANS_CUBIC)
 	t.finished.connect(label.queue_free)
+
+
+func is_any_mech_in_range(r : Vector2i) -> bool:
+	if r.x > r.y:
+		var swap := r.x
+		r.x = r.y
+		r.y = swap
+	for i in range(r.x, r.y + 1):
+		if get_tile_data(i) is Mech:
+			return true
+	return false
+
+
+func do_enemy_actions():
+	for mech : Mech in combat_order:
+		if mech != Global.player_mech:
+			if mech.combat_stats.actions_left > 0:
+				print("NPC ACTION")
+				await mech.agent.act()
+	#await get_tree().create_timer(3).timeout
+
+
+class TileOutOfBounds:
+	var lol

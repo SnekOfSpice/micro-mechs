@@ -19,6 +19,7 @@ func add_command(command : Command) -> void:
 
 
 func execute_next_command() -> void:
+	await get_tree().process_frame
 	commands_changed.emit()
 	
 	if awaiting_execution or command_queue.is_empty():
@@ -33,6 +34,8 @@ func execute_next_command() -> void:
 	await command.execute()
 	await get_tree().create_timer(0.5).timeout
 	awaiting_execution = false
-	execute_next_command()
 	
 	command_executed.emit(command)
+	await get_tree().process_frame
+	execute_next_command()
+	

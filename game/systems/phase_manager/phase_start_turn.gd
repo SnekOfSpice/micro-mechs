@@ -6,7 +6,10 @@ var first_turn := true
 
 
 func enter_state() -> void:
-	Global.active_mech.generate_energy()
+	for mech : Mech in Global.battle_stage.combat_order:
+		print("REFILLING ", mech)
+		mech.generate_energy()
+		mech.refill_actions()
 	Global.hud.begin_turn()
 	
 	super()
@@ -16,8 +19,6 @@ func enter_state() -> void:
 func exit_state() -> void:
 	super()
 	if first_turn:
-		Global.active_mech.refill_actions(1)
-	else:
-		Global.active_mech.refill_actions()
+		Global.player_mech.refill_actions(1)
 	first_turn = false
 	pass

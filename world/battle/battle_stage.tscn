@@ -53,7 +53,7 @@ tonemap_white = 2.56
 script = ExtResource("1_mlyy2")
 
 [node name="CameraHolder" type="Node3D" parent="." unique_id=425572374]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.34296, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.61208, 0, 0)
 script = ExtResource("2_ty4ei")
 
 [node name="PhantomCamera3D" type="Node3D" parent="CameraHolder" unique_id=1995811210]
@@ -65,7 +65,7 @@ tween_resource = SubResource("Resource_t17tb")
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="BattleCamera" type="Camera3D" parent="." unique_id=1505341304]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.22354, 103.382355, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -354.1786, 103.382355, 0)
 top_level = true
 current = true
 

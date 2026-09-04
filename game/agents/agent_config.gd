@@ -23,6 +23,15 @@ func pick_next_action(viable_action_list : Array[Action],
 	if viable_action_list.size() == 1:
 		return viable_action_list.front()
 	
+	
+	
+	for action : Action in viable_action_list:
+		if action is ActionFlip:
+			if executing_mech.is_pointed_at_enemy():
+				viable_action_list.erase(action)
+			else:
+				return action
+	
 	if executing_mech.combat_stats.heat == 0:
 		if viable_action_list.size() > 1:
 			for action : Action in viable_action_list:

@@ -5,6 +5,7 @@ class_name CombatStats
 var actions_left : int:
 	set(value):
 		if value != actions_left:
+			print("ACTIONS LEFT: 1")
 			actions_left = value
 			emit_changed()
 

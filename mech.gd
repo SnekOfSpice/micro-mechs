@@ -28,13 +28,15 @@ var combat_stats : CombatStats:
 		if is_inside_tree():
 			set_flip(flipped)
 	get():
-		if is_inside_tree():
-			var other : Mech = Global.get_other_mech(self)
-			if other:
-				var self_spot : int = Global.battle_stage.get_spot(self)
-				var other_spot : int = Global.battle_stage.get_spot(other)
-				return self_spot > other_spot
-		return flipped
+		# mechs get positioned along the z axis with higher z values being further right
+		# on the battle field to make math easier
+		# however this means that once in game, positive z is forward
+		# and since default forward is negative z, the flipped logic is a bit backwards
+		var absolute_rotation : float = abs(rotation_degrees.y)
+		if absolute_rotation > 175 and absolute_rotation < 185:
+			return false
+		return true
+
 
 var _torso : Torso:
 	get():
@@ -208,6 +210,11 @@ func set_flip(flipped : bool):
 	#%WeaponPivots.scale.x = -1 if flipped else 1
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	Global.battle_stage.register(self)
+
 
 func _get_leg_config() -> LegConfig:
 	if not _leg_config:
@@ -216,10 +223,11 @@ func _get_leg_config() -> LegConfig:
 
 
 func is_in_front_of_other_mech() -> bool:
-	var spot := get_spot()
-	var other_spot : int = Global.get_other_mech(self).get_spot()
 	
-	return (abs(spot - other_spot)) == 1
+	if Global.battle_stage.get_forward_data(get_spot(), flipped, 1) is Mech:
+		return true
+	return false
+	
 
 
 func get_action_list() -> Array[Action]:
@@ -231,6 +239,9 @@ func get_action_list() -> Array[Action]:
 	var stomp_action := ActionStomp.new()
 	stomp_action.owner = self
 	result.append(stomp_action)
+	var flip_action := ActionFlip.new()
+	flip_action.owner = self
+	result.append(flip_action)
 	
 	var leg_config : LegConfig = _get_leg_config()
 	for i in range(-leg_config.movement, leg_config.movement + 1):
@@ -317,7 +328,7 @@ func can_use_weapon(weapon_config : WeaponConfig) -> Action.CanDoResult:
 	#weapon_config.weapon_range
 	#adjusted_range.x += get_spot()
 	#adjusted_range.y += get_spot()
-	var in_range : bool = Global.get_other_mech(self).is_in_range(adjusted_range)
+	var in_range : bool = Global.battle_stage.is_any_mech_in_range(adjusted_range)
 	if in_range:
 		return Action.CanDoResult.CAN_DO
 	else:
@@ -359,11 +370,16 @@ func cool_down():
 
 
 func stomp():
+	var knockback := 1# put into config
+	var other_mech = Global.battle_stage.get_forward_data(get_spot(), flipped, knockback)
+	if not other_mech is Mech:
+		push_warning("Tried to stomp with no mech in front")
+		return
 	await _torso.stomp_anim()
 	var stomp_attack := WeaponConfig.new()
 	stomp_attack.damage = _leg_config.stomp_damage
-	stomp_attack.knockback = 1
-	Global.get_other_mech(self).handle_attacked(stomp_attack)
+	stomp_attack.knockback = knockback
+	other_mech.handle_attacked(stomp_attack)
 
 
 func move_to_index(index : int, duration : float = 0.0):
@@ -373,6 +389,19 @@ func move_to_index(index : int, duration : float = 0.0):
 	Global.battle_stage.handle_spot_change(self, get_spot(), index)
 	_move(index * WIDTH + HALF_WIDTH, duration)
 
+
+func _process(delta: float) -> void:
+	$Label3D.text = str(
+		position.z,
+		"\n",
+		Global.battle_stage.commands_begun_this_turn.size(),
+		"/",
+		combat_stats.actions_left,
+		"\n",
+		"pointed at enemy ", is_pointed_at_enemy()
+		)
+	if Global.player_mech == self:
+		$Label3D.text += "\nv"
 
 func _move(target_z : float, duration : float):
 	var t := create_tween()
@@ -416,7 +445,7 @@ func do_attack(target : Mech, weapon_index : int):
 	if weapon_config.uses > -1:
 		weapon_config.uses_left = max(0, weapon_config.uses_left - 1)
 	
-	var duration := await weapon.attack_animation(Global.get_other_mech(self))
+	var duration := await weapon.attack_animation(target)
 	await get_tree().create_timer(duration).timeout
 
 
@@ -473,3 +502,34 @@ func get_projectile_point() -> Vector3:
 		randf_range(-torso_size.y, torso_size.y),
 		randf_range(-torso_size.z, torso_size.z),
 	)
+
+
+func command_flip():
+	var c = CommandFlip.new()
+	c.targets = [self]
+	CommandHandler.add_command(c)
+
+
+func flip():
+	rotate_y(deg_to_rad(180))
+	rotation_degrees.y = int(rotation_degrees.y) % 360
+
+
+func is_pointed_at_enemy() -> bool:
+	if self == Global.player_mech:
+		var lower : int
+		var upper : int
+		if flipped:
+			lower = 0
+			upper = get_spot() - 1
+		else:
+			lower = get_spot() + 1
+			upper = Global.battle_stage.get_arena_size() - 1
+		return Global.battle_stage.is_any_mech_in_range(Vector2(lower, upper))
+	else:
+		var player_spot : int = Global.player_mech.get_spot()
+		var spot := get_spot()
+		if flipped:
+			return spot > player_spot
+		else:
+			return spot < player_spot

@@ -14,31 +14,23 @@ func _ready() -> void:
 
 func _on_mech_died(mech : Mech):
 	%MatchFinish.show()
-	if mech == Global.npc_mech:
-		%MatchFinishLabel.text = "you win"
-	else:
+	if mech == Global.player_mech:
 		%MatchFinishLabel.text = "you lose"
+	else:
+		%MatchFinishLabel.text = "you win"
 
 
 
 func _on_phase_changed(phase : Phase):
 	%ActionsContainer.hide()
-	if not phase is PhaseAct:
+	if not phase is PhasePlayerTurn:
 		return
 	
-	if Global.active_mech == Global.player_mech:
-		%ActionsContainer.visible = true
+	%ActionsContainer.visible = true
 
-#
-#func _on_combat_stats_changed(mech : Mech):
-	#if mech != Global.player_mech:
-		#return
-	#
-	#%ActionsContainer.visible = mech.combat_stats.actions_left > 0
 
-func register_mechs_to_track(player_mech : Mech, npc_mech : Mech):
+func register_mechs_to_track(player_mech : Mech):
 	%MechStatusContainer.tracking_mech = player_mech
-	%MechStatusContainer2.tracking_mech = npc_mech
 
 func populate_player_actions(actions : Array[Action]):
 	for child in %ActionsContainer.get_children():
@@ -82,7 +74,7 @@ func hide_weapon_visualizer():
 
 
 func begin_turn():
-	var is_player_turn : bool = Global.active_mech == Global.player_mech
+	var is_player_turn : bool = PhaseManager.phase is PhasePlayerTurn
 	if is_player_turn:
 		%TurnLabel.text = "PLAYER TURN"
 	else:

@@ -4,12 +4,8 @@
 [ext_resource type="Script" uid="uid://doykq4fatoa8u" path="res://parts/mech_config.gd" id="2_n3pud"]
 [ext_resource type="PackedScene" uid="uid://b30xwos54plgc" path="res://parts/torsos/torso_1.tscn" id="3_03qo4"]
 [ext_resource type="Script" uid="uid://dyvy5uipvdaox" path="res://parts/torsos/torso_config.gd" id="4_d1hbp"]
-[ext_resource type="Script" uid="uid://dm2eppebv8m75" path="res://parts/torsos/torso.gd" id="5_og3mo"]
 [ext_resource type="PackedScene" uid="uid://wbj8pe7d146a" path="res://parts/legs/scenes/leg_1.tscn" id="6_n3pud"]
-[ext_resource type="Script" uid="uid://binxewfhgr2bv" path="res://parts/legs/leg_pivot.gd" id="8_k5npo"]
-[ext_resource type="Resource" uid="uid://ckh4d14kgvejb" path="res://parts/legs/configs/leg_1.tres" id="9_gv68a"]
 [ext_resource type="PackedScene" uid="uid://dpdt0208uwpai" path="res://parts/weapons/scenes/cannon_1.tscn" id="9_wgdda"]
-[ext_resource type="Script" uid="uid://btpy4p1qf56fv" path="res://parts/weapons/weapon_pivot.gd" id="10_og3mo"]
 [ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="11_my38c"]
 [ext_resource type="PackedScene" uid="uid://bm8rndef6axsm" path="res://parts/weapons/scenes/cannon_2.tscn" id="12_k5npo"]
 
@@ -56,47 +52,36 @@ metadata/_custom_type_script = "uid://d4g0xn01kf10"
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 script = ExtResource("1_qbvha")
 config = SubResource("Resource_6frl3")
+flipped = true
 
 [node name="TorsoPivot" type="Node3D" parent="." unique_id=154919664]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21357661, 0)
 
-[node name="Torso1" type="Node3D" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("3_03qo4")]
-script = ExtResource("5_og3mo")
+[node name="Torso1" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("3_03qo4")]
 config = SubResource("Resource_gv68a")
-weapon_count = 2
 
 [node name="LegPivots" type="Node3D" parent="." unique_id=409327639]
 unique_name_in_owner = true
 
-[node name="@Marker3D@72517" type="Marker3D" parent="LegPivots" unique_id=758318238 instance=ExtResource("6_n3pud")]
+[node name="@Marker3D@72517" parent="LegPivots" unique_id=758318238 instance=ExtResource("6_n3pud")]
 transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, 0.5344469, 0, -0.013485754)
-script = ExtResource("8_k5npo")
-config = ExtResource("9_gv68a")
-metadata/_custom_type_script = "uid://binxewfhgr2bv"
 
-[node name="@Marker3D@72518" type="Marker3D" parent="LegPivots" unique_id=1099145651 instance=ExtResource("6_n3pud")]
+[node name="@Marker3D@72518" parent="LegPivots" unique_id=1099145651 instance=ExtResource("6_n3pud")]
 transform = Transform3D(-4.3711392e-08, 0, 1, 0, 1, 0, -1, 0, -4.3711392e-08, -0.5344469, -0.0011125564, -0.013485706)
-script = ExtResource("8_k5npo")
-config = ExtResource("9_gv68a")
 in_front = false
-metadata/_custom_type_script = "uid://binxewfhgr2bv"
 
 [node name="WeaponPivots" type="Node3D" parent="." unique_id=1044844915]
 unique_name_in_owner = true
 
-[node name="Cannon1" type="Marker3D" parent="WeaponPivots" unique_id=1045056308 instance=ExtResource("9_wgdda")]
+[node name="Cannon1" parent="WeaponPivots" unique_id=1045056308 instance=ExtResource("9_wgdda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6033268, 0.35512123, -0.018219177)
-script = ExtResource("10_og3mo")
 config = SubResource("Resource_gebfl")
-metadata/_custom_type_script = "uid://btpy4p1qf56fv"
 
-[node name="Cannon2" type="Marker3D" parent="WeaponPivots" unique_id=975350807 instance=ExtResource("12_k5npo")]
+[node name="Cannon2" parent="WeaponPivots" unique_id=975350807 instance=ExtResource("12_k5npo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6033268, 0.35093713, -0.01821923)
-script = ExtResource("10_og3mo")
 config = SubResource("Resource_0t1xr")
 in_front = false
-metadata/_custom_type_script = "uid://btpy4p1qf56fv"
 
 [node name="VisibleGuarantee" type="Node3D" parent="." unique_id=899868756]
 unique_name_in_owner = true
@@ -121,3 +106,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.812281)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier3D" parent="DeadSpaceEliminators" unique_id=247919459]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.319427)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=466690967]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9924133, 0)
+pixel_size = 0.0001
+billboard = 1
+fixed_size = true

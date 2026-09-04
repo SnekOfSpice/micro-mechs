@@ -55,14 +55,9 @@ func _on_commands_this_turn_changed():
 func _on_commands_begun_this_turn_changed():
 	ugh()
 func ugh():
-	var phase := PhaseManager.phase
 	%Actions.text = ""
-	if not phase is PhaseAct:
-		return
-	if Global.active_mech != tracking_mech:
-		return
 	
-	var a : int = (Global.active_mech.combat_stats.actions_left - 
+	var a : int = (Global.player_mech.combat_stats.actions_left - 
 		Global.battle_stage.commands_begun_this_turn.size())
 	%Actions.text = Global.get_uses_string(a,
 		2

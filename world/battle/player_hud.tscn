@@ -27,17 +27,6 @@ grow_vertical = 0
 unique_name_in_owner = true
 layout_mode = 0
 
-[node name="MechStatusContainer2" parent="." unique_id=1561995097 instance=ExtResource("2_6y46n")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -260.0
-offset_right = 0.0
-offset_bottom = 83.0
-grow_horizontal = 0
-
 [node name="AttackInfoDisplay" parent="." unique_id=1416408057 instance=ExtResource("3_oe0lj")]
 unique_name_in_owner = true
 layout_mode = 0

@@ -9,7 +9,6 @@ enum TargetMode{
 
 
 @export_placeholder("res://...") var command_name : String
-var target_mode := TargetMode.Players
 var targets := []
 
 

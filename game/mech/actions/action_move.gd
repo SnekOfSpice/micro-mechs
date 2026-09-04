@@ -14,11 +14,11 @@ func do():
 func can_do() -> CanDoResult:
 	if owner.is_overheated():
 		return CanDoResult.OVERHEATED #abs(distance) <= 1
-	var other : Mech = Global.get_other_mech(owner)
-	var query_distance := owner.get_spot() + distance
-	var in_spot := other.is_in_spot(query_distance)
-	if in_spot:
+	
+	# distance is already signed
+	var forward_data = Global.battle_stage.get_forward_data(owner.get_spot(), false, distance)
+	if forward_data is Mech:
 		return CanDoResult.MECH_IN_SPOT
-	if not Global.battle_stage.is_in_arena(query_distance):
+	if forward_data is BattleStage.TileOutOfBounds:
 		return CanDoResult.EDGE_OF_ARENA
 	return CanDoResult.CAN_DO

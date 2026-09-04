@@ -30,7 +30,7 @@ func set_phase(new_phase : Phase, previous_phase : Phase = null):
 	
 	
 	#_update_player_ui()
-	
+	print("Phase set", new_phase)
 	phase.enter_state()
 	EventBus.phase_changed.emit(phase)
 

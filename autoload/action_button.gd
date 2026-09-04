@@ -29,6 +29,8 @@ func _rebuild():
 		text = "attack"
 	elif action is ActionStomp:
 		text = "stomp"
+	elif action is ActionFlip:
+		text = "flip"
 	
 	var can_do : Action.CanDoResult = action.can_do()
 	if can_do == Action.CanDoResult.CAN_DO:
@@ -45,10 +47,12 @@ func _on_pressed() -> void:
 	if CommandHandler.awaiting_execution:
 		return
 	action.do()
+	await get_tree().process_frame
 	EventBus.request_action_rebuild.emit()
 
 
 func _on_mouse_entered() -> void:
+	print(action.can_do())
 	#EventBus.request_action_rebuild.emit()
 	
 	var mech_spot := action.owner.get_spot()
