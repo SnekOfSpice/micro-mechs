@@ -12,10 +12,18 @@ func _ready() -> void:
 	agent_config = AgentConfig.get_randomized()
 
 
-func act():
-	await _pick_next_action()
+var next_action : Action
 
-func _pick_next_action():
+func do_next_action():
+	if not next_action:
+		pick_next_action()
+	
+	var mech : Mech = get_parent()
+	mech.combat_stats.actions_left -= 1
+	next_action.do()
+	await CommandHandler.command_executed
+
+func pick_next_action() -> void:
 	var mech : Mech = get_parent()
 	var action_list := mech.get_action_list()
 	var viable_actions : Array[Action] = []
@@ -33,13 +41,11 @@ func _pick_next_action():
 		push_warning("couldnt find doable action")
 		return
 	
-	var next_action = agent_config.pick_next_action(
+	var picked_action = agent_config.pick_next_action(
 		viable_actions,
 		mech,
 		Global.get_player_mech()
 	)
-	print("NEXT ACTION IS ", next_action)
-	mech.combat_stats.actions_left -= 1
-	next_action.do()
-	await CommandHandler.command_executed
+	print("NEXT ACTION IS ", picked_action)
+	next_action = picked_action
 	

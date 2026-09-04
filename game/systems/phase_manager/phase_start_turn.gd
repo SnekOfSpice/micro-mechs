@@ -10,6 +10,7 @@ func enter_state() -> void:
 		print("REFILLING ", mech)
 		mech.generate_energy()
 		mech.refill_actions()
+		mech.generate_intent()
 	Global.hud.begin_turn()
 	
 	super()

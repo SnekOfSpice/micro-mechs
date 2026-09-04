@@ -250,7 +250,10 @@ func get_action_list() -> Array[Action]:
 	result.append(flip_action)
 	
 	var leg_config : LegConfig = _get_leg_config()
-	for i in range(-leg_config.movement, leg_config.movement + 1):
+	var move_range = range(-leg_config.movement, leg_config.movement + 1)
+	if flipped:
+		move_range.reverse()
+	for i in move_range:
 		if i == 0:
 			continue
 		var move_action := ActionMove.new()
@@ -393,15 +396,15 @@ func cool_down():
 
 
 func stomp():
-	var knockback := 1# put into config
-	var other_mech = Global.battle_stage.get_forward_data(get_spot(), flipped, knockback)
+	var other_mech = Global.battle_stage.get_forward_data(get_spot(), flipped, 1)
 	if not other_mech is Mech:
 		push_warning("Tried to stomp with no mech in front")
 		return
 	await _torso.stomp_anim()
 	var stomp_attack := WeaponConfig.new()
 	stomp_attack.damage = _leg_config.stomp_damage
-	stomp_attack.knockback = knockback
+	stomp_attack.knockback = _leg_config.stomp_knockback
+	stomp_attack.kind = WeaponConfig.Kind.STOMP
 	other_mech.handle_attacked(stomp_attack)
 
 
@@ -482,9 +485,12 @@ func do_attack(target : Mech, weapon_index : int):
 	await get_tree().create_timer(duration).timeout
 
 
+var hit_history := []
+
 # usedful for multi projectile
 var timestamps := []
 func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), impact_position : Vector3 = get_projectile_point()):
+	hit_history.append(with)
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
 	
@@ -508,6 +514,9 @@ func _on_combat_stats_changed():
 		return
 	if combat_stats.health <= 0:
 		EventBus.mech_died.emit(self)
+		if hit_history.size() > 0:
+			if hit_history.back().kind == WeaponConfig.Kind.STOMP:
+				Global.player_mech.refill_actions()
 
 
 func reduce_heat_passive():
@@ -521,7 +530,21 @@ func _reduce_heat_active():
 func generate_energy():
 	combat_stats.energy += _torso.config.energy_generation
 	combat_stats.energy = clamp(combat_stats.energy, 0, combat_stats.energy_max)
-	
+
+
+func generate_intent():
+	if agent:
+		agent.pick_next_action()
+		if agent.next_action is ActionCoolDown:
+			%Intent.texture = load("res://icon_cooldown.png")
+		if agent.next_action is ActionFlip:
+			%Intent.texture = load("res://icon_flip.png")
+		if agent.next_action is ActionMove:
+			%Intent.texture = load("res://icon_move.png")
+		if agent.next_action is ActionStomp:
+			%Intent.texture = load("res://icon_stomp.png")
+		if agent.next_action is ActionWeapon:
+			%Intent.texture = load("res://icon_weapon.png")
 	
 	
 func get_projectile_point() -> Vector3:
@@ -546,6 +569,7 @@ func command_flip():
 func flip():
 	rotate_y(deg_to_rad(180))
 	rotation_degrees.y = int(rotation_degrees.y) % 360
+	EventBus.request_action_rebuild.emit()
 
 
 func is_pointed_at_enemy() -> bool:

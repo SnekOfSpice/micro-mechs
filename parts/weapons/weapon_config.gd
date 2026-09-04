@@ -36,3 +36,9 @@ enum AttackPattern{
 	BACK
 }
 @export var attack_pattern := AttackPattern.FRONT
+
+enum Kind{
+	DEFAULT,
+	STOMP,
+}
+var kind := Kind.DEFAULT

@@ -13,7 +13,11 @@ func _ready() -> void:
 	CommandHandler.command_executed.connect(func(_c): _rebuild())
 
 
+
+
 func is_mouse_in() -> bool:
+	if not get_viewport():
+		return false
 	var mouse_pos := get_local_mouse_position()
 	return mouse_pos.x >= 0 and mouse_pos.y >= 0 and mouse_pos.x <= size.x and mouse_pos.y <= size.y
 
@@ -38,7 +42,9 @@ func _rebuild():
 		$Label.text = ""
 	else:
 		$Label.text = Action.CanDoResult.keys()[can_do]
-		disabled = true 
+		disabled = true
+	
+	
 
 
 

@@ -9,6 +9,7 @@ func _ready() -> void:
 	EventBus.mech_died.connect(_on_mech_died)
 	%TurnLabel.hide()
 	%MatchFinish.hide()
+	EventBus.request_action_rebuild.connect(_rebuild)
 	#EventBus.combat_stats_changed.connect(_on_combat_stats_changed)
 
 
@@ -16,9 +17,9 @@ func _on_mech_died(mech : Mech):
 	if mech == Global.player_mech:
 		%MatchFinish.show()
 		%MatchFinishLabel.text = "you lose"
-	else:
+	#else:
 		#%MatchFinishLabel.text = "you win"
-		Global.player_mech.refill_actions()
+		#Global.player_mech.refill_actions()
 
 
 
@@ -30,19 +31,44 @@ func _on_phase_changed(phase : Phase):
 	%ActionsContainer.visible = true
 
 
+func _rebuild():
+	# flipping the mech reverses the spatial relation of movement
+	# buttons to the UI
+	# so we rebuild in case we flipped after doing an action
+	populate_player_actions(Global.player_mech.get_action_list())
+
+
 func register_mechs_to_track(player_mech : Mech):
 	%MechStatusContainer.tracking_mech = player_mech
 
+
+var player_action_buttons := []
+
+
+
 func populate_player_actions(actions : Array[Action]):
-	for child in %ActionsContainer.get_children():
-		child.queue_free()
+	for child in player_action_buttons:
+		if is_instance_valid(child):
+			child.queue_free()
 	
 	for action : Action in actions:
 		# TODO hook this into a factory
 		var button := preload("res://autoload/action_button.tscn").instantiate()
-		#button.text = action.resource_name
-		%ActionsContainer.add_child(button)
+		player_action_buttons.append(button)
+		
 		button.action = action
+	
+		if action is ActionCoolDown:
+			%CooldownAnchor.add_child(button)
+		elif action is ActionMove:
+			%MoveContainer.add_child(button)
+		elif action is ActionWeapon:
+			%Weapons.add_child(button)
+		elif action is ActionStomp:
+			%StompAnchor.add_child(button)
+		elif action is ActionFlip:
+			%FlipAnchor.add_child(button)
+		
 	
 
 var visualizer_tween : Tween

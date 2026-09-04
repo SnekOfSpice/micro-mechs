@@ -64,6 +64,7 @@ func _ready() -> void:
 		
 		var free_index : int = player_start_position + offsets[i]
 		mech.move_to_index(free_index)
+		mech.aim_at(player_start_position)
 	mech1.aim_at(player_start_position + 1)
 	
 	var targets : Array[Node3D] = []
@@ -327,7 +328,7 @@ func do_enemy_actions():
 		if mech != Global.player_mech:
 			if mech.combat_stats.actions_left > 0:
 				print("NPC ACTION")
-				await mech.agent.act()
+				await mech.agent.do_next_action()
 	#await get_tree().create_timer(3).timeout
 
 func clear_tile(index : int):

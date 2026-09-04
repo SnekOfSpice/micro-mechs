@@ -13,3 +13,4 @@ enum MovementType {
 @export var movement := 1
 @export var movement_type := MovementType.WALK
 @export var stomp_damage := Vector2i(10, 10)
+@export var stomp_knockback := 1
