@@ -443,7 +443,8 @@ func command_stomp():
 	CommandHandler.add_command(c)
 
 func command_move(distance : int):
-	var target_position := position.x + distance * WIDTH
+	if flipped:
+		distance *= -1
 	var c = CommandMove.new()
 	c.targets = [self]
 	c.spots_to_move = distance

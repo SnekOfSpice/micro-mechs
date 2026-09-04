@@ -31,7 +31,7 @@ func _on_tile_data_changed():
 		else:
 			%TileDataLabel.text += " x "
 
-const ARENA_SIZE_RANGE := Vector2i(8, 13)
+const ARENA_SIZE_RANGE := Vector2i(333, 666)
 
 
 func _ready() -> void:
@@ -48,11 +48,12 @@ func _ready() -> void:
 	%BattleLine.add_child(mech1)
 	mech1.config = config
 	
-	var player_start_position := randi_range(2, 4)
+	var player_start_position := int(_tile_data.size() * 0.5)
 	mech1.move_to_index(player_start_position)
 	Global.player_mech = mech1
 	
 	const NPC_COUNT := 2
+	var offsets := [1, -3]
 	for i in NPC_COUNT:
 		var mech = preload("res://mech.tscn").instantiate()
 		%BattleLine.add_child(mech)
@@ -61,16 +62,16 @@ func _ready() -> void:
 		var agent := MechAgent.new()
 		mech.add_child(agent)
 		
-		var free_index := find_free_index()
-		mech1.aim_at(free_index)
+		var free_index : int = player_start_position + offsets[i]
 		mech.move_to_index(free_index)
+	mech1.aim_at(player_start_position + 1)
 	
 	var targets : Array[Node3D] = []
 	for mech : Mech in %BattleLine.get_children():
 		targets.append(mech)
 	%PhantomCamera3D.look_at_targets = targets
 	
-	
+	%CameraHolder.global_position.z = Global.player_mech.global_position.z
 	
 	
 	

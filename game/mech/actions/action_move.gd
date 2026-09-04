@@ -17,8 +17,7 @@ func can_do() -> CanDoResult:
 	if owner.is_overheated():
 		return CanDoResult.OVERHEATED #abs(distance) <= 1
 	
-	# distance is already signed
-	var forward_data = Global.battle_stage.get_forward_data(owner.get_spot(), false, distance)
+	var forward_data = Global.battle_stage.get_forward_data(owner.get_spot(), owner.flipped, distance)
 	if forward_data is Mech:
 		return CanDoResult.MECH_IN_SPOT
 	if forward_data is BattleStage.TileOutOfBounds:

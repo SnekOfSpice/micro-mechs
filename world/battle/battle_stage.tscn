@@ -53,6 +53,7 @@ tonemap_white = 2.56
 script = ExtResource("1_mlyy2")
 
 [node name="CameraHolder" type="Node3D" parent="." unique_id=425572374]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.61208, 0, 0)
 script = ExtResource("2_ty4ei")
 

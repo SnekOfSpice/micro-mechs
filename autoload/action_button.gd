@@ -58,6 +58,8 @@ func _on_mouse_entered() -> void:
 	var flipped : bool = action.owner.flipped
 	if action is ActionMove:
 		var distance_vector := Vector2i(action.distance, action.distance)
+		#if not action.owner.flipped:
+			#distance_vector *= -1
 		var highlight_range : Vector2i = action.owner.get_offset_bounds(distance_vector)
 		Global.battle_stage.highlight_range(highlight_range)
 	if action is ActionStomp:
