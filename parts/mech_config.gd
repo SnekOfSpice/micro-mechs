@@ -34,7 +34,7 @@ func set_weapon(index : int, weapon_id : String):
 static func get_randomized() -> MechConfig:
 	randomize()
 	var config := MechConfig.new()
-	config.leg_id = ["leg_1", "leg_2"].pick_random()
+	config.leg_id = ["leg_1", "leg_2", "leg_3"].pick_random()
 	config.torso_id = ["torso_1", "torso_2"].pick_random()
 	var quick_torso : Torso = load("res://parts/torsos/%s.tscn" % config.torso_id).instantiate()
 	var weapon_count : int = quick_torso.weapon_count

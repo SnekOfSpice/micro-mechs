@@ -44,3 +44,22 @@ func get_weapon_configs() -> Array:
 	#for file in DirAccess.get_files_at("res://parts/weapons/configs/"):
 		#result.append(file.trim_suffix(".tres"))
 	#return result
+
+
+
+func visualize_action_range(action : Action, requester : Node):
+	if action is ActionMove:
+		var distance_vector := Vector2i(action.distance, action.distance)
+		var highlight_range : Vector2i = action.owner.get_offset_bounds(distance_vector)
+		Global.battle_stage.highlight_range(highlight_range, requester)
+	
+	elif action is ActionStomp:
+		var distance_vector := Vector2i(1, 1) # todo range
+		var highlight_range : Vector2i = action.owner.get_offset_bounds(distance_vector)
+		Global.battle_stage.highlight_range(highlight_range, requester)
+	
+	elif action is ActionWeapon:
+		var weapon_config : WeaponConfig = action.config
+		var highlight_range : Vector2 = action.owner.get_weapon_attack_bounds(weapon_config)
+		Global.battle_stage.highlight_range(highlight_range, requester)
+		Global.hud.visualize_weapon(action.config, action.owner)

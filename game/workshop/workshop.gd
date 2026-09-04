@@ -30,6 +30,7 @@ func _on_config_changed():
 	
 	%MobilityLabel.text = str("Movement: ", $Mech._leg_config.movement)
 	%MobilityLabel.text += str("\nStomp Damage: ", Global.vec2_to_range_string($Mech._leg_config.stomp_damage))
+	%MobilityLabel.text += str("  knockback", $Mech._leg_config.stomp_knockback)
 
 
 func _update_weapons_selection():

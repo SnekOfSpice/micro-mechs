@@ -24,6 +24,12 @@ func pick_next_action(viable_action_list : Array[Action],
 		return viable_action_list.front()
 	
 	
+	for action : Action in viable_action_list:
+		if action is ActionWeapon:
+			var bounds := executing_mech.get_weapon_attack_bounds(action.config)
+			if not Global.player_mech.is_in_range(bounds):
+				viable_action_list.erase(action)
+	
 	
 	for action : Action in viable_action_list:
 		if action is ActionFlip:

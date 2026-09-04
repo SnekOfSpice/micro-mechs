@@ -59,25 +59,9 @@ func _on_pressed() -> void:
 
 
 func _on_mouse_entered() -> void:
-	var mech_spot := action.owner.get_spot()
-	var spot_vector := Vector2(mech_spot, mech_spot)
-	var flipped : bool = action.owner.flipped
-	if action is ActionMove:
-		var distance_vector := Vector2i(action.distance, action.distance)
-		#if not action.owner.flipped:
-			#distance_vector *= -1
-		var highlight_range : Vector2i = action.owner.get_offset_bounds(distance_vector)
-		Global.battle_stage.highlight_range(highlight_range)
-	if action is ActionStomp:
-		var distance_vector := Vector2i(1, 1) # todo range
-		var highlight_range : Vector2i = action.owner.get_offset_bounds(distance_vector)
-		Global.battle_stage.highlight_range(highlight_range)
-	if action is ActionWeapon:
-		var weapon_config : WeaponConfig = action.config
-		var highlight_range : Vector2 = action.owner.get_weapon_attack_bounds(weapon_config)
-		Global.battle_stage.highlight_range(highlight_range)
-		Global.hud.visualize_weapon(action.config, action.owner)
+	Global.visualize_action_range(action, Global.player_mech)
+
 
 func _on_mouse_exited() -> void:
-	Global.battle_stage.hide_range()
+	Global.battle_stage.hide_range(Global.player_mech)
 	Global.hud.hide_weapon_visualizer()

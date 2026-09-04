@@ -254,7 +254,9 @@ func get_action_list() -> Array[Action]:
 	result.append(flip_action)
 	
 	var leg_config : LegConfig = _get_leg_config()
-	var move_range = range(-leg_config.movement, leg_config.movement + 1)
+	# negative movement?
+	#var move_range = range(-leg_config.movement, leg_config.movement + 1)
+	var move_range = range(0, leg_config.movement + 1)
 	if flipped:
 		move_range.reverse()
 	for i in move_range:
@@ -553,7 +555,9 @@ func generate_intent():
 			%Intent.texture = load("res://icon_stomp.png")
 		if agent.next_action is ActionWeapon:
 			%Intent.texture = load("res://icon_weapon.png")
-	
+		
+		Global.visualize_action_range(agent.next_action, self)
+		
 	
 func get_projectile_point() -> Vector3:
 	var base := _torso.global_position
@@ -598,3 +602,8 @@ func is_pointed_at_enemy() -> bool:
 			return spot > player_spot
 		else:
 			return spot < player_spot
+
+
+
+func is_visible_on_screen() -> bool:
+	return %IsOnScreen.is_on_screen()

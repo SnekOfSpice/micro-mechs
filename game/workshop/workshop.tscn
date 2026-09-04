@@ -47,6 +47,10 @@ text = "leg_1"
 layout_mode = 2
 text = "leg_2"
 
+[node name="Button3" type="Button" parent="CanvasLayer/VBoxContainer/LegsContainer" unique_id=118521529]
+layout_mode = 2
+text = "leg_3"
+
 [node name="WeaponsSelection" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1099144288]
 unique_name_in_owner = true
 layout_mode = 2

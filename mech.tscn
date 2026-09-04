@@ -120,3 +120,7 @@ pixel_size = 0.001
 billboard = 1
 fixed_size = true
 render_priority = -1
+
+[node name="IsOnScreen" type="VisibleOnScreenNotifier3D" parent="." unique_id=1771867712]
+unique_name_in_owner = true
+aabb = AABB(-0.6488206, -0.71934414, -0.39966583, 1.2976412, 1.4386883, 0.79933167)

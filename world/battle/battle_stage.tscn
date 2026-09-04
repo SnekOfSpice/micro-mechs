@@ -55,7 +55,7 @@ script = ExtResource("2_ty4ei")
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -21.082603, 7.3759155, 0)
 current = true
-fov = 126.6
+fov = 126.0
 size = 100.0
 
 [node name="BattleLine" type="Node3D" parent="." unique_id=1772281237]
@@ -90,7 +90,41 @@ offset_bottom = -184.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Highlight" type="Node3D" parent="." unique_id=1148060985]
+[node name="OffScreenInfo" type="Control" parent="CanvasLayer" unique_id=1607637937]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Left" type="Label" parent="CanvasLayer/OffScreenInfo" unique_id=2142198468]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -92.0
+offset_right = 40.0
+offset_bottom = -69.0
+grow_vertical = 2
+
+[node name="Right" type="Label" parent="CanvasLayer/OffScreenInfo" unique_id=123571588]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -92.0
+offset_bottom = -69.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Highlights" type="Node3D" parent="." unique_id=1148060985]
 unique_name_in_owner = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2078045928]

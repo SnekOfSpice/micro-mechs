@@ -99,7 +99,20 @@ func get_tile_data(index : int) -> Variant:
 	return _tile_data[index]
 
 func _process(delta: float) -> void:
-	_update_flips()
+	%Left.text = ""
+	%Right.text = ""
+	var left_invisible := 0
+	var right_invisible := 0
+	for mech : Mech in %BattleLine.get_children():
+		if not mech.is_visible_on_screen():
+			if mech.global_position.z < mech1.global_position.z:
+				left_invisible += 1
+			else:
+				right_invisible += 1
+	if left_invisible > 0:
+		%Left.text = str(left_invisible)
+	if right_invisible > 0:
+		%Right.text = str(right_invisible)
 
 func handle_spot_change(mech : Mech, old_spot : int, new_spot : int):
 	_tile_data[old_spot] = null
@@ -239,41 +252,43 @@ func _on_command_executed(command : Command):
 		EventBus.commands_this_turn_changed.emit()
 
 
-func hide_range():
-	for child in %Highlight.get_children():
-		child.queue_free()
+var ranges_by_requester : Dictionary[Node, Node3D] = {}
 
-func highlight_range(range : Vector2):
+
+func hide_range(requester : Node):
+	if ranges_by_requester.keys().has(requester):
+		var thing = ranges_by_requester.get(requester)
+		if is_instance_valid(thing):
+			thing.queue_free()
+
+
+func highlight_range(range : Vector2, requester : Node):
 	# swap if reversed
 	if range.x > range.y:
 		var a := range.x
 		range.x = range.y
 		range.y = a
 	
-	for child in %Highlight.get_children():
-		child.queue_free()
+	hide_range(requester)
+	
+	var highlight := Node3D.new()
+	%Highlights.add_child(highlight)
+	ranges_by_requester[requester] = highlight
 	
 	for i in range(range.x, range.y + 1):
-		var highlight := Label3D.new()
-		highlight.fixed_size = true
-		highlight.text = "x"
-		highlight.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		highlight.no_depth_test = true
+		var marker := Label3D.new()
+		marker.fixed_size = true
+		marker.text = "x"
+		marker.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		marker.no_depth_test = true
 		var tile_data : Variant = get_tile_data(i)
 		if tile_data is Mech:
-			highlight.modulate = Color.RED
+			marker.modulate = Color.RED
 		elif tile_data is TileOutOfBounds:
-			highlight.modulate.a = 0.3
-		%Highlight.add_child(highlight)
-		highlight.position.z = i * Mech.WIDTH + Mech.HALF_WIDTH
-	return
+			marker.modulate.a = 0.3
+		highlight.add_child(marker)
+		marker.position.z = i * Mech.WIDTH + Mech.HALF_WIDTH
 	
-	%Highlight.show()
-	%Highlight.global_position = %BattleLine.global_position
-	%Highlight.points = PackedVector2Array([
-		Vector2(range.x * Mech.WIDTH - Mech.HALF_WIDTH, 0),
-		Vector2(range.y * Mech.WIDTH + Mech.HALF_WIDTH, 0),
-	])
 
 
 func _on_mech_died(mech : Mech):
@@ -351,7 +366,7 @@ func spawn_wave():
 	else:
 		for i in (wave_count + 2):
 			var random_index : int = player_position + randi_range(-10, 10)
-			if random_index != player_position and not random_index in offsets:
+			if random_index != player_position and not (random_index - player_position) in offsets:
 				offsets.append(random_index - player_position)
 		#generate
 	
