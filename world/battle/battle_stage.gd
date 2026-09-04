@@ -69,7 +69,7 @@ func _ready() -> void:
 	var targets : Array[Node3D] = []
 	for mech : Mech in %BattleLine.get_children():
 		targets.append(mech)
-	%PhantomCamera3D.look_at_targets = targets
+	#%PhantomCamera3D.look_at_targets = targets
 	
 	%CameraHolder.global_position.z = Global.player_mech.global_position.z
 	
@@ -297,7 +297,7 @@ func add_floating_number(damage : int, at : Vector3):
 	label.z_index = 5
 	$CanvasLayer.add_child(label)
 	label.pivot_offset_ratio = Vector2(0.5, 0.5)
-	label.global_position = $BattleCamera.unproject_position(at)
+	label.global_position = %BattleCamera.unproject_position(at)
 	label.text = "-%s" % damage
 	var t := create_tween()
 	t.tween_property(label, "position", Vector2(

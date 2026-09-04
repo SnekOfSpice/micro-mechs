@@ -2,13 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csgyet2aa78c0" path="res://world/battle/battle_stage.gd" id="1_mlyy2"]
 [ext_resource type="PackedScene" uid="uid://b14nvytfkkcr0" path="res://world/battle/player_hud.tscn" id="2_2c4jw"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_canda"]
 [ext_resource type="Script" uid="uid://cijrx4y0b34ep" path="res://world/battle/camera_holder.gd" id="2_ty4ei"]
-[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_ty4ei"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_dok5q"]
-
-[sub_resource type="Resource" id="Resource_t17tb"]
-script = ExtResource("5_dok5q")
 
 [sub_resource type="Gradient" id="Gradient_x51i7"]
 colors = PackedColorArray(0.5765042, 0.1685636, 0, 1, 0.5619702, 0.42688814, 0.3254574, 1)
@@ -57,24 +51,12 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.61208, 0, 0)
 script = ExtResource("2_ty4ei")
 
-[node name="PhantomCamera3D" type="Node3D" parent="CameraHolder" unique_id=1995811210]
+[node name="BattleCamera" type="Camera3D" parent="CameraHolder" unique_id=1505341304]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -281.5665, 103.382355, 0)
-script = ExtResource("4_ty4ei")
-look_at_mode = 3
-tween_resource = SubResource("Resource_t17tb")
-metadata/_custom_type_script = "uid://csjccrhj5wnx7"
-
-[node name="BattleCamera" type="Camera3D" parent="." unique_id=1505341304]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -354.1786, 103.382355, 0)
-top_level = true
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -21.082603, 7.3759155, 0)
 current = true
-
-[node name="PhantomCameraHost" type="Node" parent="BattleCamera" unique_id=1327589756]
-process_priority = 300
-process_physics_priority = 300
-script = ExtResource("2_canda")
-metadata/_custom_type_script = "uid://bd046eokvcnu2"
+fov = 126.6
+size = 100.0
 
 [node name="BattleLine" type="Node3D" parent="." unique_id=1772281237]
 unique_name_in_owner = true
