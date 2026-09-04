@@ -34,6 +34,9 @@ func _on_tile_data_changed():
 const ARENA_SIZE_RANGE := Vector2i(333, 666)
 
 
+var wave_count := 0
+
+
 func _ready() -> void:
 	Global.battle_stage = self
 	CommandHandler.command_executed.connect(_on_command_executed)
@@ -52,19 +55,7 @@ func _ready() -> void:
 	mech1.move_to_index(player_start_position)
 	Global.player_mech = mech1
 	
-	const NPC_COUNT := 2
-	var offsets := [1, -3]
-	for i in NPC_COUNT:
-		var mech = preload("res://mech.tscn").instantiate()
-		%BattleLine.add_child(mech)
-		mech.config = MechConfig.get_randomized()
-		
-		var agent := MechAgent.new()
-		mech.add_child(agent)
-		
-		var free_index : int = player_start_position + offsets[i]
-		mech.move_to_index(free_index)
-		mech.aim_at(player_start_position)
+	spawn_wave()
 	mech1.aim_at(player_start_position + 1)
 	
 	var targets : Array[Node3D] = []
@@ -343,6 +334,42 @@ func clear_corpses():
 				clear_tile(i)
 				combat_order.erase(data_here)
 				data_here.queue_free()
+	
+	if all_enemies_killed():
+		spawn_wave()
+
+
+func all_enemies_killed() -> bool:
+	return combat_order.size() == 1
+
+
+func spawn_wave():
+	var player_position = mech1.get_spot()
+	var offsets := []
+	if wave_count == 0:
+		offsets = [1, -3]
+	else:
+		for i in (wave_count + 2):
+			var random_index : int = player_position + randi_range(-10, 10)
+			if random_index != player_position and not random_index in offsets:
+				offsets.append(random_index - player_position)
+		#generate
+	
+	for i in offsets.size():
+		var mech = preload("res://mech.tscn").instantiate()
+		%BattleLine.add_child(mech)
+		mech.config = MechConfig.get_randomized()
+		
+		var agent := MechAgent.new()
+		mech.add_child(agent)
+		
+		var free_index : int = player_position + offsets[i]
+		mech.move_to_index(free_index)
+		mech.aim_at(player_position)
+		mech.initialize_combat_stats()
+	
+	
+	wave_count += 1
 
 
 

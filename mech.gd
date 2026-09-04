@@ -228,10 +228,14 @@ func _get_leg_config() -> LegConfig:
 	return _leg_config
 
 
-func is_in_front_of_other_mech() -> bool:
-	
-	if Global.battle_stage.get_forward_data(get_spot(), flipped, 1) is Mech:
-		return true
+func is_in_front_of_enemy_mech() -> bool:
+	var other_mech = Global.battle_stage.get_forward_data(get_spot(), flipped, 1)
+	if self == Global.player_mech:
+		if other_mech:
+			return true
+	else:
+		if other_mech == Global.player_mech:
+			return true
 	return false
 	
 
@@ -422,6 +426,8 @@ func _process(delta: float) -> void:
 		return
 	if agent:
 		$Label3D.modulate.a = 0.5
+	if not combat_stats:
+		return
 	$Label3D.text = str(
 		"Health : ", combat_stats.health,
 		"\n",
@@ -513,10 +519,12 @@ func _on_combat_stats_changed():
 	if not combat_stats:
 		return
 	if combat_stats.health <= 0:
-		EventBus.mech_died.emit(self)
+		# when killed by stomp, refund all actions
 		if hit_history.size() > 0:
 			if hit_history.back().kind == WeaponConfig.Kind.STOMP:
 				Global.player_mech.refill_actions()
+		
+		EventBus.mech_died.emit(self)
 
 
 func reduce_heat_passive():
