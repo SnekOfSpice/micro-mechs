@@ -3,8 +3,12 @@
 [ext_resource type="Script" uid="uid://csgyet2aa78c0" path="res://world/battle/battle_stage.gd" id="1_mlyy2"]
 [ext_resource type="PackedScene" uid="uid://b14nvytfkkcr0" path="res://world/battle/player_hud.tscn" id="2_2c4jw"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_canda"]
+[ext_resource type="Script" uid="uid://cijrx4y0b34ep" path="res://world/battle/camera_holder.gd" id="2_ty4ei"]
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_ty4ei"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_dok5q"]
+
+[sub_resource type="Resource" id="Resource_t17tb"]
+script = ExtResource("5_dok5q")
 
 [sub_resource type="Gradient" id="Gradient_x51i7"]
 colors = PackedColorArray(0.5765042, 0.1685636, 0, 1, 0.5619702, 0.42688814, 0.3254574, 1)
@@ -45,14 +49,23 @@ tonemap_mode = 3
 tonemap_exposure = 0.59
 tonemap_white = 2.56
 
-[sub_resource type="Resource" id="Resource_t17tb"]
-script = ExtResource("5_dok5q")
-
 [node name="BattleStage" type="Node3D" unique_id=311812168]
 script = ExtResource("1_mlyy2")
 
+[node name="CameraHolder" type="Node3D" parent="." unique_id=425572374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 148.34296, 0, 0)
+script = ExtResource("2_ty4ei")
+
+[node name="PhantomCamera3D" type="Node3D" parent="CameraHolder" unique_id=1995811210]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -281.5665, 103.382355, 0)
+script = ExtResource("4_ty4ei")
+look_at_mode = 3
+tween_resource = SubResource("Resource_t17tb")
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
 [node name="BattleCamera" type="Camera3D" parent="." unique_id=1505341304]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 103.382355, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.22354, 103.382355, 0)
 top_level = true
 current = true
 
@@ -105,12 +118,5 @@ mesh = SubResource("PlaneMesh_joysk")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1424576854]
 environment = SubResource("Environment_joysk")
-
-[node name="PhantomCamera3D" type="Node3D" parent="." unique_id=1995811210]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 103.382355, 0)
-script = ExtResource("4_ty4ei")
-look_at_mode = 3
-tween_resource = SubResource("Resource_t17tb")
-metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [connection signal="pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_pressed"]
