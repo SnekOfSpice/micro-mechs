@@ -218,7 +218,8 @@ func set_flip(flipped : bool):
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	Global.battle_stage.register(self)
+	if Global.battle_stage:
+		Global.battle_stage.register(self)
 
 
 func _get_leg_config() -> LegConfig:
@@ -413,6 +414,9 @@ func move_to_index(index : int, duration : float = 0.0):
 
 
 func _process(delta: float) -> void:
+	if not Global.battle_stage:
+		$Label3D.hide()
+		return
 	if agent:
 		$Label3D.modulate.a = 0.5
 	$Label3D.text = str(

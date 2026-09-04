@@ -5,7 +5,6 @@ class_name LegConfig
 
 enum MovementType {
 	WALK,
-	JUMP,
 	TELEPORT
 }
 

@@ -53,6 +53,8 @@ func display_combat_stats(combat_stats : CombatStats):
 func _on_commands_begun_this_turn_changed():
 	ugh()
 func ugh():
+	if not Global.player_mech:
+		return
 	%Actions.text = ""
 	
 	%Actions.text = Global.get_uses_string(
