@@ -35,6 +35,8 @@ func _ready() -> void:
 	%BattleLine.add_child(mech2)
 	mech2.config = MechConfig.get_randomized()
 	
+	$PhantomCamera3D.look_at_targets = [mech1, mech2] as Array[Node3D]
+	
 	var agent := MechAgent.new()
 	mech2.add_child(agent)
 	
