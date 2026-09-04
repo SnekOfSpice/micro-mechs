@@ -12,6 +12,8 @@ func do():
 
 
 func can_do() -> CanDoResult:
+	if owner.combat_stats.actions_left <= 0:
+		return CanDoResult.OUT_OF_ACTIONS
 	if owner.is_overheated():
 		return CanDoResult.OVERHEATED #abs(distance) <= 1
 	

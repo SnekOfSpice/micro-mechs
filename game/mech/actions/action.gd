@@ -20,6 +20,7 @@ enum CanDoResult {
 	MECH_IN_SPOT,
 	EDGE_OF_ARENA,
 	NO_COMBAT_STATS_ERR,
+	OUT_OF_ACTIONS,
 }
 
 

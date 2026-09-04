@@ -60,8 +60,10 @@ func _ready() -> void:
 		
 		var agent := MechAgent.new()
 		mech.add_child(agent)
-			
-		mech.move_to_index(find_free_index())
+		
+		var free_index := find_free_index()
+		mech1.aim_at(free_index)
+		mech.move_to_index(free_index)
 	
 	var targets : Array[Node3D] = []
 	for mech : Mech in %BattleLine.get_children():
@@ -189,18 +191,33 @@ func _update_flips():
 func command_do_attack(attacking_mech : Mech, weapon_index : int):
 	var c := CommandDoAttack.new()
 	c.attacker = attacking_mech
-	c.targets = get_player_or_list_of_enemies(attacking_mech)
+	c.targets = get_player_or_list_of_enemies(attacking_mech, attacking_mech.get_weapon_config(weapon_index))
 	c.weapon_index = weapon_index
 	CommandHandler.add_command(c)
 
 
-func get_player_or_list_of_enemies(from_attacker : Mech) -> Array:
+func get_player_or_list_of_enemies(from_attacker : Mech, weapon_config : WeaponConfig) -> Array:
 	if from_attacker == Global.player_mech:
-		# return list of enemies
+		# return list of enemies in range
 		var result := []
-		for mech in combat_order:
-			if mech != Global.player_mech:
-				result.append(mech)
+		var attack_bounds := from_attacker.get_weapon_attack_bounds(weapon_config)
+		var attack_range := range(attack_bounds.x, attack_bounds.y + 1)
+		match weapon_config.attack_pattern:
+			WeaponConfig.AttackPattern.ALL:
+				for index in attack_range:
+					if get_tile_data(index) is Mech:
+						result.append(get_tile_data(index))
+			WeaponConfig.AttackPattern.FRONT:
+				for index in attack_range:
+					if get_tile_data(index) is Mech:
+						result.append(get_tile_data(index))
+						break
+			WeaponConfig.AttackPattern.BACK:
+				attack_range.reverse()
+				for index in attack_range:
+					if get_tile_data(index) is Mech:
+						result.append(get_tile_data(index))
+						break
 		return result
 	else:
 		return [Global.player_mech]
@@ -223,8 +240,9 @@ func _on_command_executing(command : Command):
 func _on_command_executed(command : Command):
 	if PhaseManager.phase is PhasePlayerTurn:
 		commands_this_turn.append(command)
-		if commands_this_turn.size() >= Global.player_mech.combat_stats.actions_left:
-			PhaseManager.advance_phase()
+		clear_corpses()
+		#if commands_this_turn.size() >= Global.player_mech.combat_stats.actions_left:
+			#PhaseManager.advance_phase()
 		EventBus.commands_this_turn_changed.emit()
 
 
@@ -310,6 +328,20 @@ func do_enemy_actions():
 				print("NPC ACTION")
 				await mech.agent.act()
 	#await get_tree().create_timer(3).timeout
+
+func clear_tile(index : int):
+	_tile_data[index] = null
+
+
+func clear_corpses():
+	for i in _tile_data.size():
+		var data_here = _tile_data[i]
+		if data_here is Mech:
+			if data_here.is_dead():
+				clear_tile(i)
+				combat_order.erase(data_here)
+				data_here.queue_free()
+
 
 
 class TileOutOfBounds:

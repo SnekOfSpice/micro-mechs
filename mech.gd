@@ -93,6 +93,11 @@ func initialize_combat_stats() -> CombatStats:
 		stats.set(max_name, torso_value)
 	stats.health += leg_config.health
 	stats.health_max += leg_config.health
+	
+	if agent:
+		stats.health = 2
+		stats.health_max = 2
+	
 	stats.heat = 0
 	
 	combat_stats = stats
@@ -320,20 +325,38 @@ func can_use_weapon(weapon_config : WeaponConfig) -> Action.CanDoResult:
 		if weapon_config.uses_left == 0:
 			return Action.CanDoResult.OUT_OF_USES
 	
-	var adjusted_range : Vector2i = Vector2i(get_spot(), get_spot())
-	if flipped:
-		adjusted_range -= weapon_config.weapon_range
-	else:
-		adjusted_range += weapon_config.weapon_range
-	#weapon_config.weapon_range
-	#adjusted_range.x += get_spot()
-	#adjusted_range.y += get_spot()
-	var in_range : bool = Global.battle_stage.is_any_mech_in_range(adjusted_range)
+	var weapon_range := get_weapon_attack_bounds(weapon_config)
+	var in_range : bool = Global.battle_stage.is_any_mech_in_range(weapon_range)
 	if in_range:
 		return Action.CanDoResult.CAN_DO
 	else:
 		return Action.CanDoResult.OUT_OF_RANGE
+
+
+func aim_at(target_index : int):
+	if get_spot() < target_index and flipped:
+		flip()
+	elif get_spot() > target_index and not flipped:
+		flip()
+
+
+## returns the range of indices, with origin in the spot of this mech
+func get_offset_bounds(bounds : Vector2i) -> Vector2i:
+	var adjusted_range : Vector2i = Vector2i(get_spot(), get_spot())
+	if flipped:
+		adjusted_range -= bounds
+	else:
+		adjusted_range += bounds
 	
+	if adjusted_range.x > adjusted_range.y:
+		var swap := adjusted_range.x
+		adjusted_range.x = adjusted_range.y
+		adjusted_range.y = swap
+	return adjusted_range
+
+
+func get_weapon_attack_bounds(weapon_config : WeaponConfig) -> Vector2i:
+	return get_offset_bounds(weapon_config.weapon_range)
 
 
 func is_entirely_on_screen() -> bool:
@@ -350,17 +373,16 @@ func too_much_dead_space() -> bool:
 	return true
 
 
-#func decrement_actions():
-	#var prev := combat_stats.actions_left
-	#combat_stats.actions_left -= 1
-	#if combat_stats.actions_left <= 0 and prev > 0:
-		#PhaseManager.advance_phase()
-
 func refill_actions(amount := 2):
+	Global.battle_stage.commands_begun_this_turn.clear()
 	combat_stats.actions_left = amount
+	EventBus.request_action_rebuild.emit()
 
 
 var agent : MechAgent
+
+func is_dead() -> bool:
+	return combat_stats.health <= 0
 
 
 func cool_down():
@@ -391,14 +413,16 @@ func move_to_index(index : int, duration : float = 0.0):
 
 
 func _process(delta: float) -> void:
+	if agent:
+		$Label3D.modulate.a = 0.5
 	$Label3D.text = str(
-		position.z,
+		"Health : ", combat_stats.health,
 		"\n",
 		Global.battle_stage.commands_begun_this_turn.size(),
 		"/",
 		combat_stats.actions_left,
 		"\n",
-		"pointed at enemy ", is_pointed_at_enemy()
+		position.z,
 		)
 	if Global.player_mech == self:
 		$Label3D.text += "\nv"
@@ -426,15 +450,19 @@ func command_move(distance : int):
 	CommandHandler.add_command(c)
 
 
+func get_weapon(weapon_index : int) -> WeaponPivot:
+	return %WeaponPivots.get_child(weapon_index)
+
+
 func get_weapon_config(weapon_index : int) -> WeaponConfig:
-	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
+	var weapon : WeaponPivot = get_weapon(weapon_index)
 	var weapon_config : WeaponConfig = weapon.config
 	return weapon_config
 
 
 func do_attack(target : Mech, weapon_index : int):
-	var weapon : WeaponPivot = %WeaponPivots.get_child(weapon_index)
-	var weapon_config : WeaponConfig = weapon.config
+	var weapon : WeaponPivot = get_weapon(weapon_index)
+	var weapon_config : WeaponConfig = get_weapon_config(weapon_index)
 	weapon_configs_used_this_turn.append(weapon_config)
 	
 	combat_stats.bullets -= weapon_config.bullet_consumption

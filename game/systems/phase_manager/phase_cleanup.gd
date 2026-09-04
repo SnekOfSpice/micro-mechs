@@ -4,6 +4,7 @@ class_name PhaseCleanup
 
 func enter_state() -> void:
 	Global.player_mech.weapon_configs_used_this_turn.clear()
+	Global.battle_stage.clear_corpses()
 	super()
 	pass
 

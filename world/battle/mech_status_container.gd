@@ -7,12 +7,11 @@ var tracking_mech : Mech:
 		tracking_mech = value
 		if value:
 			display_mech_state(value)
-			_on_commands_this_turn_changed()
+			ugh()
 
 func _ready() -> void:
 	EventBus.combat_stats_changed.connect(display_mech_state)
 	EventBus.commands_begun_this_turn_changed.connect(_on_commands_begun_this_turn_changed)
-	EventBus.commands_this_turn_changed.connect(_on_commands_this_turn_changed)
 
 
 func display_mech_state(mech : Mech):
@@ -45,20 +44,18 @@ func display_combat_stats(combat_stats : CombatStats):
 		else:
 			node.modulate.a = 1
 			if icon: icon.modulate.a = 1
-	
+	ugh()
 	
 
 ## vvv i think my brain dies down here
 
-func _on_commands_this_turn_changed():
-	ugh()
+
 func _on_commands_begun_this_turn_changed():
 	ugh()
 func ugh():
 	%Actions.text = ""
 	
-	var a : int = (Global.player_mech.combat_stats.actions_left - 
-		Global.battle_stage.commands_begun_this_turn.size())
-	%Actions.text = Global.get_uses_string(a,
+	%Actions.text = Global.get_uses_string(
+		Global.player_mech.combat_stats.actions_left,
 		2
 	)

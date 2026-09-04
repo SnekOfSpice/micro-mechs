@@ -13,11 +13,12 @@ func _ready() -> void:
 
 
 func _on_mech_died(mech : Mech):
-	%MatchFinish.show()
 	if mech == Global.player_mech:
+		%MatchFinish.show()
 		%MatchFinishLabel.text = "you lose"
 	else:
-		%MatchFinishLabel.text = "you win"
+		#%MatchFinishLabel.text = "you win"
+		Global.player_mech.refill_actions()
 
 
 
@@ -90,3 +91,8 @@ func begin_turn():
 func _on_main_menu_button_pressed() -> void:
 	CommandHandler.clear()
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")
+
+
+func _on_end_turn_button_pressed() -> void:
+	if PhaseManager.phase is PhasePlayerTurn:
+		PhaseManager.advance_phase()

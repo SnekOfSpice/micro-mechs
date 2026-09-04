@@ -27,3 +27,12 @@ var uses_left := -1
 @export var bullet_consumption := 0
 @export var rocket_consumption := 0
 @export var knockback := 0
+enum AttackPattern{
+	## attacks all enemies in range
+	ALL,
+	## attacks the first enemy in range
+	FRONT,
+	## attacks the last enemy in range
+	BACK
+}
+@export var attack_pattern := AttackPattern.FRONT
