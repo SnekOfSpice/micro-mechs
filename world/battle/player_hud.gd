@@ -114,6 +114,14 @@ func begin_turn():
 	t.finished.connect(%TurnLabel.hide)
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("stomp"):
+		%StompAnchor.get_child(0).pressed.emit()
+	if event.is_action_pressed("cool_down"):
+		%CooldownAnchor.get_child(0).pressed.emit()
+	if event.is_action_pressed("flip"):
+		%FlipAnchor.get_child(0).pressed.emit()
+
 func _on_main_menu_button_pressed() -> void:
 	CommandHandler.clear()
 	get_tree().change_scene_to_file("res://game/main_menu/main_menu.tscn")

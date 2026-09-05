@@ -2,7 +2,7 @@ extends Resource
 class_name AgentConfig
 
 
-
+@export var action_count := 1
 # randomness := chance to pick a random action
 @export var randomness := 0.1
 @export var stomp_preference := 0.1
@@ -20,6 +20,10 @@ func pick_next_action(viable_action_list : Array[Action],
 	executing_mech : Mech,
 	target_mech : Mech,
 	) -> Action:
+	
+	if viable_action_list.is_empty():
+		return null
+	
 	if viable_action_list.size() == 1:
 		return viable_action_list.front()
 	
@@ -30,6 +34,8 @@ func pick_next_action(viable_action_list : Array[Action],
 			if not Global.player_mech.is_in_range(bounds):
 				viable_action_list.erase(action)
 	
+	if viable_action_list.size() == 1:
+		return viable_action_list.front()
 	
 	for action : Action in viable_action_list:
 		if action is ActionFlip:
@@ -38,11 +44,17 @@ func pick_next_action(viable_action_list : Array[Action],
 			else:
 				return action
 	
+	if viable_action_list.size() == 1:
+		return viable_action_list.front()
+	
 	if executing_mech.combat_stats.heat == 0:
 		if viable_action_list.size() > 1:
 			for action : Action in viable_action_list:
 				if action is ActionCoolDown:
 					viable_action_list.erase(action)
+	
+	if viable_action_list.size() == 1:
+		return viable_action_list.front()
 	
 	viable_action_list.shuffle()
 	

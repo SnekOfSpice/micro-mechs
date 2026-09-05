@@ -325,9 +325,13 @@ func all_enemies_killed() -> bool:
 	return combat_order.size() == 1
 
 
+const BOSS_ACTION_COUNT := 4
+
+
 func spawn_wave():
 	var player_position = mech1.get_spot()
 	var offsets := []
+	var boss_wave : bool
 	if wave_count == 0:
 		offsets = [1, -3]
 	else:
@@ -337,8 +341,12 @@ func spawn_wave():
 				offsets.append(random_index - player_position)
 		#generate
 	
+	if wave_count > 0:
+		if wave_count % 5 == 0:
+			boss_wave = true
+	
 	for i in offsets.size():
-		var mech = preload("res://mech.tscn").instantiate()
+		var mech : Mech = preload("res://mech.tscn").instantiate()
 		%BattleLine.add_child(mech)
 		mech.config = MechConfig.get_randomized()
 		
@@ -349,10 +357,16 @@ func spawn_wave():
 		mech.move_to_index(free_index)
 		mech.aim_at(player_position)
 		mech.initialize_combat_stats()
+		
+		if boss_wave and i == offsets.size() - 1:
+			mech.agent.agent_config.action_count = BOSS_ACTION_COUNT
 	
 	
 	wave_count += 1
 	EventBus.request_action_rebuild.emit()
+	%WaveLabel.text = str("Wave: ", wave_count)
+	if boss_wave:
+		%WaveLabel.text += str(" (BOSS WAVE)")
 
 
 

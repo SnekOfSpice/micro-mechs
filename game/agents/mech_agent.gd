@@ -18,10 +18,12 @@ func do_next_action():
 	if not next_action:
 		pick_next_action()
 	
-	var mech : Mech = get_parent()
-	mech.combat_stats.actions_left -= 1
-	next_action.do()
-	await CommandHandler.command_executed
+	for i in agent_config.action_count:
+		if not next_action:
+			break
+		next_action.do()
+		await CommandHandler.command_executed
+		pick_next_action()
 
 func pick_next_action() -> void:
 	var mech : Mech = get_parent()

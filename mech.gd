@@ -25,15 +25,13 @@ var combat_stats : CombatStats:
 @export var flipped: bool:
 	set(value):
 		flipped = value
-		if is_inside_tree():
-			set_flip(flipped)
 	get():
 		# mechs get positioned along the z axis with higher z values being further right
 		# on the battle field to make math easier
 		# however this means that once in game, positive z is forward
 		# and since default forward is negative z, the flipped logic is a bit backwards
 		var absolute_rotation : float = abs(rotation_degrees.y)
-		if absolute_rotation > 175 and absolute_rotation < 185:
+		if absolute_rotation > 90 and absolute_rotation < 270:
 			return false
 		return true
 
@@ -203,18 +201,6 @@ func _get_mech_height() -> float:
 
 
 
-func set_flip(flipped : bool):
-	# unneeded in 3d
-	return
-	_torso.set_flipped(flipped)
-	#%TorsoPivot.scale.x = -1 if flipped else 1
-	for pivot : Pivot in %LegPivots.get_children():
-		pivot.set_flipped(flipped)
-	for pivot : Pivot in %WeaponPivots.get_children():
-		pivot.set_flipped(flipped)
-	#%WeaponPivots.scale.x = -1 if flipped else 1
-
-
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
@@ -345,9 +331,9 @@ func can_use_weapon(weapon_config : WeaponConfig) -> Action.CanDoResult:
 
 func aim_at(target_index : int):
 	if get_spot() < target_index and flipped:
-		flip()
+		flip(0)
 	elif get_spot() > target_index and not flipped:
-		flip()
+		flip(0)
 
 
 ## returns the range of indices, with origin in the spot of this mech
@@ -421,7 +407,7 @@ func move_to_index(index : int, duration : float = 0.0):
 	Global.battle_stage.handle_spot_change(self, get_spot(), index)
 	
 	var target_z := index * WIDTH + HALF_WIDTH
-	_move(Vector3(position.x, position.y, target_z), duration)
+	await _move(Vector3(position.x, position.y, target_z), duration)
 
 
 func _process(delta: float) -> void:
@@ -608,9 +594,15 @@ func command_flip():
 	CommandHandler.add_command(c)
 
 
-func flip():
-	rotate_y(deg_to_rad(180))
-	rotation_degrees.y = int(rotation_degrees.y) % 360
+func flip(duration := 0.5):
+	var goal_degrees : float
+	if flipped:
+		goal_degrees = 180
+	else:
+		goal_degrees = 0
+	var t := create_tween()
+	t.tween_property(self, "rotation_degrees:y", goal_degrees, duration)
+	await t.finished
 	EventBus.request_action_rebuild.emit()
 
 
