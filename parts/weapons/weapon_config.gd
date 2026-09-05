@@ -27,6 +27,7 @@ var uses_left := -1
 @export var bullet_consumption := 0
 @export var rocket_consumption := 0
 @export var knockback := 0
+@export var knockback_self := 0
 enum AttackPattern{
 	## attacks all enemies in range
 	ALL,

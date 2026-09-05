@@ -419,7 +419,9 @@ func move_to_index(index : int, duration : float = 0.0):
 	if not Global.battle_stage.is_spot_free(index):
 		return
 	Global.battle_stage.handle_spot_change(self, get_spot(), index)
-	_move(index * WIDTH + HALF_WIDTH, duration)
+	
+	var target_z := index * WIDTH + HALF_WIDTH
+	_move(Vector3(position.x, position.y, target_z), duration)
 
 
 func _process(delta: float) -> void:
@@ -442,9 +444,16 @@ func _process(delta: float) -> void:
 	if Global.player_mech == self:
 		$Label3D.text += "\nv"
 
-func _move(target_z : float, duration : float):
+func _move(target_position : Vector3, duration : float):
 	var t := create_tween()
-	t.tween_property(self, "position:z", target_z, duration)
+	
+	if _leg_config.movement_type == LegConfig.MovementType.WALK:
+		t.tween_property(self, "position", target_position, duration)
+	elif _leg_config.movement_type == LegConfig.MovementType.TELEPORT:
+		var up := position.move_toward(target_position, target_position.distance_to(position) * 0.5)
+		up.y += 25
+		t.tween_property(self, "position", up, duration * 0.5).set_trans(Tween.TRANS_CUBIC)
+		t.tween_property(self, "position", target_position, duration * 0.5).set_trans(Tween.TRANS_CUBIC)
 	await t.finished
 	await get_tree().create_timer(1).timeout
 
@@ -479,6 +488,9 @@ func get_weapon_config(weapon_index : int) -> WeaponConfig:
 func do_attack(target : Mech, weapon_index : int):
 	var weapon : WeaponPivot = get_weapon(weapon_index)
 	var weapon_config : WeaponConfig = get_weapon_config(weapon_index)
+	if not target.is_in_range(get_weapon_attack_bounds(weapon_config)):
+		await get_tree().create_timer(1).timeout
+		return
 	weapon_configs_used_this_turn.append(weapon_config)
 	
 	combat_stats.bullets -= weapon_config.bullet_consumption
@@ -511,10 +523,18 @@ func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), im
 	combat_stats.energy -= with.energy_consumption_target
 	combat_stats.heat += with.heat_generation_target
 	
-	if with.knockback > 0:
-		var knockback_direction : int = 1 if flipped else -1
-		var target := get_spot() + with.knockback * knockback_direction
-		move_to_index(target * with.knockback, 0.2)
+	
+	force_move(-with.knockback)
+	
+
+
+func force_move(signed_distance : int):
+	if signed_distance != 0:
+		var knockback_direction : int = -1 if flipped else 1
+		var target := get_spot() + signed_distance * knockback_direction
+		
+		var final_index : int = Global.battle_stage.get_furthest_free_index(get_spot(), target)
+		move_to_index(final_index, 0.2)
 
 
 func _on_combat_stats_changed():

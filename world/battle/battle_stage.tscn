@@ -2,7 +2,14 @@
 
 [ext_resource type="Script" uid="uid://csgyet2aa78c0" path="res://world/battle/battle_stage.gd" id="1_mlyy2"]
 [ext_resource type="PackedScene" uid="uid://b14nvytfkkcr0" path="res://world/battle/player_hud.tscn" id="2_2c4jw"]
+[ext_resource type="Script" uid="uid://hnb4xfjo6n12" path="res://world/battle/camera_look_at_target.gd" id="2_dok5q"]
 [ext_resource type="Script" uid="uid://cijrx4y0b34ep" path="res://world/battle/camera_holder.gd" id="2_ty4ei"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_t17tb"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="5_h2vmb"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_rbf6u"]
+
+[sub_resource type="Resource" id="Resource_c6wqu"]
+script = ExtResource("6_rbf6u")
 
 [sub_resource type="Gradient" id="Gradient_x51i7"]
 colors = PackedColorArray(0.5765042, 0.1685636, 0, 1, 0.5619702, 0.42688814, 0.3254574, 1)
@@ -46,17 +53,38 @@ tonemap_white = 2.56
 [node name="BattleStage" type="Node3D" unique_id=311812168]
 script = ExtResource("1_mlyy2")
 
+[node name="CameraLookAtTarget" type="Marker3D" parent="." unique_id=1561313588]
+unique_name_in_owner = true
+script = ExtResource("2_dok5q")
+
+[node name="BattleCamera" type="Camera3D" parent="." unique_id=1505341304]
+unique_name_in_owner = true
+transform = Transform3D(-1.1920929e-07, 0.07848008, -0.99691576, 3.7252903e-09, 0.9969157, 0.07848007, 1.0000001, 0, -1.1920929e-07, -93.69469, 7.3759155, 0)
+top_level = true
+current = true
+fov = 126.0
+size = 100.0
+
+[node name="PhantomCameraHost" type="Node" parent="BattleCamera" unique_id=644155441]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("3_t17tb")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
 [node name="CameraHolder" type="Node3D" parent="." unique_id=425572374]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.61208, 0, 0)
 script = ExtResource("2_ty4ei")
 
-[node name="BattleCamera" type="Camera3D" parent="CameraHolder" unique_id=1505341304]
-unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -21.082603, 7.3759155, 0)
-current = true
-fov = 126.0
-size = 100.0
+[node name="PhantomCamera3D" type="Node3D" parent="CameraHolder" unique_id=1539535805 node_paths=PackedStringArray("look_at_target")]
+transform = Transform3D(-1.192093e-07, 0.07848008, -0.99691576, 3.7252907e-09, 0.9969157, 0.07848007, 1.0000002, 0, -1.1920929e-07, -21.082603, 7.3759155, 0)
+script = ExtResource("5_h2vmb")
+look_at_mode = 2
+look_at_target = NodePath("../../CameraLookAtTarget")
+tween_resource = SubResource("Resource_c6wqu")
+align_transform_with_view = Callable()
+align_rotation_with_view = Callable()
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="BattleLine" type="Node3D" parent="." unique_id=1772281237]
 unique_name_in_owner = true
@@ -109,6 +137,11 @@ offset_top = -92.0
 offset_right = 40.0
 offset_bottom = -69.0
 grow_vertical = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.7990034, 0, 0.10197445, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
 
 [node name="Right" type="Label" parent="CanvasLayer/OffScreenInfo" unique_id=123571588]
 unique_name_in_owner = true
@@ -123,6 +156,12 @@ offset_top = -92.0
 offset_bottom = -69.0
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 0
+theme_override_colors/font_color = Color(0.7990034, 0, 0.10197445, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 2
 
 [node name="Highlights" type="Node3D" parent="." unique_id=1148060985]
 unique_name_in_owner = true
@@ -138,3 +177,7 @@ mesh = SubResource("PlaneMesh_joysk")
 environment = SubResource("Environment_joysk")
 
 [connection signal="pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/OffScreenInfo/Left" to="." method="_on_left_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/OffScreenInfo/Left" to="." method="_on_left_mouse_exited"]
+[connection signal="mouse_entered" from="CanvasLayer/OffScreenInfo/Right" to="." method="_on_right_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/OffScreenInfo/Right" to="." method="_on_right_mouse_exited"]

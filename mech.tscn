@@ -16,7 +16,7 @@ leg_id = "leg_1"
 weapon_list = PackedStringArray("cannon_1", "cannon_2")
 metadata/_custom_type_script = "uid://doykq4fatoa8u"
 
-[sub_resource type="Resource" id="Resource_gv68a"]
+[sub_resource type="Resource" id="Resource_d1hbp"]
 resource_local_to_scene = true
 script = ExtResource("4_d1hbp")
 health_max = 30
@@ -27,7 +27,7 @@ energy_max = 8
 energy_generation = 2
 metadata/_custom_type_script = "uid://dyvy5uipvdaox"
 
-[sub_resource type="Resource" id="Resource_gebfl"]
+[sub_resource type="Resource" id="Resource_xoyw3"]
 resource_local_to_scene = true
 script = ExtResource("11_my38c")
 tech_id = "cannon_1"
@@ -36,7 +36,7 @@ weapon_range = Vector2i(1, 3)
 energy_consumption_self = 1
 heat_generation_self = 1
 
-[sub_resource type="Resource" id="Resource_0t1xr"]
+[sub_resource type="Resource" id="Resource_03qo4"]
 resource_local_to_scene = true
 script = ExtResource("11_my38c")
 tech_id = "cannon_2"
@@ -59,7 +59,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21357661, 0)
 
 [node name="Torso1" parent="TorsoPivot" unique_id=1025553937 instance=ExtResource("3_03qo4")]
-config = SubResource("Resource_gv68a")
+config = SubResource("Resource_d1hbp")
 
 [node name="LegPivots" type="Node3D" parent="." unique_id=409327639]
 unique_name_in_owner = true
@@ -76,11 +76,11 @@ unique_name_in_owner = true
 
 [node name="Cannon1" parent="WeaponPivots" unique_id=1045056308 instance=ExtResource("9_wgdda")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6033268, 0.35512123, -0.018219177)
-config = SubResource("Resource_gebfl")
+config = SubResource("Resource_xoyw3")
 
 [node name="Cannon2" parent="WeaponPivots" unique_id=975350807 instance=ExtResource("12_k5npo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6033268, 0.35093713, -0.01821923)
-config = SubResource("Resource_0t1xr")
+config = SubResource("Resource_03qo4")
 in_front = false
 
 [node name="VisibleGuarantee" type="Node3D" parent="." unique_id=899868756]
@@ -109,6 +109,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.319427)
 
 [node name="Label3D" type="Label3D" parent="." unique_id=466690967]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9924133, 0)
+visible = false
 pixel_size = 0.0003
 billboard = 1
 fixed_size = true
@@ -124,3 +125,7 @@ render_priority = -1
 [node name="IsOnScreen" type="VisibleOnScreenNotifier3D" parent="." unique_id=1771867712]
 unique_name_in_owner = true
 aabb = AABB(-0.6488206, -0.71934414, -0.39966583, 1.2976412, 1.4386883, 0.79933167)
+
+[node name="TargetOrigin" type="Marker3D" parent="." unique_id=1754961649]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8394868, -0.7983925)

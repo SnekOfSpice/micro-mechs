@@ -63,7 +63,9 @@ func _ready() -> void:
 		targets.append(mech)
 	#%PhantomCamera3D.look_at_targets = targets
 	
-	%CameraHolder.global_position.z = Global.player_mech.global_position.z
+	%CameraLookAtTarget.target = Global.player_mech
+	await get_tree().process_frame
+	%CameraLookAtTarget.global_position = Global.player_mech.global_position
 	
 	
 	
@@ -145,53 +147,12 @@ func _decrement_blocker():
 		_begin_battle()
 
 func _begin_battle():
-	_update_flips()
-	
 	await get_tree().process_frame
 	for mech : Mech in %BattleLine.get_children():
 		mech.initialize_combat_stats()
 	
 	%PlayerHUD.populate_player_actions(mech1.get_action_list())
 	PhaseManager.begin_match()
-
-
-func _update_flips():
-	return
-	#if mech1.global_position != mech2.global_position:
-		#mech1.look_at(mech2.global_position)
-		#mech2.look_at(mech1.global_position)
-	#mech1.set_flip(mech1.global_position.x > mech2.global_position.x)
-	#mech2.set_flip(mech2.global_position.x > mech1.global_position.x)
-#
-#
-#func move_mech(mech : Mech, distance : int):
-	#var mech_index := mech.get_parent().get_index()
-	#move_mech_to(mech, mech_index + distance)
-#
-#
-#func move_mech_to(mech : Mech, slot_index : int):
-	#mech.reparent(get_slot(slot_index))
-	#mech.position = get_slot_position(slot_index)
-#
-#func get_slot(slot_index : int) -> TextureRect:
-	#if slot_index < 0 or slot_index >= %MechSlots.get_child_count():
-		#push_warning("tried to get slot outside of range")
-		#slot_index = clampi(slot_index, 0, %MechSlots.get_child_count() - 1)
-	#
-	#var slot : TextureRect = %MechSlots.get_child(slot_index)
-	#return slot
-#
-#
-#func get_slot_position(slot_index : int) -> Vector2:
-	#var slot := get_slot(slot_index)
-	#
-	#var origin := slot.global_position
-	#
-	#origin.x += slot.texture.get_size().x * 0.5
-	#origin.y = slot.texture.get_height()
-	#return origin
-	#
-
 
 
 func command_do_attack(attacking_mech : Mech, weapon_index : int):
@@ -347,6 +308,7 @@ func clear_corpses():
 		if data_here is Mech:
 			if data_here.is_dead():
 				clear_tile(i)
+				hide_range(data_here)
 				combat_order.erase(data_here)
 				data_here.queue_free()
 	
@@ -385,8 +347,58 @@ func spawn_wave():
 	
 	
 	wave_count += 1
+	EventBus.request_action_rebuild.emit()
 
 
 
 class TileOutOfBounds:
 	var lol
+
+
+func _on_left_mouse_entered() -> void:
+	if not %Left.text.is_empty():
+		var lowest_mech : Mech = combat_order.front()
+		var lowest_spot : int = lowest_mech.get_spot()
+		for mech : Mech in combat_order:
+			if mech.get_spot() < lowest_spot:
+				lowest_mech = mech
+		%CameraLookAtTarget.target = lowest_mech
+
+
+func _on_left_mouse_exited() -> void:
+	%CameraLookAtTarget.target = mech1
+
+
+func _on_right_mouse_entered() -> void:
+	if not %Right.text.is_empty():
+		var highest_mech : Mech = combat_order.front()
+		var highest_spot : int = highest_mech.get_spot()
+		for mech : Mech in combat_order:
+			if mech.get_spot() > highest_spot:
+				highest_mech = mech
+		%CameraLookAtTarget.target = highest_mech
+
+
+func _on_right_mouse_exited() -> void:
+	%CameraLookAtTarget.target = mech1
+
+
+
+
+func get_furthest_free_index(from_spot : int, target_spot : int) -> int:
+	var go_up : bool = from_spot < target_spot
+	var lookup_range
+	var last_free_index := from_spot
+	if go_up:
+		lookup_range = range(from_spot + 1, target_spot + 1)
+	else:
+		lookup_range = range(from_spot - 1, target_spot - 1, -1)
+	
+	for index : int in lookup_range:
+		if get_tile_data(index) == null:
+			last_free_index = index
+		else:
+			break
+	
+	
+	return last_free_index
