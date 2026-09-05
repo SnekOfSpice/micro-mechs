@@ -114,13 +114,9 @@ pixel_size = 0.0003
 billboard = 1
 fixed_size = true
 
-[node name="Intent" type="Sprite3D" parent="." unique_id=878319550]
+[node name="IntentPosition" type="Marker3D" parent="." unique_id=822089366]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.349569, 0)
-pixel_size = 0.001
-billboard = 1
-fixed_size = true
-render_priority = -1
 
 [node name="IsOnScreen" type="VisibleOnScreenNotifier3D" parent="." unique_id=1771867712]
 unique_name_in_owner = true
@@ -129,3 +125,23 @@ aabb = AABB(-0.6488206, -0.71934414, -0.39966583, 1.2976412, 1.4386883, 0.799331
 [node name="TargetOrigin" type="Marker3D" parent="." unique_id=1754961649]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8394868, -0.7983925)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=628022269]
+
+[node name="Intent" type="TextureRect" parent="CanvasLayer" unique_id=2127617490]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[connection signal="mouse_entered" from="CanvasLayer/Intent" to="." method="_on_intent_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Intent" to="." method="_on_intent_mouse_exited"]

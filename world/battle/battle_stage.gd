@@ -39,6 +39,7 @@ var wave_count := 0
 
 func _ready() -> void:
 	Global.battle_stage = self
+	Global.camera = %BattleCamera
 	CommandHandler.command_executed.connect(_on_command_executed)
 	CommandHandler.command_executing.connect(_on_command_executing)
 	
@@ -106,6 +107,8 @@ func _process(delta: float) -> void:
 	var left_invisible := 0
 	var right_invisible := 0
 	for mech : Mech in %BattleLine.get_children():
+		if mech == Global.player_mech:
+			continue
 		if not mech.is_visible_on_screen():
 			if mech.global_position.z < mech1.global_position.z:
 				left_invisible += 1
@@ -249,6 +252,8 @@ func highlight_range(range : Vector2, requester : Node):
 			marker.modulate.a = 0.3
 		highlight.add_child(marker)
 		marker.position.z = i * Mech.WIDTH + Mech.HALF_WIDTH
+		if requester != Global.player_mech:
+			marker.outline_modulate = 2
 	
 
 

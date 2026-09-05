@@ -411,7 +411,7 @@ func stomp():
 	stomp_attack.damage = _leg_config.stomp_damage
 	stomp_attack.knockback = _leg_config.stomp_knockback
 	stomp_attack.kind = WeaponConfig.Kind.STOMP
-	other_mech.handle_attacked(stomp_attack)
+	other_mech.handle_attacked(stomp_attack, self)
 
 
 func move_to_index(index : int, duration : float = 0.0):
@@ -443,6 +443,12 @@ func _process(delta: float) -> void:
 		)
 	if Global.player_mech == self:
 		$Label3D.text += "\nv"
+	
+	
+	if Global.camera:
+		%Intent.position = Global.camera.unproject_position(%IntentPosition.global_position)
+		%Intent.position -= %Intent.size * 0.5
+
 
 func _move(target_position : Vector3, duration : float):
 	var t := create_tween()
@@ -501,7 +507,9 @@ func do_attack(target : Mech, weapon_index : int):
 	if weapon_config.uses > -1:
 		weapon_config.uses_left = max(0, weapon_config.uses_left - 1)
 	
-	var duration := await weapon.attack_animation(target)
+	force_move(-weapon_config.knockback_self)
+	
+	var duration := await weapon.attack_animation(target, self)
 	await get_tree().create_timer(duration).timeout
 
 
@@ -509,7 +517,7 @@ var hit_history := []
 
 # usedful for multi projectile
 var timestamps := []
-func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), impact_position : Vector3 = get_projectile_point()):
+func handle_attacked(with : WeaponConfig, attacker : Mech, timestamp := Time.get_ticks_msec(), impact_position : Vector3 = get_projectile_point()):
 	hit_history.append(with)
 	var damage := randi_range(with.damage.x, with.damage.y)
 	combat_stats.health -=  damage
@@ -523,8 +531,10 @@ func handle_attacked(with : WeaponConfig, timestamp := Time.get_ticks_msec(), im
 	combat_stats.energy -= with.energy_consumption_target
 	combat_stats.heat += with.heat_generation_target
 	
-	
-	force_move(-with.knockback)
+	var knockback := with.knockback
+	if attacker.flipped == flipped:
+		knockback *= -1
+	force_move(-knockback)
 	
 
 
@@ -627,3 +637,11 @@ func is_pointed_at_enemy() -> bool:
 
 func is_visible_on_screen() -> bool:
 	return %IsOnScreen.is_on_screen()
+
+
+func _on_intent_mouse_entered() -> void:
+	print("view intent")
+
+
+func _on_intent_mouse_exited() -> void:
+	print("hide intent")

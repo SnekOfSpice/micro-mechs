@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://du5jnmklcgcm5"]
+
+[ext_resource type="Script" uid="uid://c6v7a5n8dl1my" path="res://game/ui/spiky_outline.gd" id="1_dkrqk"]
+[ext_resource type="Texture2D" uid="uid://baywo04abijq2" path="res://game/ui/spike.png" id="2_wdnnt"]
+
+[node name="SpikyOutline" type="Control" unique_id=222107834]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dkrqk")
+spike_count = 11
+radius = 17.085
+
+[node name="@Control@46094" type="Control" parent="." unique_id=1855729970]
+anchors_preset = 0
+mouse_filter = 2
+
+[node name="@TextureRect@46093" type="TextureRect" parent="@Control@46094" unique_id=1313635672]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46096" type="Control" parent="." unique_id=1429635539]
+anchors_preset = 0
+rotation = 0.57119864
+mouse_filter = 2
+
+[node name="@TextureRect@46095" type="TextureRect" parent="@Control@46096" unique_id=1114123209]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46098" type="Control" parent="." unique_id=57294667]
+anchors_preset = 0
+rotation = 1.1423973
+mouse_filter = 2
+
+[node name="@TextureRect@46097" type="TextureRect" parent="@Control@46098" unique_id=838764612]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46100" type="Control" parent="." unique_id=1839573689]
+anchors_preset = 0
+rotation = 1.713596
+mouse_filter = 2
+
+[node name="@TextureRect@46099" type="TextureRect" parent="@Control@46100" unique_id=848851715]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46102" type="Control" parent="." unique_id=384760494]
+anchors_preset = 0
+rotation = 2.2847946
+mouse_filter = 2
+
+[node name="@TextureRect@46101" type="TextureRect" parent="@Control@46102" unique_id=1735903705]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46104" type="Control" parent="." unique_id=1902849277]
+anchors_preset = 0
+rotation = 2.8559933
+mouse_filter = 2
+
+[node name="@TextureRect@46103" type="TextureRect" parent="@Control@46104" unique_id=666276840]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46106" type="Control" parent="." unique_id=1782152953]
+anchors_preset = 0
+rotation = 3.427192
+mouse_filter = 2
+
+[node name="@TextureRect@46105" type="TextureRect" parent="@Control@46106" unique_id=1034356960]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46108" type="Control" parent="." unique_id=2115105546]
+anchors_preset = 0
+rotation = 3.9983907
+mouse_filter = 2
+
+[node name="@TextureRect@46107" type="TextureRect" parent="@Control@46108" unique_id=525036695]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46110" type="Control" parent="." unique_id=411734725]
+anchors_preset = 0
+rotation = 4.569589
+mouse_filter = 2
+
+[node name="@TextureRect@46109" type="TextureRect" parent="@Control@46110" unique_id=83827179]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46112" type="Control" parent="." unique_id=744275050]
+anchors_preset = 0
+rotation = 5.140788
+mouse_filter = 2
+
+[node name="@TextureRect@46111" type="TextureRect" parent="@Control@46112" unique_id=53161793]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")
+
+[node name="@Control@46114" type="Control" parent="." unique_id=242696147]
+anchors_preset = 0
+rotation = 5.7119865
+mouse_filter = 2
+
+[node name="@TextureRect@46113" type="TextureRect" parent="@Control@46114" unique_id=1775731688]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 17.085
+offset_right = 12.0
+offset_bottom = 65.085014
+texture = ExtResource("2_wdnnt")

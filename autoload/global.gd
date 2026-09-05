@@ -5,6 +5,7 @@ extends Node
 var player_mech : Mech
 var hud : PlayerHUD
 var battle_stage : BattleStage
+var camera : Camera3D
 
 
 var player_config : MechConfig
@@ -37,6 +38,7 @@ func get_weapon_configs() -> Array:
 		"shotgun",
 		"flamethrower",
 		"quad_cannon",
+		"sawed-off_shotgun"
 	]
 	
 	## vv this breaks in export

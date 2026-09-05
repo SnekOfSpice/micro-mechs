@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponConfig" format=3 uid="uid://d4a4kr50t2wis"]
+
+[ext_resource type="Script" uid="uid://d4g0xn01kf10" path="res://parts/weapons/weapon_config.gd" id="1_rib8u"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_rib8u")
+tech_id = "sawed-off_shotgun"
+damage = Vector2i(3, 4)
+projectiles = 4
+heat_generation_self = 6
+bullet_consumption = 2
+knockback = 2
+knockback_self = 1

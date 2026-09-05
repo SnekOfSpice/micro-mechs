@@ -26,7 +26,7 @@ func _ready() -> void:
 			config = WeaponConfig.new()
 
 
-func attack_animation(attack_target : Mech) -> float:
+func attack_animation(attack_target : Mech, attacker : Mech) -> float:
 	var target_position : Vector3 = attack_target.get_projectile_point()
 	
 	#var factor := -1 if _sprite.flip_h else 1
@@ -64,7 +64,7 @@ func attack_animation(attack_target : Mech) -> float:
 		var projectile_timer := get_tree().create_timer(projectile_flight_duration)
 		projectile_timer.timeout.connect(func():
 			projectile.queue_free()
-			attack_target.handle_attacked(config, attack_timestamp, target_position))
+			attack_target.handle_attacked(config, attacker, attack_timestamp, target_position))
 		# override for randomness
 		target_position = attack_target.get_projectile_point()
 		

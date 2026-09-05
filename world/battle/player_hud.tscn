@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ch0jbyygyi7ix" path="res://world/battle/player_hud.gd" id="1_g2sh0"]
 [ext_resource type="PackedScene" uid="uid://kyqyl0rq54ol" path="res://world/battle/mech_status_container.tscn" id="2_6y46n"]
+[ext_resource type="Texture2D" uid="uid://drcxo5u2v6oar" path="res://wires.png" id="2_gfo07"]
 [ext_resource type="PackedScene" uid="uid://wo6rrdj6b0k2" path="res://game/ui/attack_info_display.tscn" id="3_oe0lj"]
 
 [node name="PlayerHUD" type="Control" unique_id=1663708321]
@@ -12,6 +13,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g2sh0")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1067103127]
+z_index = -1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -540.0
+offset_right = 720.0
+grow_vertical = 0
+scale = Vector2(0.685, 0.685)
+pivot_offset_ratio = Vector2(0, 1)
+offset_transform_enabled = true
+texture = ExtResource("2_gfo07")
 
 [node name="ActionsContainer" type="Control" parent="." unique_id=1162861612]
 unique_name_in_owner = true
@@ -34,10 +49,10 @@ mouse_filter = 2
 [node name="FlipAnchor" type="Control" parent="ActionsContainer/Movement" unique_id=84531690]
 unique_name_in_owner = true
 anchors_preset = 0
-offset_left = 39.0
-offset_top = 419.0
-offset_right = 39.0
-offset_bottom = 419.0
+offset_left = 103.0
+offset_top = 451.0
+offset_right = 103.0
+offset_bottom = 451.0
 mouse_filter = 2
 
 [node name="MoveContainer" type="HBoxContainer" parent="ActionsContainer/Movement" unique_id=755041159]
