@@ -117,3 +117,11 @@ func set_flipped(flipped : bool):
 func anim(anim_name : StringName) -> float:
 	$AnimationPlayer.play(anim_name)
 	return $AnimationPlayer.get_animation(anim_name).get_length()
+
+
+func get_leg_position() -> Vector3:
+	return %LegTransformBack.global_position
+
+
+func get_weapon_position(weapon_index : int) -> Vector3:
+	return %WeaponTransforms.get_child(weapon_index).global_position

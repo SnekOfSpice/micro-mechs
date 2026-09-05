@@ -9,12 +9,42 @@ albedo_color = Color(0.62799096, 0.06090296, 0, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_jr4e6"]
 size = Vector3(1, 0.22215271, 0.21557617)
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_joysk"]
+top_radius = 0.28955078
+bottom_radius = 0.28955078
+height = 0.7902832
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57van"]
+albedo_color = Color(1, 0.5814346, 0.49137658, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_joysk"]
+radius = 0.09
+height = 0.18
+
+[sub_resource type="SphereMesh" id="SphereMesh_i1esv"]
+radius = 0.045
+height = 0.09
+
 [node name="Flamethrower" type="Marker3D" unique_id=1045056308]
 script = ExtResource("1_jr4e6")
 config = ExtResource("2_jr4e6")
 metadata/_custom_type_script = "uid://btpy4p1qf56fv"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=115197237]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.032859802, 0.009887695)
+transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, 0, 0.032859802, -0.23549974)
 material_override = SubResource("StandardMaterial3D_i1esv")
 mesh = SubResource("BoxMesh_jr4e6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1318234029]
+transform = Transform3D(-4.3711385e-08, 1, -4.371139e-08, -1, -4.371139e-08, -4.371139e-08, -4.371139e-08, 4.371139e-08, 1, 0.31066895, -0.21755816, 1.357977e-08)
+mesh = SubResource("CylinderMesh_joysk")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1238310796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.57243896, 0.27664918, 0.02530459)
+material_override = SubResource("StandardMaterial3D_57van")
+mesh = SubResource("SphereMesh_joysk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="MeshInstance3D/MeshInstance3D2" unique_id=1366188189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18096185, 0)
+material_override = SubResource("StandardMaterial3D_57van")
+mesh = SubResource("SphereMesh_i1esv")

@@ -645,3 +645,15 @@ func _on_intent_mouse_entered() -> void:
 
 func _on_intent_mouse_exited() -> void:
 	print("hide intent")
+
+
+func get_torso_position() -> Vector3:
+	return %Center.global_position
+
+
+func get_leg_position() -> Vector3:
+	return _torso.get_leg_position()
+
+
+func get_weapon_position(weapon_index : int) -> Vector3:
+	return _torso.get_weapon_position(weapon_index)

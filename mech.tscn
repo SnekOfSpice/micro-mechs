@@ -126,6 +126,10 @@ aabb = AABB(-0.6488206, -0.71934414, -0.39966583, 1.2976412, 1.4386883, 0.799331
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8394868, -0.7983925)
 
+[node name="Center" type="Marker3D" parent="." unique_id=2125422702]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5200726, 0)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=628022269]
 
 [node name="Intent" type="TextureRect" parent="CanvasLayer" unique_id=2127617490]

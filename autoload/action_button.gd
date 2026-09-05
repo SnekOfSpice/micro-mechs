@@ -31,9 +31,12 @@ func _rebuild():
 	elif action is ActionMove:
 		text = "move %s" % action.distance
 		%ActionIcon.texture = load("res://game/ui/buttons/move.png")
+		%ActionIcon.flip_h = Global.player_mech.flipped
+		
 	elif action is ActionWeapon:
 		text = "attack"
 		%ActionIcon.texture = load("res://game/ui/buttons/weapon.png")
+		%WeaponIcon.texture = load("res://parts/weapons/icons/%s.png" % action.config.tech_id)
 	elif action is ActionStomp:
 		text = "stomp"
 		%ActionIcon.texture = load("res://game/ui/buttons/stomp.png")

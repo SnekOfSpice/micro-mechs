@@ -37,6 +37,10 @@ func render(weapon_config : WeaponConfig, perspective : Perspective):
 		%BulletsContainer.visible = bullet > 0
 		%BulletsLabel.text = str(bullet)
 		
+		var knockback := weapon_config.knockback_self
+		%KnockbackContainer.visible = knockback > 0
+		%KnockbackLabel.text = str(knockback)
+		
 	
 	elif perspective == Perspective.DEFENDER:
 		%DamageContainer.visible = weapon_config.damage.x > 0 or weapon_config.damage.y > 0

@@ -21,14 +21,14 @@ config = ExtResource("2_pwkwo")
 metadata/_custom_type_script = "uid://btpy4p1qf56fv"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=894978891]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.032859802, 0.009887695)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0.032859802, -0.26347023)
 material_override = SubResource("StandardMaterial3D_i0tb0")
 mesh = SubResource("BoxMesh_joysk")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D" unique_id=2146003010]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38916016, 0.06921768, -0.008636475)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4771726, 0.06921768, -0.00863647)
 material_override = SubResource("StandardMaterial3D_76rds")
 mesh = SubResource("BoxMesh_p54w4")
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=288236561]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.55941683)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6352206)

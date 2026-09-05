@@ -1,31 +1,80 @@
 [gd_scene format=3 uid="uid://dhqhkcfm4e0pc"]
 
 [ext_resource type="Script" uid="uid://c4fnrlec51yna" path="res://game/workshop/workshop.gd" id="1_duchl"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="2_0opg1"]
 [ext_resource type="PackedScene" uid="uid://dfuldwx85p728" path="res://mech.tscn" id="2_jnchr"]
 [ext_resource type="PackedScene" uid="uid://wo6rrdj6b0k2" path="res://game/ui/attack_info_display.tscn" id="3_cy0xm"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_e24po"]
 [ext_resource type="PackedScene" uid="uid://kyqyl0rq54ol" path="res://world/battle/mech_status_container.tscn" id="3_jnchr"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="4_5ingg"]
+
+[sub_resource type="Resource" id="Resource_6v6o2"]
+script = ExtResource("3_e24po")
 
 [node name="Workshop" type="Node3D" unique_id=861177137]
 script = ExtResource("1_duchl")
+
+[node name="PhantomCamera3D" type="Node3D" parent="." unique_id=1000054980 node_paths=PackedStringArray("look_at_target")]
+transform = Transform3D(-0.8833951, 0.20604883, -0.42089972, 0, 0.898152, 0.43968472, 0.4686285, 0.38841543, -0.7934233, -15.25341, 15.934179, -28.753666)
+script = ExtResource("2_0opg1")
+look_at_mode = 2
+look_at_target = NodePath("../Mech")
+tween_resource = SubResource("Resource_6v6o2")
+align_transform_with_view = Callable()
+align_rotation_with_view = Callable()
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1690532087]
 transform = Transform3D(-0.5767704, 0.2696568, -0.7711168, -0.37586987, 0.7504928, 0.5435833, 0.72529835, 0.60336214, -0.33150607, 3.8146973e-06, 58.412148, 29.704548)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=618259664]
-transform = Transform3D(-0.95949, 0.03886094, -0.27904943, -8.8817837e-16, 0.9904418, 0.13793077, 0.2817423, 0.1323432, -0.9503192, -19.233484, 19.059464, -45.205093)
+unique_name_in_owner = true
+transform = Transform3D(-0.8833953, 0.20604886, -0.42089978, 0, 0.8981522, 0.43968478, 0.46862862, 0.3884155, -0.7934234, -15.25341, 15.934179, -28.753666)
+top_level = true
 current = true
+fov = 57.2
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D" unique_id=1166785846]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("4_5ingg")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="Mech" parent="." unique_id=1584505707 instance=ExtResource("2_jnchr")]
+unique_name_in_owner = true
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1987386696]
+position = Vector2(0, 1)
+
+[node name="TorsoLine" type="Line2D" parent="Node2D" unique_id=1410940069]
+unique_name_in_owner = true
+
+[node name="LegLine" type="Line2D" parent="Node2D" unique_id=1504006373]
+unique_name_in_owner = true
+
+[node name="WeaponLines" type="Node2D" parent="Node2D" unique_id=1311566682]
+unique_name_in_owner = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=957539602]
+layer = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=183374459]
-offset_right = 65.0
-offset_bottom = 140.0
+[node name="VBoxContainer" type="Control" parent="CanvasLayer" unique_id=1981486335]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="TorsoSelector" type="GridContainer" parent="CanvasLayer/VBoxContainer" unique_id=62006450]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_left = 51.0
+offset_top = 63.0
+offset_right = 185.0
+offset_bottom = 129.0
+columns = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/TorsoSelector" unique_id=2033244742]
 layout_mode = 2
@@ -37,7 +86,12 @@ text = "torso_2"
 
 [node name="LegsContainer" type="GridContainer" parent="CanvasLayer/VBoxContainer" unique_id=152848080]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_left = 92.0
+offset_top = 443.0
+offset_right = 190.0
+offset_bottom = 544.0
+columns = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/VBoxContainer/LegsContainer" unique_id=47953105]
 layout_mode = 2
@@ -51,9 +105,31 @@ text = "leg_2"
 layout_mode = 2
 text = "leg_3"
 
-[node name="WeaponsSelection" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1099144288]
+[node name="WeaponsSelection" type="Control" parent="CanvasLayer/VBoxContainer" unique_id=1855646495]
 unique_name_in_owner = true
-layout_mode = 2
+anchors_preset = 0
+offset_top = 175.0
+offset_right = 65.0
+offset_bottom = 175.0
+mouse_filter = 2
+
+[node name="WeaponsLPosition" type="Control" parent="CanvasLayer/VBoxContainer" unique_id=217708189]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 40.0
+offset_top = 142.0
+offset_right = 40.0
+offset_bottom = 142.0
+mouse_filter = 2
+
+[node name="WeaponsRPosition" type="Control" parent="CanvasLayer/VBoxContainer" unique_id=364264645]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_left = 571.0
+offset_top = 97.0
+offset_right = 571.0
+offset_bottom = 97.0
+mouse_filter = 2
 
 [node name="CloseButton" type="Button" parent="." unique_id=159429627]
 anchors_preset = 1
@@ -65,14 +141,15 @@ grow_horizontal = 0
 text = "Close"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=446536556]
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -316.0
-offset_top = -311.0
-grow_horizontal = 0
+offset_left = -158.0
+offset_top = -319.0
+offset_right = 158.0
+grow_horizontal = 2
 grow_vertical = 0
 alignment = 2
 
